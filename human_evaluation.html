@@ -2,92 +2,128 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Human Evaluation - Review Comparison</title>
+  <title>Review Comparison</title>
   <style>
-    body { font-family: Arial, sans-serif; max-width: 900px; margin: 2rem auto; line-height: 1.6; }
-    h2 { margin-top: 2rem; }
-    textarea { width: 100%; height: 200px; margin-top: 0.5rem; font-family: monospace; }
-    .review-box { background: #f9f9f9; padding: 1rem; border: 1px solid #ddd; margin-bottom: 1rem; white-space: pre-wrap; }
-    .question { margin-top: 1rem; }
-    button { margin-top: 2rem; padding: 10px 20px; font-size: 1rem; }
+    body { font-family: sans-serif; padding: 20px; max-width: 900px; margin: auto; }
+    .review-box { border: 1px solid #ccc; padding: 10px; margin-bottom: 20px; white-space: pre-wrap; background: #f9f9f9; }
+    .label { font-weight: bold; margin-top: 10px; }
+    .question { margin-top: 15px; }
+    .question label { margin-right: 15px; }
+    #navigation { margin-top: 30px; display: flex; justify-content: space-between; }
+    #submit-results { margin-top: 30px; }
   </style>
 </head>
 <body>
+  <h2>Peer Review Evaluation</h2>
+  <div id="sample-container">
+    <p class="label">Paper ID: <span id="paper-id"></span></p>
 
-  <h1>Peer Review Comparison</h1>
+    <div class="review-box" id="reviewA"></div>
+    <div class="review-box" id="reviewB"></div>
 
-  <h2>Paper</h2>
-  <textarea readonly>
-  [Paste full paper text here...]
-  </textarea>
-
-  <h2>Review A</h2>
-  <div class="review-box" id="reviewA">
-    [Paste Review A here...]
-  </div>
-
-  <h2>Review B</h2>
-  <div class="review-box" id="reviewB">
-    [Paste Review B here...]
-  </div>
-
-  <h2>Evaluation</h2>
-
-  <form id="evalForm">
     <div class="question">
-      <strong>1. Specificity</strong><br>
-      <label><input type="radio" name="specificity" value="A" required> A</label>
+      <div class="label">1. Which review is more specific?</div>
+      <label><input type="radio" name="specificity" value="A"> A</label>
       <label><input type="radio" name="specificity" value="B"> B</label>
       <label><input type="radio" name="specificity" value="Tie"> Tie</label>
     </div>
 
     <div class="question">
-      <strong>2. Decisiveness</strong><br>
-      <label><input type="radio" name="decisiveness" value="A" required> A</label>
+      <div class="label">2. Which review is more decisive?</div>
+      <label><input type="radio" name="decisiveness" value="A"> A</label>
       <label><input type="radio" name="decisiveness" value="B"> B</label>
       <label><input type="radio" name="decisiveness" value="Tie"> Tie</label>
     </div>
 
     <div class="question">
-      <strong>3. Comprehensiveness</strong><br>
-      <label><input type="radio" name="comprehensiveness" value="A" required> A</label>
+      <div class="label">3. Which review is more comprehensive?</div>
+      <label><input type="radio" name="comprehensiveness" value="A"> A</label>
       <label><input type="radio" name="comprehensiveness" value="B"> B</label>
       <label><input type="radio" name="comprehensiveness" value="Tie"> Tie</label>
     </div>
 
     <div class="question">
-      <strong>4. Factuality</strong><br>
-      <label><input type="radio" name="factuality" value="A" required> A</label>
+      <div class="label">4. Which review is more factual (free from hallucination)?</div>
+      <label><input type="radio" name="factuality" value="A"> A</label>
       <label><input type="radio" name="factuality" value="B"> B</label>
       <label><input type="radio" name="factuality" value="Tie"> Tie</label>
     </div>
 
     <div class="question">
-      <strong>5. Overall Preference</strong><br>
-      <label><input type="radio" name="overall" value="A" required> A</label>
+      <div class="label">5. Overall, which review is better?</div>
+      <label><input type="radio" name="overall" value="A"> A</label>
       <label><input type="radio" name="overall" value="B"> B</label>
       <label><input type="radio" name="overall" value="Tie"> Tie</label>
     </div>
 
-    <button type="submit">Submit</button>
-  </form>
+    <div id="navigation">
+      <button onclick="prevSample()">Previous</button>
+      <button onclick="nextSample()">Next</button>
+    </div>
 
-  <div id="result" style="margin-top: 2rem;"></div>
+    <button id="submit-results" onclick="downloadResults()">Download Results</button>
+  </div>
 
   <script>
-    document.getElementById('evalForm').onsubmit = function(event) {
-      event.preventDefault();
-      const data = new FormData(event.target);
-      const result = {};
-      for (let [key, value] of data.entries()) {
-        result[key] = value;
-      }
-      const output = JSON.stringify(result, null, 2);
-      document.getElementById('result').innerHTML =
-        `<h3>Submitted Evaluation</h3><pre>${output}</pre>`;
-      // You can replace this with POST request to backend or save to file
-    };
-  </script>
+    const data = [/* DATA PLACEHOLDER */];
 
+    let current = 0;
+    const results = [];
+
+    function shuffleReviews(sample) {
+      const AisHuman = Math.random() < 0.5;
+      return {
+        paper_id: sample.paper_id,
+        reviewA: AisHuman ? sample.human : JSON.parse(sample.llm).strengths + "\n" + JSON.parse(sample.llm).weaknesses,
+        reviewB: AisHuman ? JSON.parse(sample.llm).strengths + "\n" + JSON.parse(sample.llm).weaknesses : sample.human,
+        AisHuman
+      };
+    }
+
+    let shuffled = data.map(shuffleReviews);
+
+    function loadSample(index) {
+      if (index < 0 || index >= shuffled.length) return;
+      current = index;
+      const sample = shuffled[index];
+      document.getElementById('paper-id').textContent = sample.paper_id;
+      document.getElementById('reviewA').textContent = 'Review A:\n' + sample.reviewA;
+      document.getElementById('reviewB').textContent = 'Review B:\n' + sample.reviewB;
+
+      document.querySelectorAll('input[type=radio]').forEach(el => el.checked = false);
+    }
+
+    function collectResponses() {
+      const response = { index: current, paper_id: shuffled[current].paper_id };
+      ['specificity','decisiveness','comprehensiveness','factuality','overall'].forEach(name => {
+        const checked = document.querySelector(`input[name=${name}]:checked`);
+        response[name] = checked ? checked.value : null;
+      });
+      response.AisHuman = shuffled[current].AisHuman;
+      results[current] = response;
+    }
+
+    function nextSample() {
+      collectResponses();
+      loadSample(current + 1);
+    }
+
+    function prevSample() {
+      collectResponses();
+      loadSample(current - 1);
+    }
+
+    function downloadResults() {
+      collectResponses();
+      const blob = new Blob([JSON.stringify(results, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'review_evaluation_results.json';
+      a.click();
+    }
+
+    loadSample(0);
+  </script>
 </body>
 </html>
