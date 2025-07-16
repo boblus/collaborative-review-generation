@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Peer Review Evaluation</title>
+  <title>Peer review evaluation</title>
   <style>
     body { font-family: Arial, sans-serif; max-width: 900px; margin: auto; padding: 20px; }
     .navigation { margin: 20px 0; display: flex; justify-content: space-between; }
@@ -13,7 +13,7 @@
   </style>
 </head>
 <body>
-  <h1>Peer Review Evaluation</h1>
+  <h1>Peer review evaluation</h1>
 
   <div id="paper-container">
     <h2 id="paper-title"></h2>
@@ -35,9 +35,9 @@
   </div>
 
   <div class="navigation">
-    <button onclick="prevPaper()">Previous</button>
+    <button onclick="prevPaper()">previous</button>
     <span id="counter"></span>
-    <button onclick="nextPaper()">Next</button>
+    <button onclick="nextPaper()">next</button>
   </div>
 
   <script>
@@ -69,7 +69,7 @@
       document.getElementById('paper-abstract').textContent = paperData.paper;
       document.getElementById('review-a').textContent = paperData.aspect_review || "No Review A Available";
       document.getElementById('review-b').textContent = paperData.general_review || "No Review B Available";
-      document.getElementById('counter').textContent = `Paper ${index + 1} of ${keys.length}`;
+      document.getElementById('counter').textContent = `Sample ${index + 1} of ${keys.length}`;
 
       renderCriteria(paperId);
     }
