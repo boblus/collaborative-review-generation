@@ -2,16 +2,19 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Peer Review Comparison</title>
+  <title>Peer Review Evaluation</title>
   <style>
-    body { font-family: Arial, sans-serif; max-width: 800px; margin: auto; padding: 20px; }
+    body { font-family: Arial, sans-serif; max-width: 900px; margin: auto; padding: 20px; }
     .navigation { margin: 20px 0; display: flex; justify-content: space-between; }
     .review-box { border: 1px solid #ccc; padding: 15px; margin-top: 15px; }
-    .hidden { display: none; }
+    .criteria-box { margin-top: 25px; }
+    .criteria { margin-bottom: 20px; }
+    label { margin-right: 20px; }
   </style>
 </head>
 <body>
   <h1>Peer Review Evaluation</h1>
+
   <div id="paper-container">
     <h2 id="paper-title"></h2>
     <p id="paper-abstract"></p>
@@ -25,6 +28,10 @@
       <h3>Review B</h3>
       <div id="review-b"></div>
     </div>
+
+    <div class="criteria-box" id="criteria-container">
+      <h3>Evaluation Criteria</h3>
+    </div>
   </div>
 
   <div class="navigation">
@@ -34,24 +41,65 @@
   </div>
 
   <script>
+    const criteriaList = [
+      "Specificity",
+      "Decisiveness",
+      "Comprehensiveness",
+      "Factuality",
+      "Overall preference"
+    ];
+
     let data = {};
-    let currentIndex = 0;
     let keys = [];
+    let currentIndex = 0;
+    let responses = {};  // { paperId: { criterion: selectedValue } }
 
     async function loadData() {
-      const response = await fetch('data.json');
-      data = await response.json();
+      const res = await fetch('data.json');
+      data = await res.json();
       keys = Object.keys(data);
       displayPaper(currentIndex);
     }
 
     function displayPaper(index) {
-      const paperData = data[keys[index]];
+      const paperId = keys[index];
+      const paperData = data[paperId];
+
       document.getElementById('paper-title').textContent = paperData.paper.split('\n')[0] || "Untitled";
       document.getElementById('paper-abstract').textContent = paperData.paper;
-      document.getElementById('review-a').textContent = paperData.review_a || "No Review A Available";
-      document.getElementById('review-b').textContent = paperData.review_b || "No Review B Available";
+      document.getElementById('review-a').textContent = paperData.aspect_review || "No Review A Available";
+      document.getElementById('review-b').textContent = paperData.general_review || "No Review B Available";
       document.getElementById('counter').textContent = `Paper ${index + 1} of ${keys.length}`;
+
+      renderCriteria(paperId);
+    }
+
+    function renderCriteria(paperId) {
+      const container = document.getElementById('criteria-container');
+      container.innerHTML = '<h3>Evaluation Criteria</h3>';
+
+      if (!responses[paperId]) responses[paperId] = {};
+
+      criteriaList.forEach(criterion => {
+        const criterionKey = criterion;
+        const selected = responses[paperId][criterionKey] || '';
+
+        const div = document.createElement('div');
+        div.className = 'criteria';
+        div.innerHTML = `
+          <strong>${criterion}</strong><br>
+          <label><input type="radio" name="${criterionKey}" value="A" ${selected === 'A' ? 'checked' : ''} onchange="saveResponse('${paperId}', '${criterionKey}', 'A')"> Review A</label>
+          <label><input type="radio" name="${criterionKey}" value="B" ${selected === 'B' ? 'checked' : ''} onchange="saveResponse('${paperId}', '${criterionKey}', 'B')"> Review B</label>
+          <label><input type="radio" name="${criterionKey}" value="Tie" ${selected === 'Tie' ? 'checked' : ''} onchange="saveResponse('${paperId}', '${criterionKey}', 'Tie')"> Tie</label>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function saveResponse(paperId, criterion, value) {
+      if (!responses[paperId]) responses[paperId] = {};
+      responses[paperId][criterion] = value;
+      console.log("Saved:", responses);
     }
 
     function nextPaper() {
