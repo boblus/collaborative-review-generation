@@ -1,129 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Review Comparison</title>
+  <meta charset="UTF-8" />
+  <title>Peer Review Comparison</title>
   <style>
-    body { font-family: sans-serif; padding: 20px; max-width: 900px; margin: auto; }
-    .review-box { border: 1px solid #ccc; padding: 10px; margin-bottom: 20px; white-space: pre-wrap; background: #f9f9f9; }
-    .label { font-weight: bold; margin-top: 10px; }
-    .question { margin-top: 15px; }
-    .question label { margin-right: 15px; }
-    #navigation { margin-top: 30px; display: flex; justify-content: space-between; }
-    #submit-results { margin-top: 30px; }
+    body { font-family: Arial, sans-serif; max-width: 800px; margin: auto; padding: 20px; }
+    .navigation { margin: 20px 0; display: flex; justify-content: space-between; }
+    .review-box { border: 1px solid #ccc; padding: 15px; margin-top: 15px; }
+    .hidden { display: none; }
   </style>
 </head>
 <body>
-  <h2>Peer Review Evaluation</h2>
-  <div id="sample-container">
-    <p class="label">Paper ID: <span id="paper-id"></span></p>
+  <h1>Peer Review Evaluation</h1>
+  <div id="paper-container">
+    <h2 id="paper-title"></h2>
+    <p id="paper-abstract"></p>
 
-    <div class="review-box" id="reviewA"></div>
-    <div class="review-box" id="reviewB"></div>
-
-    <div class="question">
-      <div class="label">1. Which review is more specific?</div>
-      <label><input type="radio" name="specificity" value="A"> A</label>
-      <label><input type="radio" name="specificity" value="B"> B</label>
-      <label><input type="radio" name="specificity" value="Tie"> Tie</label>
+    <div class="review-box">
+      <h3>Review A</h3>
+      <div id="review-a"></div>
     </div>
 
-    <div class="question">
-      <div class="label">2. Which review is more decisive?</div>
-      <label><input type="radio" name="decisiveness" value="A"> A</label>
-      <label><input type="radio" name="decisiveness" value="B"> B</label>
-      <label><input type="radio" name="decisiveness" value="Tie"> Tie</label>
+    <div class="review-box">
+      <h3>Review B</h3>
+      <div id="review-b"></div>
     </div>
+  </div>
 
-    <div class="question">
-      <div class="label">3. Which review is more comprehensive?</div>
-      <label><input type="radio" name="comprehensiveness" value="A"> A</label>
-      <label><input type="radio" name="comprehensiveness" value="B"> B</label>
-      <label><input type="radio" name="comprehensiveness" value="Tie"> Tie</label>
-    </div>
-
-    <div class="question">
-      <div class="label">4. Which review is more factual (free from hallucination)?</div>
-      <label><input type="radio" name="factuality" value="A"> A</label>
-      <label><input type="radio" name="factuality" value="B"> B</label>
-      <label><input type="radio" name="factuality" value="Tie"> Tie</label>
-    </div>
-
-    <div class="question">
-      <div class="label">5. Overall, which review is better?</div>
-      <label><input type="radio" name="overall" value="A"> A</label>
-      <label><input type="radio" name="overall" value="B"> B</label>
-      <label><input type="radio" name="overall" value="Tie"> Tie</label>
-    </div>
-
-    <div id="navigation">
-      <button onclick="prevSample()">Previous</button>
-      <button onclick="nextSample()">Next</button>
-    </div>
-
-    <button id="submit-results" onclick="downloadResults()">Download Results</button>
+  <div class="navigation">
+    <button onclick="prevPaper()">Previous</button>
+    <span id="counter"></span>
+    <button onclick="nextPaper()">Next</button>
   </div>
 
   <script>
-    const data = [/* DATA PLACEHOLDER */];
+    let data = {};
+    let currentIndex = 0;
+    let keys = [];
 
-    let current = 0;
-    const results = [];
-
-    function shuffleReviews(sample) {
-      const AisHuman = Math.random() < 0.5;
-      return {
-        paper_id: sample.paper_id,
-        reviewA: AisHuman ? sample.human : JSON.parse(sample.llm).strengths + "\n" + JSON.parse(sample.llm).weaknesses,
-        reviewB: AisHuman ? JSON.parse(sample.llm).strengths + "\n" + JSON.parse(sample.llm).weaknesses : sample.human,
-        AisHuman
-      };
+    async function loadData() {
+      const response = await fetch('data.json');
+      data = await response.json();
+      keys = Object.keys(data);
+      displayPaper(currentIndex);
     }
 
-    let shuffled = data.map(shuffleReviews);
-
-    function loadSample(index) {
-      if (index < 0 || index >= shuffled.length) return;
-      current = index;
-      const sample = shuffled[index];
-      document.getElementById('paper-id').textContent = sample.paper_id;
-      document.getElementById('reviewA').textContent = 'Review A:\n' + sample.reviewA;
-      document.getElementById('reviewB').textContent = 'Review B:\n' + sample.reviewB;
-
-      document.querySelectorAll('input[type=radio]').forEach(el => el.checked = false);
+    function displayPaper(index) {
+      const paperData = data[keys[index]];
+      document.getElementById('paper-title').textContent = paperData.paper.split('\n')[0] || "Untitled";
+      document.getElementById('paper-abstract').textContent = paperData.paper;
+      document.getElementById('review-a').textContent = paperData.review_a || "No Review A Available";
+      document.getElementById('review-b').textContent = paperData.review_b || "No Review B Available";
+      document.getElementById('counter').textContent = `Paper ${index + 1} of ${keys.length}`;
     }
 
-    function collectResponses() {
-      const response = { index: current, paper_id: shuffled[current].paper_id };
-      ['specificity','decisiveness','comprehensiveness','factuality','overall'].forEach(name => {
-        const checked = document.querySelector(`input[name=${name}]:checked`);
-        response[name] = checked ? checked.value : null;
-      });
-      response.AisHuman = shuffled[current].AisHuman;
-      results[current] = response;
+    function nextPaper() {
+      if (currentIndex < keys.length - 1) {
+        currentIndex++;
+        displayPaper(currentIndex);
+      }
     }
 
-    function nextSample() {
-      collectResponses();
-      loadSample(current + 1);
+    function prevPaper() {
+      if (currentIndex > 0) {
+        currentIndex--;
+        displayPaper(currentIndex);
+      }
     }
 
-    function prevSample() {
-      collectResponses();
-      loadSample(current - 1);
-    }
-
-    function downloadResults() {
-      collectResponses();
-      const blob = new Blob([JSON.stringify(results, null, 2)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'review_evaluation_results.json';
-      a.click();
-    }
-
-    loadSample(0);
+    loadData();
   </script>
 </body>
 </html>
