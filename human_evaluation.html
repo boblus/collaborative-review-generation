@@ -17,14 +17,7 @@
 
   <div id="paper-container">
     <h2 id="paper-title"></h2>
-    <div id="paper-abstract" style="
-      border: 1px solid #ccc;
-      padding: 15px;
-      height: 300px;
-      overflow-y: scroll;
-      white-space: pre-wrap;
-      background-color: #f9f9f9;
-      margin-bottom: 20px;
+    <iframe id="pdf-viewer" style="width: 100%; height: 600px;" frameborder="0"></iframe>
     "></div>
 
     <div class="review-box">
@@ -73,8 +66,7 @@
       const paperId = keys[index];
       const paperData = data[paperId];
 
-      document.getElementById('paper-title').textContent = paperData.paper.split('\n')[0] || "Untitled";
-      document.getElementById('paper-abstract').textContent = paperData.paper;
+      document.getElementById('pdf-viewer').src = `human_evaluation_pdfs/${paperData.paper_id}.pdf`;
       document.getElementById('review-a').textContent = paperData.aspect_review || "No Review A Available";
       document.getElementById('review-b').textContent = paperData.general_review || "No Review B Available";
       document.getElementById('counter').textContent = `Sample ${index + 1} of ${keys.length}`;
