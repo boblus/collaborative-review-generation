@@ -6,49 +6,86 @@
   <style>
     body { font-family: Arial, sans-serif; max-width: 900px; margin: auto; padding: 20px; }
     .navigation { margin: 20px 0; display: flex; justify-content: space-between; }
-    .review-box { border: 1px solid #ccc; padding: 15px; margin-top: 15px; }
+    .review-label-box {
+      margin-top: 12px;
+    }
+    .review-label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 4px;
+      min-width: 64px;
+      color: #111;
+      font-size: 1.08em;
+      letter-spacing: 0.5px;
+    }
+    .review-box {
+      background: #f0f4fa;
+      border: 1px solid #e0e6ef;
+      padding: 10px 14px 14px 14px;
+      border-radius: 5px;
+      flex: 1;
+    }
+    .review-label-box.review-b .review-box {
+      background: #f9f0f0;
+      border: 1px solid #eedede;
+    }
     .criteria-box { margin-top: 25px; }
     .criteria { margin-bottom: 20px; }
     label { margin-right: 20px; }
+    #review-main-box > span {
+      display: block;
+      margin-bottom: 12px;
+    }
   </style>
 </head>
 <body>
   <h1>Peer review evaluation</h1>
 
-  <div id="paper-container">
-    <h2 id="paper-title"></h2>
-    <iframe id="pdf-viewer" style="width: 100%; height: 600px;" frameborder="0"></iframe>
-    "></div>
-
-    <div class="review-box">
-      <h3>Review A</h3>
-      <div id="review-a"></div>
+  <div id="main-box" style="border: 1px solid #ddd; background: #f8f8f8; padding: 16px 20px; margin-bottom: 22px; border-radius: 6px;">
+    <h2 style="margin-top: 0; margin-bottom: 10px; font-size: 1.4em;">1. Read the paper</h2>
+    <span style="font-size: 0.98em;">
+      Start by reading the full paper. Try to understand:
+      <ul style="margin-top: 6px; margin-bottom: 0;">
+        <li>The research goals and key contributions</li>
+        <li>The methods and experiments used</li>
+        <li>The results, conclusions, and any major claims</li>
+      </ul>
+    </span>
+    <div id="paper-container" style="resize: both; overflow: auto; min-width: 100%; max-width: 100%; width: 100%; min-height: 600px; max-height: 1220px; margin-top: 8px;">
+      <h2 id="paper-title"></h2>
+      <iframe id="pdf-viewer" style="width: 100%; height: 1200px;" frameborder="0"></iframe>
     </div>
+  </div>
 
-    <div class="review-box">
-      <h3>Review B</h3>
-      <div id="review-b"></div>
+  <div id="review-main-box" style="border: 1px solid #ddd; background: #f8f8f8; padding: 16px 20px; margin-bottom: 22px; border-radius: 6px;">
+    <h2 style="margin-top: 0; margin-bottom: 10px; font-size: 1.4em;">2. Review the two peer reviews</h2>
+    <span style="font-size: 0.98em;">
+      You will be shown two reviews, <strong>Review A</strong> and <strong>Review B</strong>. You will evaluate which review performs better.
+    </span>
+    <div class="review-label-box">
+      <span class="review-label">Review A</span>
+      <div class="review-box">
+        <div id="review-a"></div>
+      </div>
     </div>
-
+    <div class="review-label-box review-b">
+      <span class="review-label">Review B</span>
+      <div class="review-box">
+        <div id="review-b"></div>
+      </div>
+    </div>
     <div class="criteria-box" id="criteria-container">
       <h3>Evaluation Criteria</h3>
     </div>
   </div>
 
   <div class="navigation">
-    <button onclick="prevPaper()">previous</button>
+    <button onclick="prevPaper()">Previous</button>
     <span id="counter"></span>
-    <button onclick="nextPaper()">next</button>
+    <button onclick="nextPaper()">Next</button>
   </div>
 
   <script>
-    const criteriaList = [
-      "Specificity",
-      "Decisiveness",
-      "Comprehensiveness",
-      "Factuality",
-      "Overall preference"
-    ];
 
     let data = {};
     let keys = [];
@@ -67,33 +104,88 @@
       const paperData = data[paperId];
 
       document.getElementById('pdf-viewer').src = `human_evaluation_pdfs/${paperData.paper_id}.pdf`;
-      document.getElementById('review-a').textContent = paperData.aspect_review || "No Review A Available";
-      document.getElementById('review-b').textContent = paperData.general_review || "No Review B Available";
-      document.getElementById('counter').textContent = `Sample ${index + 1} of ${keys.length}`;
+      // Review A
+      let reviewAContent = paperData.aspect_review || "No Review A Available";
+      reviewAContent = reviewAContent.replace(/(Strengths:)/g, '<strong>$1</strong><br>')
+                                     .replace(/(Weaknesses:)/g, '<strong>$1</strong><br>')
+                                     .replace(/\r\n|\n|\r/g, '<br>');
+      document.getElementById('review-a').innerHTML = reviewAContent;
+      // Review B
+      let reviewBContent = paperData.general_review || "No Review B Available";
+      reviewBContent = reviewBContent.replace(/(Strengths:)/g, '<strong>$1</strong><br>')
+                                     .replace(/(Weaknesses:)/g, '<strong>$1</strong><br>')
+                                     .replace(/\r\n|\n|\r/g, '<br>');
+      document.getElementById('review-b').innerHTML = reviewBContent;
+      document.getElementById('counter').textContent = `Item ${index + 1} of ${keys.length}`;
 
       renderCriteria(paperId);
     }
 
     function renderCriteria(paperId) {
       const container = document.getElementById('criteria-container');
-      container.innerHTML = '<h3>Evaluation Criteria</h3>';
+      container.innerHTML = '<h3 style="margin-bottom: 10px;">Evaluation</h3><div style="margin-bottom: 20px;">For each criterion, please select the review that is better (<strong>Review A</strong> or <strong>Review B</strong>). If the reviews are equally good, select <strong>Tie</strong>.</div>';
 
       if (!responses[paperId]) responses[paperId] = {};
 
-      criteriaList.forEach(criterion => {
-        const criterionKey = criterion;
-        const selected = responses[paperId][criterionKey] || '';
+      // Specificity
+      const selectedSpecificity = responses[paperId]["Specificity"] || '';
+      const specificityDiv = document.createElement('div');
+      specificityDiv.className = 'criteria';
+      specificityDiv.innerHTML = `
+        <strong>Specificity</strong> <span style="color: #666; font-size: 0.95em; font-style: italic; display: block; margin-top: 6px; margin-bottom: 6px;">- Which review provides more paper-specific feedback?<br>- Does either review avoid vague or templated language?</span>
+        <label><input type="radio" name="Specificity" value="A" ${selectedSpecificity === 'A' ? 'checked' : ''} onchange="saveResponse('${paperId}', 'Specificity', 'A')"> Review A</label>
+        <label><input type="radio" name="Specificity" value="B" ${selectedSpecificity === 'B' ? 'checked' : ''} onchange="saveResponse('${paperId}', 'Specificity', 'B')"> Review B</label>
+        <label><input type="radio" name="Specificity" value="Tie" ${selectedSpecificity === 'Tie' ? 'checked' : ''} onchange="saveResponse('${paperId}', 'Specificity', 'Tie')"> Tie</label>
+      `;
+      container.appendChild(specificityDiv);
 
-        const div = document.createElement('div');
-        div.className = 'criteria';
-        div.innerHTML = `
-          <strong>${criterion}</strong><br>
-          <label><input type="radio" name="${criterionKey}" value="A" ${selected === 'A' ? 'checked' : ''} onchange="saveResponse('${paperId}', '${criterionKey}', 'A')"> Review A</label>
-          <label><input type="radio" name="${criterionKey}" value="B" ${selected === 'B' ? 'checked' : ''} onchange="saveResponse('${paperId}', '${criterionKey}', 'B')"> Review B</label>
-          <label><input type="radio" name="${criterionKey}" value="Tie" ${selected === 'Tie' ? 'checked' : ''} onchange="saveResponse('${paperId}', '${criterionKey}', 'Tie')"> Tie</label>
-        `;
-        container.appendChild(div);
-      });
+      // Decisiveness
+      const selectedDecisiveness = responses[paperId]["Decisiveness"] || '';
+      const decisivenessDiv = document.createElement('div');
+      decisivenessDiv.className = 'criteria';
+      decisivenessDiv.innerHTML = `
+        <strong>Decisiveness</strong> <span style="color: #666; font-size: 0.95em; font-style: italic; display: block; margin-top: 6px; margin-bottom: 6px;">- Which review takes a clearer stance on whether the paper is strong or weak?<br>- Are the strengths or weaknesses expressed with confidence and justification?</span>
+        <label><input type="radio" name="Decisiveness" value="A" ${selectedDecisiveness === 'A' ? 'checked' : ''} onchange="saveResponse('${paperId}', 'Decisiveness', 'A')"> Review A</label>
+        <label><input type="radio" name="Decisiveness" value="B" ${selectedDecisiveness === 'B' ? 'checked' : ''} onchange="saveResponse('${paperId}', 'Decisiveness', 'B')"> Review B</label>
+        <label><input type="radio" name="Decisiveness" value="Tie" ${selectedDecisiveness === 'Tie' ? 'checked' : ''} onchange="saveResponse('${paperId}', 'Decisiveness', 'Tie')"> Tie</label>
+      `;
+      container.appendChild(decisivenessDiv);
+
+      // Comprehensiveness
+      const selectedComprehensiveness = responses[paperId]["Comprehensiveness"] || '';
+      const comprehensivenessDiv = document.createElement('div');
+      comprehensivenessDiv.className = 'criteria';
+      comprehensivenessDiv.innerHTML = `
+        <strong>Comprehensiveness</strong> <span style="color: #666; font-size: 0.95em; font-style: italic; display: block; margin-top: 6px; margin-bottom: 6px;">- Which review addresses a broader or more complete range of relevant aspects?</span>
+        <label><input type="radio" name="Comprehensiveness" value="A" ${selectedComprehensiveness === 'A' ? 'checked' : ''} onchange="saveResponse('${paperId}', 'Comprehensiveness', 'A')"> Review A</label>
+        <label><input type="radio" name="Comprehensiveness" value="B" ${selectedComprehensiveness === 'B' ? 'checked' : ''} onchange="saveResponse('${paperId}', 'Comprehensiveness', 'B')"> Review B</label>
+        <label><input type="radio" name="Comprehensiveness" value="Tie" ${selectedComprehensiveness === 'Tie' ? 'checked' : ''} onchange="saveResponse('${paperId}', 'Comprehensiveness', 'Tie')"> Tie</label>
+      `;
+      container.appendChild(comprehensivenessDiv);
+
+      // Factuality
+      const selectedFactuality = responses[paperId]["Factuality"] || '';
+      const factualityDiv = document.createElement('div');
+      factualityDiv.className = 'criteria';
+      factualityDiv.innerHTML = `
+        <strong>Factuality</strong> <span style="color: #666; font-size: 0.95em; font-style: italic; display: block; margin-top: 6px; margin-bottom: 6px;">- Which review makes claims that are better supported by the paper's content?<br>- Does either review contain hallucinated or unsupported claims?</span>
+        <label><input type="radio" name="Factuality" value="A" ${selectedFactuality === 'A' ? 'checked' : ''} onchange="saveResponse('${paperId}', 'Factuality', 'A')"> Review A</label>
+        <label><input type="radio" name="Factuality" value="B" ${selectedFactuality === 'B' ? 'checked' : ''} onchange="saveResponse('${paperId}', 'Factuality', 'B')"> Review B</label>
+        <label><input type="radio" name="Factuality" value="Tie" ${selectedFactuality === 'Tie' ? 'checked' : ''} onchange="saveResponse('${paperId}', 'Factuality', 'Tie')"> Tie</label>
+      `;
+      container.appendChild(factualityDiv);
+
+      // Overall preference
+      const selectedOverall = responses[paperId]["Overall preference"] || '';
+      const overallDiv = document.createElement('div');
+      overallDiv.className = 'criteria';
+      overallDiv.innerHTML = `
+        <strong>Overall preference</strong> <span style="color: #666; font-size: 0.95em; font-style: italic; display: block; margin-top: 6px; margin-bottom: 6px;">- Taking all aspects into account, which review do you find better for this paper?</span>
+        <label><input type="radio" name="Overall preference" value="A" ${selectedOverall === 'A' ? 'checked' : ''} onchange="saveResponse('${paperId}', 'Overall preference', 'A')"> Review A</label>
+        <label><input type="radio" name="Overall preference" value="B" ${selectedOverall === 'B' ? 'checked' : ''} onchange="saveResponse('${paperId}', 'Overall preference', 'B')"> Review B</label>
+        <label><input type="radio" name="Overall preference" value="Tie" ${selectedOverall === 'Tie' ? 'checked' : ''} onchange="saveResponse('${paperId}', 'Overall preference', 'Tie')"> Tie</label>
+      `;
+      container.appendChild(overallDiv);
     }
 
     function saveResponse(paperId, criterion, value) {
@@ -106,6 +198,7 @@
       if (currentIndex < keys.length - 1) {
         currentIndex++;
         displayPaper(currentIndex);
+        window.scrollTo(0, 0);
       }
     }
 
@@ -113,6 +206,7 @@
       if (currentIndex > 0) {
         currentIndex--;
         displayPaper(currentIndex);
+        window.scrollTo(0, document.body.scrollHeight);
       }
     }
 
