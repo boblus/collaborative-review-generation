@@ -39,63 +39,119 @@
   </style>
 </head>
 <body>
-  <h1>Peer review evaluation</h1>
-
-  <div id="main-box" style="border: 1px solid #ddd; background: #f8f8f8; padding: 16px 20px; margin-bottom: 22px; border-radius: 6px;">
-    <h2 style="margin-top: 0; margin-bottom: 10px; font-size: 1.4em;">1. Read the paper</h2>
-    <span style="font-size: 0.98em;">
-      Start by reading the full paper. Try to understand:
-      <ul style="margin-top: 6px; margin-bottom: 0;">
-        <li>The research goals and key contributions</li>
-        <li>The methods and experiments used</li>
-        <li>The results, conclusions, and any major claims</li>
-      </ul>
-    </span>
-    <div id="paper-container" style="resize: both; overflow: auto; min-width: 100%; max-width: 100%; width: 100%; min-height: 600px; max-height: 1220px; margin-top: 8px;">
-      <h2 id="paper-title"></h2>
-      <iframe id="pdf-viewer" style="width: 100%; height: 1200px;" frameborder="0"></iframe>
-    </div>
+  <div id="login-box" style="display: flex; flex-direction: column; align-items: center; margin-top: 100px;">
+    <input id="username-input" placeholder="Enter your username" style="margin-bottom: 10px; padding: 6px 10px; font-size: 1em;">
+    <button onclick="login()" style="padding: 6px 18px; font-size: 1em;">Login</button>
   </div>
+  <div id="main-content" style="display: none;">
+    <h1>Peer review evaluation</h1>
+    <button onclick="logout()" style="position: absolute; top: 18px; right: 24px;">Logout</button>
 
-  <div id="review-main-box" style="border: 1px solid #ddd; background: #f8f8f8; padding: 16px 20px; margin-bottom: 22px; border-radius: 6px;">
-    <h2 style="margin-top: 0; margin-bottom: 10px; font-size: 1.4em;">2. Review the two peer reviews</h2>
-    <span style="font-size: 0.98em;">
-      You will be shown two reviews, <strong>Review A</strong> and <strong>Review B</strong>. You will evaluate which review performs better.
-    </span>
-    <div class="review-label-box">
-      <span class="review-label">Review A</span>
-      <div class="review-box">
-        <div id="review-a"></div>
+    <div id="main-box" style="border: 1px solid #ddd; background: #f8f8f8; padding: 16px 20px; margin-bottom: 22px; border-radius: 6px;">
+      <h2 style="margin-top: 0; margin-bottom: 10px; font-size: 1.4em;">1. Read the paper</h2>
+      <span style="font-size: 0.98em;">
+        Start by reading the full paper. Try to understand:
+        <ul style="margin-top: 6px; margin-bottom: 0;">
+          <li>The research goals and key contributions</li>
+          <li>The methods and experiments used</li>
+          <li>The results, conclusions, and any major claims</li>
+        </ul>
+      </span>
+      <div id="paper-container" style="resize: both; overflow: auto; min-width: 100%; max-width: 100%; width: 100%; min-height: 600px; max-height: 1220px; margin-top: 8px;">
+        <h2 id="paper-title"></h2>
+        <iframe id="pdf-viewer" style="width: 100%; height: 1200px;" frameborder="0"></iframe>
       </div>
     </div>
-    <div class="review-label-box review-b">
-      <span class="review-label">Review B</span>
-      <div class="review-box">
-        <div id="review-b"></div>
+
+    <div id="review-main-box" style="border: 1px solid #ddd; background: #f8f8f8; padding: 16px 20px; margin-bottom: 22px; border-radius: 6px;">
+      <h2 style="margin-top: 0; margin-bottom: 10px; font-size: 1.4em;">2. Evaluate two peer reviews</h2>
+      <span style="font-size: 0.98em;">
+        Read the two reviews, <strong>Review A</strong> and <strong>Review B</strong>, and determine which review is better.
+      </span>
+      <div class="review-label-box">
+        <span class="review-label">Review A</span>
+        <div class="review-box">
+          <div id="review-a"></div>
+        </div>
+      </div>
+      <div class="review-label-box review-b">
+        <span class="review-label">Review B</span>
+        <div class="review-box">
+          <div id="review-b"></div>
+        </div>
+      </div>
+      <div class="criteria-box" id="criteria-container">
+        <h3>Evaluation Criteria</h3>
       </div>
     </div>
-    <div class="criteria-box" id="criteria-container">
-      <h3>Evaluation Criteria</h3>
-    </div>
-  </div>
 
-  <div class="navigation">
-    <button onclick="prevPaper()">Previous</button>
-    <span id="counter"></span>
-    <button onclick="nextPaper()">Next</button>
+    <div class="navigation" style="position: relative; height: 40px; margin: 20px 0;">
+      <button style="position: absolute; left: 0; top: 0;" onclick="prevPaper()">Previous</button>
+      <span id="counter" style="position: absolute; left: 46%; top: 0; transform: translateX(-50%);"></span>
+      <span id="save-warning" style="position: absolute; right: 17.2%; top: 2%; color: red; min-width: 120px; text-align: right;"></span>
+      <button id="save-current-btn" style="position: absolute; right: 6%; top: 0;" onclick="saveCurrent()">Save current</button>
+      <button id="next-btn" style="position: absolute; right: 0; top: 0;" onclick="nextPaper()">Next</button>
+    </div>
   </div>
 
   <script>
-
     let data = {};
     let keys = [];
     let currentIndex = 0;
     let responses = {};  // { paperId: { criterion: selectedValue } }
+    let isSaved = false; // Whether current item is saved
+    let currentUser = null;
+
+    function login() {
+      const username = document.getElementById('username-input').value.trim();
+      if (!username) return alert('Please enter a username!');
+      if (username.toLowerCase() !== 'user1') {
+        alert('Only user1 is allowed');
+        return;
+      }
+      localStorage.setItem('currentUser', username);
+      document.getElementById('login-box').style.display = 'none';
+      document.getElementById('main-content').style.display = '';
+      loadUserData();
+    }
+
+    function logout() {
+      localStorage.removeItem('currentUser');
+      location.reload();
+    }
+
+    function loadUserData() {
+      currentUser = localStorage.getItem('currentUser');
+      if (!currentUser) return;
+      // 恢复responses
+      const saved = localStorage.getItem('responses_' + currentUser);
+      responses = saved ? JSON.parse(saved) : {};
+      loadData();
+    }
 
     async function loadData() {
       const res = await fetch('data.json');
       data = await res.json();
       keys = Object.keys(data);
+      // 跳转到第一个未完成的item
+      const requiredCriteria = [
+        "Specificity",
+        "Decisiveness",
+        "Comprehensiveness",
+        "Trustworthiness",
+        "Overall preference"
+      ];
+      let firstIncomplete = 0;
+      for (let i = 0; i < keys.length; i++) {
+        const paperId = keys[i];
+        const currentResponses = responses[paperId] || {};
+        const incomplete = requiredCriteria.filter(c => !currentResponses[c]);
+        if (incomplete.length > 0) {
+          firstIncomplete = i;
+          break;
+        }
+      }
+      currentIndex = firstIncomplete;
       displayPaper(currentIndex);
     }
 
@@ -119,6 +175,10 @@
       document.getElementById('counter').textContent = `Item ${index + 1} of ${keys.length}`;
 
       renderCriteria(paperId);
+      isSaved = false;
+      const btn = document.getElementById('next-btn');
+      btn.disabled = false;
+      document.getElementById('save-warning').textContent = '';
     }
 
     function renderCriteria(paperId) {
@@ -144,7 +204,7 @@
       const decisivenessDiv = document.createElement('div');
       decisivenessDiv.className = 'criteria';
       decisivenessDiv.innerHTML = `
-        <strong>Decisiveness</strong> <span style="color: #666; font-size: 0.95em; font-style: italic; display: block; margin-top: 6px; margin-bottom: 6px;">- Which review takes a clearer stance on whether the paper is strong or weak?<br>- Are the strengths or weaknesses expressed with confidence and justification?</span>
+        <strong>Decisiveness</strong> <span style="color: #666; font-size: 0.95em; font-style: italic; display: block; margin-top: 6px; margin-bottom: 6px;">- Which review takes a clearer stance on whether the paper is strong or weak?</span>
         <label><input type="radio" name="Decisiveness" value="A" ${selectedDecisiveness === 'A' ? 'checked' : ''} onchange="saveResponse('${paperId}', 'Decisiveness', 'A')"> Review A</label>
         <label><input type="radio" name="Decisiveness" value="B" ${selectedDecisiveness === 'B' ? 'checked' : ''} onchange="saveResponse('${paperId}', 'Decisiveness', 'B')"> Review B</label>
         <label><input type="radio" name="Decisiveness" value="Tie" ${selectedDecisiveness === 'Tie' ? 'checked' : ''} onchange="saveResponse('${paperId}', 'Decisiveness', 'Tie')"> Tie</label>
@@ -163,17 +223,17 @@
       `;
       container.appendChild(comprehensivenessDiv);
 
-      // Factuality
-      const selectedFactuality = responses[paperId]["Factuality"] || '';
-      const factualityDiv = document.createElement('div');
-      factualityDiv.className = 'criteria';
-      factualityDiv.innerHTML = `
-        <strong>Factuality</strong> <span style="color: #666; font-size: 0.95em; font-style: italic; display: block; margin-top: 6px; margin-bottom: 6px;">- Which review makes claims that are better supported by the paper's content?<br>- Does either review contain hallucinated or unsupported claims?</span>
-        <label><input type="radio" name="Factuality" value="A" ${selectedFactuality === 'A' ? 'checked' : ''} onchange="saveResponse('${paperId}', 'Factuality', 'A')"> Review A</label>
-        <label><input type="radio" name="Factuality" value="B" ${selectedFactuality === 'B' ? 'checked' : ''} onchange="saveResponse('${paperId}', 'Factuality', 'B')"> Review B</label>
-        <label><input type="radio" name="Factuality" value="Tie" ${selectedFactuality === 'Tie' ? 'checked' : ''} onchange="saveResponse('${paperId}', 'Factuality', 'Tie')"> Tie</label>
+      // Trustworthiness
+      const selectedTrustworthiness = responses[paperId]["Trustworthiness"] || '';
+      const TrustworthinessDiv = document.createElement('div');
+      TrustworthinessDiv.className = 'criteria';
+      TrustworthinessDiv.innerHTML = `
+        <strong>Trustworthiness</strong> <span style="color: #666; font-size: 0.95em; font-style: italic; display: block; margin-top: 6px; margin-bottom: 6px;">- Which review makes claims that are better supported by the paper's content?</span>
+        <label><input type="radio" name="Trustworthiness" value="A" ${selectedTrustworthiness === 'A' ? 'checked' : ''} onchange="saveResponse('${paperId}', 'Trustworthiness', 'A')"> Review A</label>
+        <label><input type="radio" name="Trustworthiness" value="B" ${selectedTrustworthiness === 'B' ? 'checked' : ''} onchange="saveResponse('${paperId}', 'Trustworthiness', 'B')"> Review B</label>
+        <label><input type="radio" name="Trustworthiness" value="Tie" ${selectedTrustworthiness === 'Tie' ? 'checked' : ''} onchange="saveResponse('${paperId}', 'Trustworthiness', 'Tie')"> Tie</label>
       `;
-      container.appendChild(factualityDiv);
+      container.appendChild(TrustworthinessDiv);
 
       // Overall preference
       const selectedOverall = responses[paperId]["Overall preference"] || '';
@@ -191,10 +251,38 @@
     function saveResponse(paperId, criterion, value) {
       if (!responses[paperId]) responses[paperId] = {};
       responses[paperId][criterion] = value;
+      // 自动保存到本地
+      if (currentUser) {
+        localStorage.setItem('responses_' + currentUser, JSON.stringify(responses));
+        localStorage.setItem('progress_' + currentUser, currentIndex);
+      }
       console.log("Saved:", responses);
     }
 
     function nextPaper() {
+      // 检查是否全部作答
+      const paperId = keys[currentIndex];
+      const requiredCriteria = [
+        "Specificity",
+        "Decisiveness",
+        "Comprehensiveness",
+        "Trustworthiness",
+        "Overall preference"
+      ];
+      const currentResponses = responses[paperId] || {};
+      const incomplete = requiredCriteria.filter(c => !currentResponses[c]);
+      const warning = document.getElementById('save-warning');
+      if (incomplete.length > 0) {
+        warning.style.color = 'red';
+        warning.textContent = 'Not finished yet';
+        return;
+      }
+      warning.textContent = '';
+      // 自动保存当前responses和进度
+      if (currentUser) {
+        localStorage.setItem('responses_' + currentUser, JSON.stringify(responses));
+        localStorage.setItem('progress_' + currentUser, currentIndex);
+      }
       if (currentIndex < keys.length - 1) {
         currentIndex++;
         displayPaper(currentIndex);
@@ -210,7 +298,51 @@
       }
     }
 
-    loadData();
+    function saveCurrent() {
+      const paperId = keys[currentIndex];
+      const requiredCriteria = [
+        "Specificity",
+        "Decisiveness",
+        "Comprehensiveness",
+        "Trustworthiness",
+        "Overall preference"
+      ];
+      const currentResponses = responses[paperId] || {};
+      const incomplete = requiredCriteria.filter(c => !currentResponses[c]);
+      const warning = document.getElementById('save-warning');
+      if (incomplete.length > 0) {
+        warning.style.color = 'red';
+        warning.textContent = 'Not finished yet';
+        return;
+      }
+      warning.textContent = '';
+      const dataStr = JSON.stringify(responses, null, 2);
+      const blob = new Blob([dataStr], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      const now = new Date();
+      const pad = n => n.toString().padStart(2, '0');
+      const timestamp = `${now.getFullYear()}${pad(now.getMonth()+1)}${pad(now.getDate())}T${pad(now.getHours())}${pad(now.getMinutes())}${pad(now.getSeconds())}`;
+      const filename = `response-${timestamp}.json`;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    // 页面加载时判断是否已登录
+    window.onload = function() {
+      if (localStorage.getItem('currentUser')) {
+        document.getElementById('login-box').style.display = 'none';
+        document.getElementById('main-content').style.display = '';
+        loadUserData();
+      } else {
+        document.getElementById('login-box').style.display = '';
+        document.getElementById('main-content').style.display = 'none';
+      }
+    }
   </script>
 </body>
 </html>
