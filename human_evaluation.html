@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <title>Peer review evaluation</title>
   <style>
-    body { font-family: Arial, sans-serif; max-width: 900px; margin: auto; padding: 20px; }
+    body { font-family: Arial, sans-serif; max-width: 1500px; margin: auto; padding: 20px; }
     .navigation { margin: 20px 0; display: flex; justify-content: space-between; }
     .review-label-box {
       margin-top: 12px;
@@ -36,46 +36,77 @@
       display: block;
       margin-bottom: 12px;
     }
+    /* Added for side-by-side layout */
+    .main-layout { display: flex; gap: 20px; align-items: flex-start; }
+    .left-pane { flex: 1.4; min-width: 0; }
+    .right-pane { flex: 1; min-width: 0; }
+    @media (max-width: 1100px) { .main-layout { flex-direction: column; } }
+    .hint { color: #666; font-size: 0.95em; font-style: italic; display: block; margin-top: 6px; margin-bottom: 6px; }
+    .result-box { margin-top: 16px; padding: 10px 12px; border-radius: 4px; border: 1px solid #e2e2e2; background: #fafafa; }
+    .info-box { margin: 12px 0 16px 0; padding: 10px 12px; border: 1px solid #e6e6e6; background: #fcfcfc; border-radius: 6px; }
+    .info-item { margin: 6px 0; }
+    .muted { color: #111; font-size: 0.95em; }
+    #kp-text { font-weight: normal; }
+    /* Frosted mask for candidate review */
+    .frosted { position: relative; }
+    .frosted::after { content: ""; position: absolute; inset: 0; backdrop-filter: blur(4px); background: rgba(255,255,255,0.35); border-radius: 5px; }
+    /* Greyed-out style for outdated blocks */
+    .disabled { color: #aaa; }
+    .disabled .hint { color: #bbb; }
   </style>
 </head>
 <body>
   <h1>Peer review evaluation</h1>
 
-  <div id="main-box" style="border: 1px solid #ddd; background: #f8f8f8; padding: 16px 20px; margin-bottom: 22px; border-radius: 6px;">
-    <h2 style="margin-top: 0; margin-bottom: 10px; font-size: 1.4em;">1. Read the paper</h2>
-    <span style="font-size: 0.98em;">
-      Start by reading the full paper. Try to understand:
-      <ul style="margin-top: 6px; margin-bottom: 0;">
-        <li>The research goals and key contributions</li>
-        <li>The methods and experiments used</li>
-        <li>The results, conclusions, and any major claims</li>
-      </ul>
-    </span>
-    <div id="paper-container" style="resize: both; overflow: auto; min-width: 100%; max-width: 100%; width: 100%; min-height: 600px; max-height: 1220px; margin-top: 8px;">
-      <h2 id="paper-title"></h2>
-      <iframe id="pdf-viewer" style="width: 100%; height: 1200px;" frameborder="0"></iframe>
-    </div>
-  </div>
-
-  <div id="review-main-box" style="border: 1px solid #ddd; background: #f8f8f8; padding: 16px 20px; margin-bottom: 22px; border-radius: 6px;">
-    <h2 style="margin-top: 0; margin-bottom: 10px; font-size: 1.4em;">2. Review the two peer reviews</h2>
-    <span style="font-size: 0.98em;">
-      You will be shown two reviews, <strong>Review A</strong> and <strong>Review B</strong>. You will evaluate which review performs better.
-    </span>
-    <div class="review-label-box">
-      <span class="review-label">Review A</span>
-      <div class="review-box">
-        <div id="review-a"></div>
+  <div class="main-layout">
+    <div class="left-pane">
+      <div id="main-box" style="border: 1px solid #ddd; background: #f8f8f8; padding: 16px 20px; margin-bottom: 22px; border-radius: 6px;">
+        <h2 style="margin-top: 0; margin-bottom: 10px; font-size: 1.4em;">1. Read the paper</h2>
+        <span style="font-size: 0.98em;">
+          Start by reading the full paper. Try to understand:
+          <ul style="margin-top: 6px; margin-bottom: 0;">
+            <li>The research goals and key contributions.</li>
+            <li>The methods and experiments used.</li>
+            <li>The results, conclusions, and any major claims.</li>
+          </ul>
+        </span>
+        <div id="paper-container" style="resize: both; overflow: auto; min-width: 100%; max-width: 100%; width: 100%; min-height: 600px; max-height: 1220px; margin-top: 8px;">
+          <h2 id="paper-title"></h2>
+          <iframe id="pdf-viewer" style="width: 100%; height: 1200px;" frameborder="0"></iframe>
+        </div>
       </div>
     </div>
-    <div class="review-label-box review-b">
-      <span class="review-label">Review B</span>
-      <div class="review-box">
-        <div id="review-b"></div>
+    <div class="right-pane">
+      <div id="review-main-box" style="border: 1px solid #ddd; background: #f8f8f8; padding: 16px 20px; margin-bottom: 22px; border-radius: 6px;">
+        <h2 style="margin-top: 0; margin-bottom: 10px; font-size: 1.4em;">2. Evaluate a review</h2>
+        <span style="font-size: 0.98em;">
+          Your task is to assess whether the <strong>candidate review</strong> aligns in intent and quality with the <strong>reference review</strong>.
+          <p>
+            The candidate review was written based on a set of <strong>key points and judgments</strong> that were extracted from the reference review. Each key point represents an <em>aspect</em> (e.g., Novelty), and each judgment indicates the reference reviewer's stance (i.e., Strength or Weakness).
+          </p>
+        </span>
+        <div class="review-label-box">
+          <span class="review-label">Reference review</span>
+          <div class="review-box">
+            <div id="review-a"></div>
+          </div>
+        </div>
+        <div class="review-label-box" id="kpj-wrap" style="display: none;">
+          <span class="review-label">Key point and judgment</span>
+          <div class="review-box">
+            <div id="kp-text"></div>
+          </div>
+        </div>
+        <div class="review-label-box review-b">
+          <span class="review-label">Candidate review</span>
+          <div class="review-box" id="candidate-box">
+            <div id="review-b"></div>
+          </div>
+        </div>
+        <div class="criteria-box" id="criteria-container">
+          <h3>Evaluation</h3>
+        </div>
       </div>
-    </div>
-    <div class="criteria-box" id="criteria-container">
-      <h3>Evaluation Criteria</h3>
     </div>
   </div>
 
@@ -88,110 +119,307 @@
   <script>
 
     let data = {};
+    let fineData = {}; // fine-grained data for specified reviews
+    let fineLoaded = false;
     let keys = [];
     let currentIndex = 0;
     let responses = {};  // { paperId: { criterion: selectedValue } }
 
     async function loadData() {
-      const res = await fetch('data.json');
-      data = await res.json();
+      const resCoarse = await fetch('data_coarse.json');
+      data = await resCoarse.json();
       keys = Object.keys(data);
       displayPaper(currentIndex);
+    }
+
+    async function loadFineDataOnce() {
+      if (fineLoaded) return;
+      try {
+        const resFine = await fetch('data_fine.json');
+        if (resFine.ok) {
+          fineData = await resFine.json();
+          fineLoaded = true;
+        }
+      } catch (e) {
+        fineData = {};
+        fineLoaded = true;
+      }
     }
 
     function displayPaper(index) {
       const paperId = keys[index];
       const paperData = data[paperId];
 
-      document.getElementById('pdf-viewer').src = `human_evaluation_pdfs/${paperData.paper_id}.pdf`;
-      // Review A
-      let reviewAContent = paperData.aspect_review || "No Review A Available";
-      reviewAContent = reviewAContent.replace(/(Strengths:)/g, '<strong>$1</strong><br>')
-                                     .replace(/(Weaknesses:)/g, '<strong>$1</strong><br>')
-                                     .replace(/\r\n|\n|\r/g, '<br>');
-      document.getElementById('review-a').innerHTML = reviewAContent;
-      // Review B
-      let reviewBContent = paperData.general_review || "No Review B Available";
-      reviewBContent = reviewBContent.replace(/(Strengths:)/g, '<strong>$1</strong><br>')
-                                     .replace(/(Weaknesses:)/g, '<strong>$1</strong><br>')
-                                     .replace(/\r\n|\n|\r/g, '<br>');
-      document.getElementById('review-b').innerHTML = reviewBContent;
+      document.getElementById('pdf-viewer').src = `pdfs/${paperData.paper_id}.pdf`;
+
+      // Candidate review from coarse data by default
+      let humanReview = paperData.human_review || "No Human-written review available";
+      let candidateReview = paperData.llm_review || "No LLM-generated review available";
+
+      // Key points (array or string)
+      const rawKeyPoints = paperData.key_points !== undefined ? paperData.key_points : (paperData.key_point || paperData.keyPoint || paperData.kp || '');
+      const keyPoints = Array.isArray(rawKeyPoints) ? rawKeyPoints : (rawKeyPoints ? [String(rawKeyPoints)] : []);
+
+      const formatReview = (txt) => (txt || "").replace(/(Strengths:)/g, '<strong>$1</strong><br>')
+                                               .replace(/(Weaknesses:)/g, '<strong>$1</strong><br>')
+                                               .replace(/\r\n|\n|\r/g, '<br>');
+
+      document.getElementById('review-a').innerHTML = formatReview(humanReview);
+      document.getElementById('review-b').innerHTML = formatReview(candidateReview);
       document.getElementById('counter').textContent = `Item ${index + 1} of ${keys.length}`;
 
-      renderCriteria(paperId);
+      // Reset frosted state when switching items
+      const candidateBox = document.getElementById('candidate-box');
+      candidateBox && candidateBox.classList.remove('frosted');
+
+      // Populate KP info if available
+      const kpjWrap = document.getElementById('kpj-wrap');
+      const kpEl = document.getElementById('kp-text');
+      const kpDisplay = keyPoints.length ? keyPoints.join('; ') : '';
+      if (kpDisplay && String(kpDisplay).trim()) {
+        kpjWrap.style.display = '';
+        kpEl.textContent = kpDisplay || '—';
+      } else {
+        kpjWrap.style.display = 'none';
+        kpEl.textContent = '';
+      }
+
+      renderQC(paperId);
     }
 
-    function renderCriteria(paperId) {
+    function saveResponse(paperId, key, value) {
+      if (!responses[paperId]) responses[paperId] = {};
+      responses[paperId][key] = value;
+      renderQC(paperId);
+      console.log('Saved:', responses);
+    }
+
+    async function renderQC(paperId) {
       const container = document.getElementById('criteria-container');
-      container.innerHTML = '<h3 style="margin-bottom: 10px;">Evaluation</h3><div style="margin-bottom: 20px;">For each criterion, please select the review that is better (<strong>Review A</strong> or <strong>Review B</strong>). If the reviews are equally good, select <strong>Tie</strong>.</div>';
+      container.innerHTML = '<h3 style="margin-bottom: 10px;">Evaluation</h3>';
 
       if (!responses[paperId]) responses[paperId] = {};
+      const r = responses[paperId];
 
-      // Specificity
-      const selectedSpecificity = responses[paperId]["Specificity"] || '';
-      const specificityDiv = document.createElement('div');
-      specificityDiv.className = 'criteria';
-      specificityDiv.innerHTML = `
-        <strong>Specificity</strong> <span style="color: #666; font-size: 0.95em; font-style: italic; display: block; margin-top: 6px; margin-bottom: 6px;">- Which review provides more paper-specific feedback?<br>- Does either review avoid vague or templated language?</span>
-        <label><input type="radio" name="Specificity" value="A" ${selectedSpecificity === 'A' ? 'checked' : ''} onchange="saveResponse('${paperId}', 'Specificity', 'A')"> Review A</label>
-        <label><input type="radio" name="Specificity" value="B" ${selectedSpecificity === 'B' ? 'checked' : ''} onchange="saveResponse('${paperId}', 'Specificity', 'B')"> Review B</label>
-        <label><input type="radio" name="Specificity" value="Tie" ${selectedSpecificity === 'Tie' ? 'checked' : ''} onchange="saveResponse('${paperId}', 'Specificity', 'Tie')"> Tie</label>
-      `;
-      container.appendChild(specificityDiv);
+      // If Specification was toggled back to Yes, remove frosted effect
+      const candidateBoxEl = document.getElementById('candidate-box');
+      if (r['Specification'] === 'Yes') {
+        candidateBoxEl && candidateBoxEl.classList.remove('frosted');
+      }
 
-      // Decisiveness
-      const selectedDecisiveness = responses[paperId]["Decisiveness"] || '';
-      const decisivenessDiv = document.createElement('div');
-      decisivenessDiv.className = 'criteria';
-      decisivenessDiv.innerHTML = `
-        <strong>Decisiveness</strong> <span style="color: #666; font-size: 0.95em; font-style: italic; display: block; margin-top: 6px; margin-bottom: 6px;">- Which review takes a clearer stance on whether the paper is strong or weak?<br>- Are the strengths or weaknesses expressed with confidence and justification?</span>
-        <label><input type="radio" name="Decisiveness" value="A" ${selectedDecisiveness === 'A' ? 'checked' : ''} onchange="saveResponse('${paperId}', 'Decisiveness', 'A')"> Review A</label>
-        <label><input type="radio" name="Decisiveness" value="B" ${selectedDecisiveness === 'B' ? 'checked' : ''} onchange="saveResponse('${paperId}', 'Decisiveness', 'B')"> Review B</label>
-        <label><input type="radio" name="Decisiveness" value="Tie" ${selectedDecisiveness === 'Tie' ? 'checked' : ''} onchange="saveResponse('${paperId}', 'Decisiveness', 'Tie')"> Tie</label>
+      // Relevance
+      const relevanceDiv = document.createElement('div');
+      relevanceDiv.className = 'criteria';
+      relevanceDiv.innerHTML = `
+        <strong>Relevance</strong>
+        <span class="hint">Does the candidate review address the provided key points and judgment?</span>
+        <label><input type="radio" name="Relevance" value="Yes" ${(r['Relevance']||'')==='Yes'?'checked':''} onchange="saveResponse('${paperId}', 'Relevance', 'Yes')"> Yes</label>
+        <label><input type="radio" name="Relevance" value="No" ${(r['Relevance']||'')==='No'?'checked':''} onchange="saveResponse('${paperId}', 'Relevance', 'No')"> No</label>
       `;
-      container.appendChild(decisivenessDiv);
+      container.appendChild(relevanceDiv);
 
-      // Comprehensiveness
-      const selectedComprehensiveness = responses[paperId]["Comprehensiveness"] || '';
-      const comprehensivenessDiv = document.createElement('div');
-      comprehensivenessDiv.className = 'criteria';
-      comprehensivenessDiv.innerHTML = `
-        <strong>Comprehensiveness</strong> <span style="color: #666; font-size: 0.95em; font-style: italic; display: block; margin-top: 6px; margin-bottom: 6px;">- Which review addresses a broader or more complete range of relevant aspects?</span>
-        <label><input type="radio" name="Comprehensiveness" value="A" ${selectedComprehensiveness === 'A' ? 'checked' : ''} onchange="saveResponse('${paperId}', 'Comprehensiveness', 'A')"> Review A</label>
-        <label><input type="radio" name="Comprehensiveness" value="B" ${selectedComprehensiveness === 'B' ? 'checked' : ''} onchange="saveResponse('${paperId}', 'Comprehensiveness', 'B')"> Review B</label>
-        <label><input type="radio" name="Comprehensiveness" value="Tie" ${selectedComprehensiveness === 'Tie' ? 'checked' : ''} onchange="saveResponse('${paperId}', 'Comprehensiveness', 'Tie')"> Tie</label>
-      `;
-      container.appendChild(comprehensivenessDiv);
+      // Stop rendering further questions until Relevance is answered
+      if (r['Relevance'] !== 'Yes' && r['Relevance'] !== 'No') {
+        return;
+      }
 
-      // Factuality
-      const selectedFactuality = responses[paperId]["Factuality"] || '';
-      const factualityDiv = document.createElement('div');
-      factualityDiv.className = 'criteria';
-      factualityDiv.innerHTML = `
-        <strong>Factuality</strong> <span style="color: #666; font-size: 0.95em; font-style: italic; display: block; margin-top: 6px; margin-bottom: 6px;">- Which review makes claims that are better supported by the paper's content?<br>- Does either review contain hallucinated or unsupported claims?</span>
-        <label><input type="radio" name="Factuality" value="A" ${selectedFactuality === 'A' ? 'checked' : ''} onchange="saveResponse('${paperId}', 'Factuality', 'A')"> Review A</label>
-        <label><input type="radio" name="Factuality" value="B" ${selectedFactuality === 'B' ? 'checked' : ''} onchange="saveResponse('${paperId}', 'Factuality', 'B')"> Review B</label>
-        <label><input type="radio" name="Factuality" value="Tie" ${selectedFactuality === 'Tie' ? 'checked' : ''} onchange="saveResponse('${paperId}', 'Factuality', 'Tie')"> Tie</label>
-      `;
-      container.appendChild(factualityDiv);
+      if (r['Relevance'] === 'No') {
+        appendResult(container, 'Not aligned due to Relevance.');
+        return;
+      }
 
-      // Overall preference
-      const selectedOverall = responses[paperId]["Overall preference"] || '';
-      const overallDiv = document.createElement('div');
-      overallDiv.className = 'criteria';
-      overallDiv.innerHTML = `
-        <strong>Overall preference</strong> <span style="color: #666; font-size: 0.95em; font-style: italic; display: block; margin-top: 6px; margin-bottom: 6px;">- Taking all aspects into account, which review do you find better for this paper?</span>
-        <label><input type="radio" name="Overall preference" value="A" ${selectedOverall === 'A' ? 'checked' : ''} onchange="saveResponse('${paperId}', 'Overall preference', 'A')"> Review A</label>
-        <label><input type="radio" name="Overall preference" value="B" ${selectedOverall === 'B' ? 'checked' : ''} onchange="saveResponse('${paperId}', 'Overall preference', 'B')"> Review B</label>
-        <label><input type="radio" name="Overall preference" value="Tie" ${selectedOverall === 'Tie' ? 'checked' : ''} onchange="saveResponse('${paperId}', 'Overall preference', 'Tie')"> Tie</label>
+      // Specification (original)
+      const specDiv = document.createElement('div');
+      specDiv.className = 'criteria';
+      specDiv.id = 'spec-original';
+      specDiv.innerHTML = `
+        <strong>Specification</strong>
+        <span class="hint">Does the candidate review capture the intended specificity of the provided key point and judgment (reflected in the reference review)?</span>
+        <label><input type="radio" name="Specification" value="Yes" ${(r['Specification']||'')==='Yes'?'checked':''} onchange="saveResponse('${paperId}', 'Specification', 'Yes')"> Yes</label>
+        <label><input type="radio" name="Specification" value="No" ${(r['Specification']||'')==='No'?'checked':''} onchange="saveResponse('${paperId}', 'Specification', 'No')"> No</label>
       `;
-      container.appendChild(overallDiv);
+      container.appendChild(specDiv);
+
+      // Stop rendering until first Specification is answered
+      if (r['Specification'] !== 'Yes' && r['Specification'] !== 'No') {
+        return;
+      }
+
+      if (r['Specification'] === 'No') {
+        // Load fine data on demand
+        await loadFineDataOnce();
+
+        // Frost original candidate and grey out original spec
+        const candidateBox = document.getElementById('candidate-box');
+        candidateBox && candidateBox.classList.add('frosted');
+        specDiv.classList.add('disabled');
+
+        // Alternate review styled same as review-b (pink)
+        const altWrap = document.createElement('div');
+        altWrap.className = 'review-label-box review-b';
+        const fine = fineData && fineData[paperId];
+        const altReview = (fine && fine.llm_review) || '';
+        const altContent = altReview ? altReview.replace(/(Strengths:)/g, '<strong>$1</strong><br>')
+                                              .replace(/(Weaknesses:)/g, '<strong>$1</strong><br>')
+                                              .replace(/\r\n|\n|\r/g, '<br>')
+                                     : '<em>No specified review available.</em>';
+        altWrap.innerHTML = `
+          <span class="review-label">New candidate review</span>
+          <div class="review-box">${altContent}</div>
+        `;
+        container.appendChild(altWrap);
+
+        // Second Specification for new review
+        const spec2Div = document.createElement('div');
+        spec2Div.className = 'criteria';
+        spec2Div.style.marginTop = '20px';
+        spec2Div.innerHTML = `
+          <strong>Specification (New candidate review)</strong>
+          <span class="hint">Does the new candidate review now capture the intended specificity of the provided key point and judgment (reflected in the reference review)?</span>
+          <label><input type="radio" name="Specification2" value="Yes" ${(r['Specification2']||'')==='Yes'?'checked':''} onchange="saveResponse('${paperId}', 'Specification2', 'Yes')"> Yes</label>
+          <label><input type="radio" name="Specification2" value="No" ${(r['Specification2']||'')==='No'?'checked':''} onchange="saveResponse('${paperId}', 'Specification2', 'No')"> No</label>
+        `;
+        container.appendChild(spec2Div);
+
+        // Require answer to new spec before continuing
+        if (r['Specification2'] !== 'Yes' && r['Specification2'] !== 'No') {
+          return;
+        }
+        if (r['Specification2'] === 'No') {
+          appendResult(container, 'Not aligned due to Specification (new review).');
+          return;
+        }
+      }
+
+      // Use second spec pass-through if present, else first spec
+      const specPassed = r['Specification2'] ? (r['Specification2'] === 'Yes') : (r['Specification'] === 'Yes');
+      if (!specPassed) {
+        return;
+      }
+
+      // Evidence need
+      const needEvidenceDiv = document.createElement('div');
+      needEvidenceDiv.className = 'criteria';
+      needEvidenceDiv.innerHTML = `
+        <strong>Evidence needed?</strong>
+        <span class="hint">Does the provided key point and judgment require evidence to be supported?</span>
+        <label><input type="radio" name="NeedsEvidence" value="Yes" ${(r['NeedsEvidence']||'')==='Yes'?'checked':''} onchange="saveResponse('${paperId}', 'NeedsEvidence', 'Yes')"> Yes</label>
+        <label><input type="radio" name="NeedsEvidence" value="No" ${(r['NeedsEvidence']||'')==='No'?'checked':''} onchange="saveResponse('${paperId}', 'NeedsEvidence', 'No')"> No</label>
+      `;
+      container.appendChild(needEvidenceDiv);
+
+      // Stop rendering Evidence sub-steps until NeedsEvidence is answered
+      if (r['NeedsEvidence'] !== 'Yes' && r['NeedsEvidence'] !== 'No') {
+        return;
+      }
+
+      if (r['NeedsEvidence'] === 'Yes') {
+        // Hallucination
+        const hallucinationDiv = document.createElement('div');
+        hallucinationDiv.className = 'criteria';
+        hallucinationDiv.innerHTML = `
+          <strong>Evidence — Hallucination</strong>
+          <span class="hint">Is any evidence in the candidate review hallucinated?</span>
+          <label><input type="radio" name="Hallucination" value="Yes" ${(r['Hallucination']||'')==='Yes'?'checked':''} onchange="saveResponse('${paperId}', 'Hallucination', 'Yes')"> Yes</label>
+          <label><input type="radio" name="Hallucination" value="No" ${(r['Hallucination']||'')==='No'?'checked':''} onchange="saveResponse('${paperId}', 'Hallucination', 'No')"> No</label>
+        `;
+        container.appendChild(hallucinationDiv);
+
+        // Stop rendering until Hallucination is answered
+        if (r['Hallucination'] !== 'Yes' && r['Hallucination'] !== 'No') {
+          return;
+        }
+
+        if (r['Hallucination'] === 'Yes') {
+          appendResult(container, 'Not aligned due to Evidence — Hallucination.');
+          return;
+        }
+
+        // Match
+        const matchDiv = document.createElement('div');
+        matchDiv.className = 'criteria';
+        matchDiv.innerHTML = `
+          <strong>Evidence — Match</strong>
+          <span class="hint">Does the evidence in the candidate review match that in the reference review?</span>
+          <label><input type="radio" name="Match" value="Yes" ${(r['Match']||'')==='Yes'?'checked':''} onchange="saveResponse('${paperId}', 'Match', 'Yes')"> Yes</label>
+          <label><input type="radio" name="Match" value="No" ${(r['Match']||'')==='No'?'checked':''} onchange="saveResponse('${paperId}', 'Match', 'No')"> No</label>
+          <label><input type="radio" name="Match" value="NA" ${(r['Match']||'')==='NA'?'checked':''} onchange="saveResponse('${paperId}', 'Match', 'NA')"> NA</label>
+        `;
+        container.appendChild(matchDiv);
+
+        // Stop rendering until Match is answered
+        if (r['Match'] !== 'Yes' && r['Match'] !== 'No' && r['Match'] !== 'NA') {
+          return;
+        }
+
+        // If Match is No or NA, we need to check sufficiency; if Yes, skip to Reasoning
+        if (r['Match'] !== 'Yes') {
+          // Sufficiency
+          const suffDiv = document.createElement('div');
+          suffDiv.className = 'criteria';
+          suffDiv.innerHTML = `
+            <strong>Evidence — Sufficiency</strong>
+            <span class="hint">Is the evidence in the candidate review sufficient to support the provided key point and judgment?</span>
+            <label><input type="radio" name="Sufficiency" value="Yes" ${(r['Sufficiency']||'')==='Yes'?'checked':''} onchange="saveResponse('${paperId}', 'Sufficiency', 'Yes')"> Yes</label>
+            <label><input type="radio" name="Sufficiency" value="No" ${(r['Sufficiency']||'')==='No'?'checked':''} onchange="saveResponse('${paperId}', 'Sufficiency', 'No')"> No</label>
+          `;
+          container.appendChild(suffDiv);
+
+          // Stop rendering until Sufficiency is answered
+          if (r['Sufficiency'] !== 'Yes' && r['Sufficiency'] !== 'No') {
+            return;
+          }
+
+          if (r['Sufficiency'] === 'No') {
+            appendResult(container, 'Not aligned due to Evidence — Insufficient.');
+            return;
+          }
+        }
+      }
+
+      // Reasoning is shown after Evidence branch is fully resolved (or not needed)
+      if (r['NeedsEvidence'] === 'No' || r['NeedsEvidence'] === 'Yes') {
+        const reasoningDiv = document.createElement('div');
+        reasoningDiv.className = 'criteria';
+        reasoningDiv.innerHTML = `
+          <strong>Reasoning</strong>
+          <span class="hint">Is the reasoning in the candidate review sufficiently developed and logically connected to the provided key point and judgment?</span>
+          <label><input type="radio" name="Reasoning" value="Yes" ${(r['Reasoning']||'')==='Yes'?'checked':''} onchange="saveResponse('${paperId}', 'Reasoning', 'Yes')"> Yes</label>
+          <label><input type="radio" name="Reasoning" value="No" ${(r['Reasoning']||'')==='No'?'checked':''} onchange="saveResponse('${paperId}', 'Reasoning', 'No')"> No</label>
+        `;
+        container.appendChild(reasoningDiv);
+
+        if (r['Reasoning'] === 'No') {
+          appendResult(container, 'Not aligned due to Reasoning.');
+          return;
+        }
+      }
+
+      // If all checks passed where applicable
+      if (r['Relevance'] === 'Yes' && (r['Specification'] === 'Yes' || r['Specification2'] === 'Yes') &&
+          (
+            r['NeedsEvidence'] === 'No' ||
+            (
+              r['NeedsEvidence'] === 'Yes' &&
+              r['Hallucination'] === 'No' &&
+              (r['Match'] === 'Yes' || ((r['Match'] === 'No' || r['Match'] === 'NA') && r['Sufficiency'] === 'Yes'))
+            )
+          ) &&
+          r['Reasoning'] === 'Yes') {
+        const ok = document.createElement('div');
+        ok.className = 'result-box';
+        ok.style.borderColor = '#c7e7c7';
+        ok.style.background = '#f0fff0';
+        ok.textContent = 'Aligned';
+        container.appendChild(ok);
+      }
     }
 
-    function saveResponse(paperId, criterion, value) {
-      if (!responses[paperId]) responses[paperId] = {};
-      responses[paperId][criterion] = value;
-      console.log("Saved:", responses);
+    function appendResult(container, text) {
+      const res = document.createElement('div');
+      res.className = 'result-box';
+      res.textContent = text;
+      container.appendChild(res);
     }
 
     function nextPaper() {
