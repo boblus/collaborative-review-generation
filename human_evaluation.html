@@ -9,10 +9,10 @@
     .nav-counter { position: absolute; left: 50%; transform: translateX(-50%); bottom: 10px; font-size: 0.98em; }
     .nav-actions { margin-left: auto; display: flex; flex-direction: column; gap: 8px; align-items: flex-end; }
     .nav-row { display: flex; gap: 8px; }
-    .nav-row:first-child { margin-right: 8px; }
+    .nav-row:first-child { margin-right: 0; }
     .btn { background: #fff; border: 1px solid #ccc; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.95em; }
     .btn:hover { background: #f6f6f6; }
-    .file-btn { position: relative; overflow: hidden; display: inline-flex; align-items: center; }
+    .file-btn { position: relative; overflow: hidden; display: inline-flex; align-items: center; margin-right: 4px; }
     .file-btn input[type="file"] { position: absolute; left: 0; top: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
     .review-label-box {
       margin-top: 12px;
@@ -122,15 +122,14 @@
     <div class="nav-counter"><span id="counter"></span></div>
     <div class="nav-actions">
       <div class="nav-row">
-        <button class="btn" onclick="exportProgress()">Export</button>
-        <label class="btn file-btn">
+        <button class="btn file-btn">
           Import
           <input id="import-file" type="file" accept="application/json" onchange="importProgress(event)">
-        </label>
+        </button>
+        <button class="btn" onclick="exportProgress()">Export</button>
       </div>
       <div class="nav-row">
         <button class="btn" onclick="prevPaper()">Previous</button>
-        <button class="btn" onclick="nextPaper()">Next</button>
       </div>
     </div>
   </div>
@@ -518,7 +517,7 @@
         ok.className = 'result-box';
         ok.style.borderColor = '#c7e7c7';
         ok.style.background = '#f0fff0';
-        ok.textContent = 'Please proceed to the next item.';
+        ok.innerHTML = 'Please proceed to the next item. <button class="btn" onclick="nextPaper()" style="margin-left: 10px;">Go</button>';
         container.appendChild(ok);
       }
     }
