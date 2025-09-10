@@ -5,7 +5,14 @@
   <title>Peer review evaluation</title>
   <style>
     body { font-family: Arial, sans-serif; max-width: 1500px; margin: auto; padding: 20px; }
-    .navigation { margin: 20px 0; display: flex; justify-content: space-between; }
+    .navigation { margin: 20px 0; display: flex; justify-content: center; align-items: flex-end; position: relative; min-height: 72px; }
+    .nav-counter { position: absolute; left: 50%; transform: translateX(-50%); bottom: 10px; font-size: 0.98em; }
+    .nav-actions { margin-left: auto; display: flex; flex-direction: column; gap: 8px; align-items: flex-end; }
+    .nav-row { display: flex; gap: 8px; }
+    .btn { background: #fff; border: 1px solid #ccc; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.95em; }
+    .btn:hover { background: #f6f6f6; }
+    .file-btn { position: relative; overflow: hidden; display: inline-flex; align-items: center; }
+    .file-btn input[type="file"] { position: absolute; left: 0; top: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
     .review-label-box {
       margin-top: 12px;
     }
@@ -111,9 +118,20 @@
   </div>
 
   <div class="navigation">
-    <button onclick="prevPaper()">Previous</button>
-    <span id="counter"></span>
-    <button onclick="nextPaper()">Next</button>
+    <div class="nav-counter"><span id="counter"></span></div>
+    <div class="nav-actions">
+      <div class="nav-row">
+        <button class="btn" onclick="exportProgress()">Export</button>
+        <label class="btn file-btn">
+          Import
+          <input id="import-file" type="file" accept="application/json" onchange="importProgress(event)">
+        </label>
+      </div>
+      <div class="nav-row">
+        <button class="btn" onclick="prevPaper()">Previous</button>
+        <button class="btn" onclick="nextPaper()">Next</button>
+      </div>
+    </div>
   </div>
 
   <script>
@@ -125,10 +143,37 @@
     let currentIndex = 0;
     let responses = {};  // { paperId: { criterion: selectedValue } }
 
+    const STORAGE_KEYS = {
+      responses: 'peer_eval_responses',
+      index: 'peer_eval_index'
+    };
+
+    function persistState() {
+      try {
+        localStorage.setItem(STORAGE_KEYS.responses, JSON.stringify(responses));
+        localStorage.setItem(STORAGE_KEYS.index, String(currentIndex));
+      } catch (e) {
+        console.warn('Persist failed', e);
+      }
+    }
+
+    function restoreState() {
+      try {
+        const rawR = localStorage.getItem(STORAGE_KEYS.responses);
+        const rawI = localStorage.getItem(STORAGE_KEYS.index);
+        if (rawR) responses = JSON.parse(rawR) || {};
+        if (rawI && !isNaN(Number(rawI))) currentIndex = Math.max(0, Number(rawI));
+      } catch (e) {
+        responses = {};
+      }
+    }
+
     async function loadData() {
       const resCoarse = await fetch('data_coarse.json');
       data = await resCoarse.json();
       keys = Object.keys(data);
+      restoreState();
+      if (currentIndex >= keys.length) currentIndex = 0;
       displayPaper(currentIndex);
     }
 
@@ -192,6 +237,7 @@
       responses[paperId][key] = value;
       renderQC(paperId);
       console.log('Saved:', responses);
+      persistState();
     }
 
     async function renderQC(paperId) {
@@ -427,6 +473,7 @@
         currentIndex++;
         displayPaper(currentIndex);
         window.scrollTo(0, 0);
+        persistState();
       }
     }
 
@@ -435,7 +482,50 @@
         currentIndex--;
         displayPaper(currentIndex);
         window.scrollTo(0, document.body.scrollHeight);
+        persistState();
       }
+    }
+
+    function exportProgress() {
+      const payload = { responses, currentIndex };
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      const itemNum = (currentIndex + 1);
+      const ts = new Date().toISOString().replace(/[:.]/g,'-');
+      a.download = `peer_review_evaluation-item_${itemNum}-${ts}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    function importProgress(ev) {
+      const file = ev.target.files && ev.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          const obj = JSON.parse(String(reader.result||'{}'));
+          if (obj && typeof obj === 'object') {
+            if (obj.responses && typeof obj.responses === 'object') {
+              responses = obj.responses;
+            }
+            if (typeof obj.currentIndex === 'number') {
+              currentIndex = Math.max(0, Math.min(obj.currentIndex, keys.length - 1));
+            }
+            persistState();
+            displayPaper(currentIndex);
+            window.scrollTo(0, 0);
+          }
+        } catch (e) {
+          alert('Import failed: invalid JSON');
+        }
+      };
+      reader.readAsText(file);
+      // reset input value to allow re-importing same file
+      ev.target.value = '';
     }
 
     loadData();
