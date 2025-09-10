@@ -9,6 +9,7 @@
     .nav-counter { position: absolute; left: 50%; transform: translateX(-50%); bottom: 10px; font-size: 0.98em; }
     .nav-actions { margin-left: auto; display: flex; flex-direction: column; gap: 8px; align-items: flex-end; }
     .nav-row { display: flex; gap: 8px; }
+    .nav-row:first-child { margin-right: 8px; }
     .btn { background: #fff; border: 1px solid #ccc; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.95em; }
     .btn:hover { background: #f6f6f6; }
     .file-btn { position: relative; overflow: hidden; display: inline-flex; align-items: center; }
@@ -234,7 +235,68 @@
 
     function saveResponse(paperId, key, value) {
       if (!responses[paperId]) responses[paperId] = {};
-      responses[paperId][key] = value;
+      
+      // 清除后续选择
+      if (key === 'Relevance' && value === 'No') {
+        // 清除所有后续选择
+        responses[paperId] = { 'Relevance': 'No' };
+      } else if (key === 'Relevance' && value === 'Yes') {
+        // 清除Specification及后续选择
+        delete responses[paperId]['Specification'];
+        delete responses[paperId]['Specification2'];
+        delete responses[paperId]['NeedsEvidence'];
+        delete responses[paperId]['Hallucination'];
+        delete responses[paperId]['Match'];
+        delete responses[paperId]['Sufficiency'];
+        delete responses[paperId]['Reasoning'];
+        responses[paperId][key] = value;
+      } else if (key === 'Specification' && value === 'Yes') {
+        // 清除Specification2及后续选择
+        delete responses[paperId]['Specification2'];
+        delete responses[paperId]['NeedsEvidence'];
+        delete responses[paperId]['Hallucination'];
+        delete responses[paperId]['Match'];
+        delete responses[paperId]['Sufficiency'];
+        delete responses[paperId]['Reasoning'];
+        responses[paperId][key] = value;
+      } else if (key === 'Specification' && value === 'No') {
+        // 清除Specification2及后续选择
+        delete responses[paperId]['Specification2'];
+        delete responses[paperId]['NeedsEvidence'];
+        delete responses[paperId]['Hallucination'];
+        delete responses[paperId]['Match'];
+        delete responses[paperId]['Sufficiency'];
+        delete responses[paperId]['Reasoning'];
+        responses[paperId][key] = value;
+      } else if (key === 'Specification2' && value === 'No') {
+        // 清除后续选择
+        delete responses[paperId]['NeedsEvidence'];
+        delete responses[paperId]['Hallucination'];
+        delete responses[paperId]['Match'];
+        delete responses[paperId]['Sufficiency'];
+        delete responses[paperId]['Reasoning'];
+        responses[paperId][key] = value;
+      } else if (key === 'NeedsEvidence' && value === 'No') {
+        // 清除Evidence相关选择
+        delete responses[paperId]['Hallucination'];
+        delete responses[paperId]['Match'];
+        delete responses[paperId]['Sufficiency'];
+        responses[paperId][key] = value;
+      } else if (key === 'Hallucination' && value === 'Yes') {
+        // 清除后续选择
+        delete responses[paperId]['Match'];
+        delete responses[paperId]['Sufficiency'];
+        delete responses[paperId]['Reasoning'];
+        responses[paperId][key] = value;
+      } else if (key === 'Match' && value === 'Yes') {
+        // 清除Sufficiency选择
+        delete responses[paperId]['Sufficiency'];
+        responses[paperId][key] = value;
+      } else {
+        // 其他情况直接保存
+        responses[paperId][key] = value;
+      }
+      
       renderQC(paperId);
       console.log('Saved:', responses);
       persistState();
@@ -270,7 +332,7 @@
       }
 
       if (r['Relevance'] === 'No') {
-        appendResult(container, 'Not aligned due to Relevance.');
+        appendResult(container, 'Please proceed to the next item.');
         return;
       }
 
@@ -332,7 +394,7 @@
           return;
         }
         if (r['Specification2'] === 'No') {
-          appendResult(container, 'Not aligned due to Specification (new review).');
+          appendResult(container, 'Please proceed to the next item.');
           return;
         }
       }
@@ -377,7 +439,7 @@
         }
 
         if (r['Hallucination'] === 'Yes') {
-          appendResult(container, 'Not aligned due to Evidence — Hallucination.');
+          appendResult(container, 'Please proceed to the next item.');
           return;
         }
 
@@ -417,7 +479,7 @@
           }
 
           if (r['Sufficiency'] === 'No') {
-            appendResult(container, 'Not aligned due to Evidence — Insufficient.');
+            appendResult(container, 'Please proceed to the next item.');
             return;
           }
         }
@@ -436,7 +498,7 @@
         container.appendChild(reasoningDiv);
 
         if (r['Reasoning'] === 'No') {
-          appendResult(container, 'Not aligned due to Reasoning.');
+          appendResult(container, 'Please proceed to the next item.');
           return;
         }
       }
@@ -456,7 +518,7 @@
         ok.className = 'result-box';
         ok.style.borderColor = '#c7e7c7';
         ok.style.background = '#f0fff0';
-        ok.textContent = 'Aligned';
+        ok.textContent = 'Please proceed to the next item.';
         container.appendChild(ok);
       }
     }
@@ -464,7 +526,15 @@
     function appendResult(container, text) {
       const res = document.createElement('div');
       res.className = 'result-box';
-      res.textContent = text;
+      res.style.borderColor = '#c7e7c7';
+      res.style.background = '#f0fff0';
+      
+      if (text === 'Please proceed to the next item.') {
+        res.innerHTML = text + ' <button class="btn" onclick="nextPaper()" style="margin-left: 10px;">Go</button>';
+      } else {
+        res.textContent = text;
+      }
+      
       container.appendChild(res);
     }
 
