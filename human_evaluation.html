@@ -92,6 +92,9 @@
           <p>
             The candidate review was written based on a set of <strong>key points and judgments</strong> that were extracted from the reference review. Each key point represents an <em>aspect</em> (e.g., Novelty), and each judgment indicates the reference reviewer's stance (i.e., Strength or Weakness).
           </p>
+          <p>
+            Note that <strong>neither the candidate review nor the reference review is a full review</strong>. They are excerpts from a complete review, which discuss the provided key points and judgments.
+          </p>
         </span>
         <div class="review-label-box">
           <span class="review-label">Reference review</span>
@@ -239,6 +242,9 @@
       if (key === 'Relevance' && value === 'No') {
         // 清除所有后续选择
         responses[paperId] = { 'Relevance': 'No' };
+        // 移除毛玻璃特效
+        const candidateBox = document.getElementById('candidate-box');
+        candidateBox && candidateBox.classList.remove('frosted');
       } else if (key === 'Relevance' && value === 'Yes') {
         // 清除Specification及后续选择
         delete responses[paperId]['Specification'];
@@ -249,6 +255,9 @@
         delete responses[paperId]['Sufficiency'];
         delete responses[paperId]['Reasoning'];
         responses[paperId][key] = value;
+        // 移除毛玻璃特效
+        const candidateBox = document.getElementById('candidate-box');
+        candidateBox && candidateBox.classList.remove('frosted');
       } else if (key === 'Specification' && value === 'Yes') {
         // 清除Specification2及后续选择
         delete responses[paperId]['Specification2'];
