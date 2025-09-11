@@ -46,9 +46,9 @@
     }
     /* Added for side-by-side layout */
     .main-layout { display: flex; gap: 20px; align-items: flex-start; }
-    .left-pane { flex: 1.4; min-width: 0; }
+    .left-pane { width: 888px; flex-shrink: 0; }
     .right-pane { flex: 1; min-width: 0; }
-    @media (max-width: 1100px) { .main-layout { flex-direction: column; } }
+    @media (max-width: 900px) { .main-layout { flex-direction: column; } .left-pane { width: 100%; } }
     .hint { color: #666; font-size: 0.95em; font-style: italic; display: block; margin-top: 6px; margin-bottom: 6px; }
     .result-box { margin-top: 16px; padding: 10px 12px; border-radius: 4px; border: 1px solid #e2e2e2; background: #fafafa; }
     .info-box { margin: 12px 0 16px 0; padding: 10px 12px; border: 1px solid #e6e6e6; background: #fcfcfc; border-radius: 6px; }
@@ -94,6 +94,9 @@
           </p>
           <p>
             Note that <strong>neither the candidate review nor the reference review is a full review</strong>. They are excerpts from a complete review, which discuss the provided key points and judgments.
+          </p>
+          <p>
+            Please read the <strong><a href="https://docs.google.com/document/d/1yWyMDvcL0KjcM8vGUQxvV8iAAQ4NPWq9XU7o9OO3TUk/edit?usp=sharing" target=\"_blank\">evaluation guidelines</a></strong> carefully before starting.
           </p>
         </span>
         <div class="review-label-box">
