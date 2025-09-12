@@ -58,6 +58,12 @@
     /* Frosted mask for candidate review */
     .frosted { position: relative; }
     .frosted::after { content: ""; position: absolute; inset: 0; backdrop-filter: blur(4px); background: rgba(255,255,255,0.35); border-radius: 5px; }
+    /* Frosted mask for criteria-container reviews - only affects review-box */
+    #criteria-container .frosted { position: relative; }
+    #criteria-container .frosted .review-box { position: relative; }
+    #criteria-container .frosted .review-box::after { content: ""; position: absolute; inset: 0; backdrop-filter: blur(4px); background: rgba(255,255,255,0.35); border-radius: 5px; }
+    /* Override the general frosted effect for criteria-container */
+    #criteria-container .frosted::after { display: none; }
     /* Greyed-out style for outdated blocks */
     .disabled { color: #aaa; }
     .disabled .hint { color: #bbb; }
@@ -144,7 +150,9 @@
 
     let data = {};
     let fineData = {}; // fine-grained data for specified reviews
+    let fineEvidenceData = {}; // fine-grained data for evidence reviews
     let fineLoaded = false;
+    let fineEvidenceLoaded = false;
     let keys = [];
     let currentIndex = 0;
     let responses = {};  // { paperId: { criterion: selectedValue } }
@@ -194,6 +202,20 @@
       } catch (e) {
         fineData = {};
         fineLoaded = true;
+      }
+    }
+
+    async function loadFineEvidenceDataOnce() {
+      if (fineEvidenceLoaded) return;
+      try {
+        const resFineEvidence = await fetch('data_fine_evidence.json');
+        if (resFineEvidence.ok) {
+          fineEvidenceData = await resFineEvidence.json();
+          fineEvidenceLoaded = true;
+        }
+      } catch (e) {
+        fineEvidenceData = {};
+        fineEvidenceLoaded = true;
       }
     }
 
@@ -292,16 +314,19 @@
         delete responses[paperId]['Hallucination'];
         delete responses[paperId]['Match'];
         delete responses[paperId]['Sufficiency'];
+        delete responses[paperId]['Sufficiency2'];
         responses[paperId][key] = value;
       } else if (key === 'Hallucination' && value === 'Yes') {
         // 清除后续选择
         delete responses[paperId]['Match'];
         delete responses[paperId]['Sufficiency'];
+        delete responses[paperId]['Sufficiency2'];
         delete responses[paperId]['Reasoning'];
         responses[paperId][key] = value;
       } else if (key === 'Match' && value === 'Yes') {
         // 清除Sufficiency选择
         delete responses[paperId]['Sufficiency'];
+        delete responses[paperId]['Sufficiency2'];
         responses[paperId][key] = value;
       } else {
         // 其他情况直接保存
@@ -324,6 +349,14 @@
       const candidateBoxEl = document.getElementById('candidate-box');
       if (r['Specification'] === 'Yes') {
         candidateBoxEl && candidateBoxEl.classList.remove('frosted');
+      }
+
+      // If Sufficiency was toggled back to Yes, remove frosted effect from specification new candidate review
+      if (r['Sufficiency'] === 'Yes') {
+        const specAltWrap = document.querySelector('#criteria-container .review-label-box.review-b');
+        if (specAltWrap) {
+          specAltWrap.classList.remove('frosted');
+        }
       }
 
       // Relevance
@@ -393,7 +426,7 @@
         spec2Div.className = 'criteria';
         spec2Div.style.marginTop = '20px';
         spec2Div.innerHTML = `
-          <strong>Specification (New candidate review)</strong>
+          <strong>Specification (new candidate review)</strong>
           <span class="hint">Does the new candidate review now capture the intended specificity of the provided key point and judgment (reflected in the reference review)?</span>
           <label><input type="radio" name="Specification2" value="Yes" ${(r['Specification2']||'')==='Yes'?'checked':''} onchange="saveResponse('${paperId}', 'Specification2', 'Yes')"> Yes</label>
           <label><input type="radio" name="Specification2" value="No" ${(r['Specification2']||'')==='No'?'checked':''} onchange="saveResponse('${paperId}', 'Specification2', 'No')"> No</label>
@@ -490,8 +523,66 @@
           }
 
           if (r['Sufficiency'] === 'No') {
-            appendResult(container, 'Please proceed to the next item.');
-            return;
+            // Load fine evidence data on demand
+            await loadFineEvidenceDataOnce();
+
+            // Check if evidence data is different from fine data
+            const fine = fineData && fineData[paperId];
+            const fineEvidence = fineEvidenceData && fineEvidenceData[paperId];
+            const fineReview = (fine && fine.llm_review) || '';
+            const evidenceReview = (fineEvidence && fineEvidence.llm_review) || '';
+            
+            // If evidence data is the same as fine data, proceed with original logic
+            if (fineReview === evidenceReview) {
+              appendResult(container, 'Please proceed to the next item.');
+              return;
+            }
+
+            // Frost the new candidate review and grey out sufficiency
+            const altWrap = document.querySelector('.review-label-box.review-b:last-of-type');
+            if (altWrap) {
+              altWrap.classList.add('frosted');
+            }
+            // Also frost the specification new candidate review (the one in criteria-container)
+            const specAltWrap = document.querySelector('#criteria-container .review-label-box.review-b');
+            if (specAltWrap) {
+              specAltWrap.classList.add('frosted');
+            }
+            suffDiv.classList.add('disabled');
+
+            // Alternate evidence review styled same as review-b (pink)
+            const evidenceWrap = document.createElement('div');
+            evidenceWrap.className = 'review-label-box review-b';
+            const evidenceContent = evidenceReview ? evidenceReview.replace(/(Strengths:)/g, '<strong>$1</strong><br>')
+                                                          .replace(/(Weaknesses:)/g, '<strong>$1</strong><br>')
+                                                          .replace(/\r\n|\n|\r/g, '<br>')
+                                                 : '<em>No evidence review available.</em>';
+            evidenceWrap.innerHTML = `
+              <span class="review-label">New candidate review</span>
+              <div class="review-box">${evidenceContent}</div>
+            `;
+            container.appendChild(evidenceWrap);
+
+            // Second Sufficiency for new evidence review
+            const suff2Div = document.createElement('div');
+            suff2Div.className = 'criteria';
+            suff2Div.style.marginTop = '20px';
+            suff2Div.innerHTML = `
+              <strong>Evidence — Sufficiency (new candidate review)</strong>
+              <span class="hint">Is the evidence in the new candidate review now sufficient to support the provided key point and judgment?</span>
+              <label><input type="radio" name="Sufficiency2" value="Yes" ${(r['Sufficiency2']||'')==='Yes'?'checked':''} onchange="saveResponse('${paperId}', 'Sufficiency2', 'Yes')"> Yes</label>
+              <label><input type="radio" name="Sufficiency2" value="No" ${(r['Sufficiency2']||'')==='No'?'checked':''} onchange="saveResponse('${paperId}', 'Sufficiency2', 'No')"> No</label>
+            `;
+            container.appendChild(suff2Div);
+
+            // Require answer to new sufficiency before continuing
+            if (r['Sufficiency2'] !== 'Yes' && r['Sufficiency2'] !== 'No') {
+              return;
+            }
+            if (r['Sufficiency2'] === 'No') {
+              appendResult(container, 'Please proceed to the next item.');
+              return;
+            }
           }
         }
       }
@@ -521,7 +612,7 @@
             (
               r['NeedsEvidence'] === 'Yes' &&
               r['Hallucination'] === 'No' &&
-              (r['Match'] === 'Yes' || ((r['Match'] === 'No' || r['Match'] === 'NA') && r['Sufficiency'] === 'Yes'))
+              (r['Match'] === 'Yes' || ((r['Match'] === 'No' || r['Match'] === 'NA') && (r['Sufficiency'] === 'Yes' || r['Sufficiency2'] === 'Yes')))
             )
           ) &&
           r['Reasoning'] === 'Yes') {
