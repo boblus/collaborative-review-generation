@@ -67,6 +67,37 @@
     /* Greyed-out style for outdated blocks */
     .disabled { color: #aaa; }
     .disabled .hint { color: #bbb; }
+    /* Collapsible reference review panel */
+    .ref-panel-toggle {
+      margin: 10px 0;
+      padding: 8px 12px;
+      background: #f0f0f0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9em;
+      color: #333;
+    }
+    .ref-panel-toggle:hover {
+      background: #e0e0e0;
+    }
+    .ref-panel {
+      display: none;
+      margin: 10px 0;
+      padding: 15px;
+      background: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    .ref-panel.show {
+      display: block;
+    }
+    .ref-panel .review-label-box {
+      margin-top: 8px;
+    }
+    .ref-panel .review-label-box:first-child {
+      margin-top: 0;
+    }
   </style>
 </head>
 <body>
@@ -321,6 +352,25 @@
         delete responses[paperId]['Match'];
         delete responses[paperId]['Sufficiency'];
         delete responses[paperId]['Sufficiency2'];
+        delete responses[paperId]['Hallucination2'];
+        delete responses[paperId]['Match2'];
+        delete responses[paperId]['Reasoning'];
+        responses[paperId][key] = value;
+      } else if (key === 'Hallucination2' && value === 'Yes') {
+        // 清除后续选择
+        delete responses[paperId]['Match2'];
+        delete responses[paperId]['Sufficiency2'];
+        delete responses[paperId]['Reasoning'];
+        responses[paperId][key] = value;
+      } else if (key === 'Match2' && value === 'Yes') {
+        // 清除Sufficiency2选择
+        delete responses[paperId]['Sufficiency2'];
+        responses[paperId][key] = value;
+      } else if (key === 'Sufficiency' && value === 'Yes') {
+        // 清除后续选择（当从No改回Yes时）
+        delete responses[paperId]['Hallucination2'];
+        delete responses[paperId]['Match2'];
+        delete responses[paperId]['Sufficiency2'];
         delete responses[paperId]['Reasoning'];
         responses[paperId][key] = value;
       } else if (key === 'Match' && value === 'Yes') {
@@ -340,6 +390,13 @@
 
     async function renderQC(paperId) {
       const container = document.getElementById('criteria-container');
+      
+      // 保存当前面板状态
+      const specPanel = document.getElementById('ref-panel-spec');
+      const evidencePanel = document.getElementById('ref-panel-evidence');
+      const specPanelVisible = specPanel && (specPanel.style.display === 'block');
+      const evidencePanelVisible = evidencePanel && (evidencePanel.style.display === 'block');
+      
       container.innerHTML = '<h3 style="margin-bottom: 10px;">Evaluation</h3>';
 
       if (!responses[paperId]) responses[paperId] = {};
@@ -420,6 +477,69 @@
           <div class="review-box">${altContent}</div>
         `;
         container.appendChild(altWrap);
+
+        // Add toggle button for reference review and key points
+        const toggleButton = document.createElement('div');
+        toggleButton.className = 'ref-panel-toggle';
+        toggleButton.innerHTML = '📋 <strong>Show Reference review & Key point and judgment</strong>';
+        toggleButton.onclick = function() {
+          const panel = document.getElementById('ref-panel-spec');
+          const button = this;
+          if (panel.style.display === 'none' || panel.style.display === '') {
+            panel.style.display = 'block';
+            button.innerHTML = '📋 <strong>Hide Reference review & Key point and judgment</strong>';
+          } else {
+            panel.style.display = 'none';
+            button.innerHTML = '📋 <strong>Show Reference review & Key point and judgment</strong>';
+          }
+        };
+        container.appendChild(toggleButton);
+
+        // Create collapsible reference panel
+        const refPanel = document.createElement('div');
+        refPanel.id = 'ref-panel-spec';
+        refPanel.className = 'ref-panel';
+        refPanel.style.display = 'none';
+        
+        // Get reference review content
+        const refReviewEl = document.getElementById('review-a');
+        const kpjWrap = document.getElementById('kpj-wrap');
+        const kpText = document.getElementById('kp-text');
+        
+        let panelContent = '';
+        
+        // Add key points if available
+        if (kpjWrap && kpjWrap.style.display !== 'none' && kpText && kpText.textContent.trim()) {
+          panelContent += `
+            <div class="review-label-box">
+              <span class="review-label">Key point and judgment</span>
+              <div class="review-box">${kpText.textContent}</div>
+            </div>
+          `;
+        }
+        
+        // Add reference review
+        if (refReviewEl) {
+          panelContent += `
+            <div class="review-label-box">
+              <span class="review-label">Reference review</span>
+              <div class="review-box">${refReviewEl.innerHTML}</div>
+            </div>
+          `;
+        }
+        
+        refPanel.innerHTML = panelContent;
+        container.appendChild(refPanel);
+        
+        // 恢复面板状态
+        if (specPanelVisible) {
+          refPanel.style.display = 'block';
+          // 找到specification部分的toggle按钮（在ref-panel-spec之前）
+          const specToggleButton = container.querySelector('#ref-panel-spec').previousElementSibling;
+          if (specToggleButton && specToggleButton.classList.contains('ref-panel-toggle')) {
+            specToggleButton.innerHTML = '📋 <strong>Hide Reference review & Key point and judgment</strong>';
+          }
+        }
 
         // Second Specification for new review
         const spec2Div = document.createElement('div');
@@ -563,25 +683,132 @@
             `;
             container.appendChild(evidenceWrap);
 
-            // Second Sufficiency for new evidence review
-            const suff2Div = document.createElement('div');
-            suff2Div.className = 'criteria';
-            suff2Div.style.marginTop = '20px';
-            suff2Div.innerHTML = `
-              <strong>Evidence — Sufficiency (new candidate review)</strong>
-              <span class="hint">Is the evidence in the new candidate review now sufficient to support the provided key point and judgment?</span>
-              <label><input type="radio" name="Sufficiency2" value="Yes" ${(r['Sufficiency2']||'')==='Yes'?'checked':''} onchange="saveResponse('${paperId}', 'Sufficiency2', 'Yes')"> Yes</label>
-              <label><input type="radio" name="Sufficiency2" value="No" ${(r['Sufficiency2']||'')==='No'?'checked':''} onchange="saveResponse('${paperId}', 'Sufficiency2', 'No')"> No</label>
-            `;
-            container.appendChild(suff2Div);
+            // Add toggle button for reference review and key points
+            const toggleButton = document.createElement('div');
+            toggleButton.className = 'ref-panel-toggle';
+            toggleButton.innerHTML = '📋 <strong>Show Reference review & Key point and judgment</strong>';
+            toggleButton.onclick = function() {
+              const panel = document.getElementById('ref-panel-evidence');
+              const button = this;
+              if (panel.style.display === 'none' || panel.style.display === '') {
+                panel.style.display = 'block';
+                button.innerHTML = '📋 <strong>Hide Reference review & Key point and judgment</strong>';
+              } else {
+                panel.style.display = 'none';
+                button.innerHTML = '📋 <strong>Show Reference review & Key point and judgment</strong>';
+              }
+            };
+            container.appendChild(toggleButton);
 
-            // Require answer to new sufficiency before continuing
-            if (r['Sufficiency2'] !== 'Yes' && r['Sufficiency2'] !== 'No') {
+            // Create collapsible reference panel
+            const refPanel = document.createElement('div');
+            refPanel.id = 'ref-panel-evidence';
+            refPanel.className = 'ref-panel';
+            refPanel.style.display = 'none';
+            
+            // Get reference review content
+            const refReviewEl = document.getElementById('review-a');
+            const kpjWrap = document.getElementById('kpj-wrap');
+            const kpText = document.getElementById('kp-text');
+            
+            let panelContent = '';
+            
+            // Add key points if available
+            if (kpjWrap && kpjWrap.style.display !== 'none' && kpText && kpText.textContent.trim()) {
+              panelContent += `
+                <div class="review-label-box">
+                  <span class="review-label">Key point and judgment</span>
+                  <div class="review-box">${kpText.textContent}</div>
+                </div>
+              `;
+            }
+            
+            // Add reference review
+            if (refReviewEl) {
+              panelContent += `
+                <div class="review-label-box">
+                  <span class="review-label">Reference review</span>
+                  <div class="review-box">${refReviewEl.innerHTML}</div>
+                </div>
+              `;
+            }
+            
+            refPanel.innerHTML = panelContent;
+            container.appendChild(refPanel);
+            
+            // 恢复面板状态
+            if (evidencePanelVisible) {
+              refPanel.style.display = 'block';
+              // 找到evidence部分的toggle按钮（在ref-panel-evidence之前）
+              const evidenceToggleButton = container.querySelector('#ref-panel-evidence').previousElementSibling;
+              if (evidenceToggleButton && evidenceToggleButton.classList.contains('ref-panel-toggle')) {
+                evidenceToggleButton.innerHTML = '📋 <strong>Hide Reference review & Key point and judgment</strong>';
+              }
+            }
+
+            // Hallucination for new evidence review
+            const hallucination2Div = document.createElement('div');
+            hallucination2Div.className = 'criteria';
+            hallucination2Div.style.marginTop = '20px';
+            hallucination2Div.innerHTML = `
+              <strong>Evidence — Hallucination (new candidate review)</strong>
+              <span class="hint">Is any evidence in the new candidate review hallucinated?</span>
+              <label><input type="radio" name="Hallucination2" value="Yes" ${(r['Hallucination2']||'')==='Yes'?'checked':''} onchange="saveResponse('${paperId}', 'Hallucination2', 'Yes')"> Yes</label>
+              <label><input type="radio" name="Hallucination2" value="No" ${(r['Hallucination2']||'')==='No'?'checked':''} onchange="saveResponse('${paperId}', 'Hallucination2', 'No')"> No</label>
+            `;
+            container.appendChild(hallucination2Div);
+
+            // Require answer to new hallucination before continuing
+            if (r['Hallucination2'] !== 'Yes' && r['Hallucination2'] !== 'No') {
               return;
             }
-            if (r['Sufficiency2'] === 'No') {
+            if (r['Hallucination2'] === 'Yes') {
               appendResult(container, 'Please proceed to the next item.');
               return;
+            }
+
+            // Match for new evidence review
+            const match2Div = document.createElement('div');
+            match2Div.className = 'criteria';
+            match2Div.style.marginTop = '20px';
+            match2Div.innerHTML = `
+              <strong>Evidence — Match (new candidate review)</strong>
+              <span class="hint">Does the evidence in the new candidate review match that in the reference review?</span>
+              <label><input type="radio" name="Match2" value="Yes" ${(r['Match2']||'')==='Yes'?'checked':''} onchange="saveResponse('${paperId}', 'Match2', 'Yes')"> Yes</label>
+              <label><input type="radio" name="Match2" value="No" ${(r['Match2']||'')==='No'?'checked':''} onchange="saveResponse('${paperId}', 'Match2', 'No')"> No</label>
+              <label><input type="radio" name="Match2" value="NA" ${(r['Match2']||'')==='NA'?'checked':''} onchange="saveResponse('${paperId}', 'Match2', 'NA')"> NA</label>
+            `;
+            container.appendChild(match2Div);
+
+            // Require answer to new match before continuing
+            if (r['Match2'] !== 'Yes' && r['Match2'] !== 'No' && r['Match2'] !== 'NA') {
+              return;
+            }
+
+            // If Match2 is Yes, skip to Reasoning; if No or NA, check Sufficiency2
+            if (r['Match2'] === 'Yes') {
+              // Skip to Reasoning - no need to check Sufficiency2
+            } else {
+              // Second Sufficiency for new evidence review
+              const suff2Div = document.createElement('div');
+              suff2Div.className = 'criteria';
+              suff2Div.style.marginTop = '20px';
+              suff2Div.innerHTML = `
+                <strong>Evidence — Sufficiency (new candidate review)</strong>
+                <span class="hint">Is the evidence in the new candidate review now sufficient to support the provided key point and judgment?</span>
+                <label><input type="radio" name="Sufficiency2" value="Yes" ${(r['Sufficiency2']||'')==='Yes'?'checked':''} onchange="saveResponse('${paperId}', 'Sufficiency2', 'Yes')"> Yes</label>
+                <label><input type="radio" name="Sufficiency2" value="No" ${(r['Sufficiency2']||'')==='No'?'checked':''} onchange="saveResponse('${paperId}', 'Sufficiency2', 'No')"> No</label>
+              `;
+              container.appendChild(suff2Div);
+
+              // Require answer to new sufficiency before continuing
+              if (r['Sufficiency2'] !== 'Yes' && r['Sufficiency2'] !== 'No') {
+                return;
+              }
+              if (r['Sufficiency2'] === 'No') {
+                appendResult(container, 'Please proceed to the next item.');
+                return;
+              }
             }
           }
         }
@@ -611,8 +838,8 @@
             r['NeedsEvidence'] === 'No' ||
             (
               r['NeedsEvidence'] === 'Yes' &&
-              r['Hallucination'] === 'No' &&
-              (r['Match'] === 'Yes' || ((r['Match'] === 'No' || r['Match'] === 'NA') && (r['Sufficiency'] === 'Yes' || r['Sufficiency2'] === 'Yes')))
+              (r['Hallucination'] === 'No' || r['Hallucination2'] === 'No') &&
+              (r['Match'] === 'Yes' || r['Match2'] === 'Yes' || ((r['Match'] === 'No' || r['Match'] === 'NA' || r['Match2'] === 'No' || r['Match2'] === 'NA') && (r['Sufficiency'] === 'Yes' || r['Sufficiency2'] === 'Yes')))
             )
           ) &&
           r['Reasoning'] === 'Yes') {
