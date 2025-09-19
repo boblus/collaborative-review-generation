@@ -346,6 +346,7 @@
         delete responses[paperId]['Match'];
         delete responses[paperId]['Sufficiency'];
         delete responses[paperId]['Sufficiency2'];
+        delete responses[paperId]['Reasoning'];
         responses[paperId][key] = value;
       } else if (key === 'Hallucination' && value === 'Yes') {
         // 清除后续选择
@@ -356,7 +357,22 @@
         delete responses[paperId]['Match2'];
         delete responses[paperId]['Reasoning'];
         responses[paperId][key] = value;
+      } else if (key === 'Hallucination' && value === 'No') {
+        // 清除后续选择
+        delete responses[paperId]['Match'];
+        delete responses[paperId]['Sufficiency'];
+        delete responses[paperId]['Sufficiency2'];
+        delete responses[paperId]['Hallucination2'];
+        delete responses[paperId]['Match2'];
+        delete responses[paperId]['Reasoning'];
+        responses[paperId][key] = value;
       } else if (key === 'Hallucination2' && value === 'Yes') {
+        // 清除后续选择
+        delete responses[paperId]['Match2'];
+        delete responses[paperId]['Sufficiency2'];
+        delete responses[paperId]['Reasoning'];
+        responses[paperId][key] = value;
+      } else if (key === 'Hallucination2' && value === 'No') {
         // 清除后续选择
         delete responses[paperId]['Match2'];
         delete responses[paperId]['Sufficiency2'];
@@ -377,6 +393,39 @@
         // 清除Sufficiency选择
         delete responses[paperId]['Sufficiency'];
         delete responses[paperId]['Sufficiency2'];
+        responses[paperId][key] = value;
+      } else if (key === 'Match' && value === 'No') {
+        // 清除后续选择
+        delete responses[paperId]['Sufficiency'];
+        delete responses[paperId]['Sufficiency2'];
+        delete responses[paperId]['Reasoning'];
+        responses[paperId][key] = value;
+      } else if (key === 'Match' && value === 'NA') {
+        // 清除后续选择
+        delete responses[paperId]['Sufficiency'];
+        delete responses[paperId]['Sufficiency2'];
+        delete responses[paperId]['Reasoning'];
+        responses[paperId][key] = value;
+      } else if (key === 'Match2' && value === 'No') {
+        // 清除后续选择
+        delete responses[paperId]['Sufficiency2'];
+        delete responses[paperId]['Reasoning'];
+        responses[paperId][key] = value;
+      } else if (key === 'Match2' && value === 'NA') {
+        // 清除后续选择
+        delete responses[paperId]['Sufficiency2'];
+        delete responses[paperId]['Reasoning'];
+        responses[paperId][key] = value;
+      } else if (key === 'Sufficiency' && value === 'No') {
+        // 清除后续选择
+        delete responses[paperId]['Hallucination2'];
+        delete responses[paperId]['Match2'];
+        delete responses[paperId]['Sufficiency2'];
+        delete responses[paperId]['Reasoning'];
+        responses[paperId][key] = value;
+      } else if (key === 'Sufficiency2' && value === 'No') {
+        // 清除后续选择
+        delete responses[paperId]['Reasoning'];
         responses[paperId][key] = value;
       } else {
         // 其他情况直接保存
@@ -591,7 +640,7 @@
         hallucinationDiv.className = 'criteria';
         hallucinationDiv.innerHTML = `
           <strong>Evidence — Hallucination</strong>
-          <span class="hint">Is any evidence in the candidate review hallucinated?</span>
+          <span class="hint">Is any evidence in the new candidate review hallucinated?</span>
           <label><input type="radio" name="Hallucination" value="Yes" ${(r['Hallucination']||'')==='Yes'?'checked':''} onchange="saveResponse('${paperId}', 'Hallucination', 'Yes')"> Yes</label>
           <label><input type="radio" name="Hallucination" value="No" ${(r['Hallucination']||'')==='No'?'checked':''} onchange="saveResponse('${paperId}', 'Hallucination', 'No')"> No</label>
         `;
@@ -612,7 +661,7 @@
         matchDiv.className = 'criteria';
         matchDiv.innerHTML = `
           <strong>Evidence — Match</strong>
-          <span class="hint">Does the evidence in the candidate review match that in the reference review?</span>
+          <span class="hint">Does the evidence in the new candidate review match that in the reference review?</span>
           <label><input type="radio" name="Match" value="Yes" ${(r['Match']||'')==='Yes'?'checked':''} onchange="saveResponse('${paperId}', 'Match', 'Yes')"> Yes</label>
           <label><input type="radio" name="Match" value="No" ${(r['Match']||'')==='No'?'checked':''} onchange="saveResponse('${paperId}', 'Match', 'No')"> No</label>
           <label><input type="radio" name="Match" value="NA" ${(r['Match']||'')==='NA'?'checked':''} onchange="saveResponse('${paperId}', 'Match', 'NA')"> NA</label>
@@ -631,7 +680,7 @@
           suffDiv.className = 'criteria';
           suffDiv.innerHTML = `
             <strong>Evidence — Sufficiency</strong>
-            <span class="hint">Is the evidence in the candidate review sufficient to support the provided key point and judgment?</span>
+            <span class="hint">Is the evidence in the new candidate review sufficient to support the provided key point and judgment?</span>
             <label><input type="radio" name="Sufficiency" value="Yes" ${(r['Sufficiency']||'')==='Yes'?'checked':''} onchange="saveResponse('${paperId}', 'Sufficiency', 'Yes')"> Yes</label>
             <label><input type="radio" name="Sufficiency" value="No" ${(r['Sufficiency']||'')==='No'?'checked':''} onchange="saveResponse('${paperId}', 'Sufficiency', 'No')"> No</label>
           `;
