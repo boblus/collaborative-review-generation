@@ -1,0 +1,106 @@
+{
+    "0": {
+        "paper_id": "ea2fcaadea43b14cd757b899060486935bbc8ae9aa1f5e09d6593e11fbfc7482d9e6b01198b4144b4f4587be071ea4436d377e42b8f20df4c9ad77d190acbea4",
+        "review_id": "f44f0ca236369e5e597d2b8b8d05ec1a98c69e2cf68fd94a6accde8c749771328614c1d07a06141e170ce4c7d2ff6cbba39c2a4184adf16423c2bad2b120aac9",
+        "judge": {
+            "soundness": "3.5",
+            "overall_assessment": "3.5"
+        }
+    },
+    "1": {
+        "paper_id": "4d56bde71a33d412724e11253d44bcdb6eb88bd86e325faddfd1752caa1e9634a80a214c473f6c9ca05ec3e7c5ace6f7e20f8206ec9de5f859951572e4e1a105",
+        "review_id": "852e98e66333fe7ad9714dcbfa742e47b8e435a08295c9580680a8b1c3f6b98e37f0ea56b1eacfad9ae779c3b680a891e25571a660828354b27650d87c9e0ac5",
+        "judge": {
+            "soundness": "4",
+            "overall_assessment": "4"
+        }
+    },
+    "2": {
+        "paper_id": "c28e525283c0b7390216f732607d0c64b5d17a62543684d743b64981de62d6b85a6c9d360141c216cd3baee7f6f94023a6ab40eba23aaaa6b2606cf9e509442c",
+        "review_id": "3c930622ec1af37dc2f232f3f63f12799b32c8b25c8615316d31ddbc36dbd9f0dc7128e28fa121f62dae65f304ec0c177b80ec356945e1e23b079d06ae5d5632",
+        "judge": {
+            "soundness": 4,
+            "overall_assessment": 4
+        }
+    },
+    "3": {
+        "paper_id": "38f72f46a3c72e131ee8b9bf36a29842c151505fb66c8c29de16ae524881d65eb3173abfc16f94fcde8893fcc797be358fbce659a4f82a8e6e50bca193fd69b0",
+        "review_id": "2eff61e3383d619162b34202481957951c31775ae0cee6b90926ad8558979bbf60f62db6394885ae0fe01729aa6dbdb602dfc4eee008ad72ff586f139361eaaf",
+        "judge": {
+            "soundness": "3.5",
+            "overall_assessment": "3.5"
+        }
+    },
+    "4": {
+        "paper_id": "a9ff676f49a8d12373550407f55b00465f11841801d4822daaab007c3be3f454553269c958ba3f1d79fa16802efb64f449ebf200fdbf5d756d3b7b6ba3a7f694",
+        "review_id": "9507d39c6f5e56c8f528f632bfac194e4f84f32a9c381b2ca9fee02d50884e5b7a1dad40132ee346b7807afa282df1c62fac3867e240d2d0801c80f9853cec05",
+        "judge": {
+            "soundness": 4,
+            "overall_assessment": 4
+        }
+    },
+    "5": {
+        "paper_id": "7909f80a713fbac55c893dfe4e82af6630200b8359a2383f990498b37b9b2dfd99b3f419d20534ed97e3f1358e75cd148628ae12e7e2f5dc2fe7f09b93467fee",
+        "review_id": "4b5c29b2802e415eb03e09ee3dfeae4be437a3b23b017f1586e1f6e9f1809d5d6a396143d51f0ccbee16c8bd1e465f59cc77d705db9935c374713bab18f9bb7c",
+        "judge": {
+            "soundness": "4",
+            "overall_assessment": "4"
+        }
+    },
+    "6": {
+        "paper_id": "077b2bb0c8b7784d9769d4a4bbe2406f6d387bb9f303681e44efb9c8e4e81e519da08117632eb08e723bb3ef59fb68c1d01b45e9378d39095a5ffe6c9663f5d9",
+        "review_id": "1edbaf44ebc264f3e2200b0ea93b4d4ea362dbe283139684bb374225229ddae12114a8052c246c8e3ab710031f2da994b0d22e5546dde35fd1e9b91a9fcd7a18",
+        "judge": {
+            "soundness": "4",
+            "overall_assessment": "4"
+        }
+    },
+    "7": {
+        "paper_id": "bb7e81f0cd0ef81dd005934f5e9e415c682e5d528f78b2386fcd7f55adebce65688704bed7ff01a4cd3aa7cde70e86353424deb656ddc079f61a660f7afe43f6",
+        "review_id": "e29bbdf75112afd4bf09632373e1723e8239dcaf22a1cd6e2c7a90762345e6b78a7202b7807b3f8aa29b479ecc6ce18f92698f0a2964ab9ac98399e2941e138b",
+        "judge": {
+            "soundness": "4",
+            "overall_assessment": "4"
+        }
+    },
+    "8": {
+        "paper_id": "0be34345b6f719aa9cc5e06b8d3e0af8018471e40b964622bd1d6cd21a393de3b5eca441a0a6557ed26f2e3b24f5e851ebbfff230eccac25894e8b23696e93bd",
+        "review_id": "0533a9872fdb636bedb8e855f65d1e7bd93aefe0d6adcdc2077cf33f214fae069792cd705f76d5208155b3b13f7c29f9dd0d761fce23da62355c3b67b7e67977",
+        "judge": {
+            "soundness": "4",
+            "overall_assessment": "4"
+        }
+    },
+    "9": {
+        "paper_id": "c7afe2e0219838c49d0f15e6aa52f7f10fe71a344bee98c90c11ca701f4bd9940037f57b9f4c95b8d213f02da18c372e634ab64581ff1331363107541ab4d4a7",
+        "review_id": "99c2f1325f494c835d4a397b60678cd69630383ee29359b4457800490c9a62f28f0bb298d3ea92f2514a59f028042bfd49e51080cca192ee38f56cac549dbda1",
+        "judge": {
+            "soundness": "4",
+            "overall_assessment": "4"
+        }
+    },
+    "10": {
+        "paper_id": "1d6deb04fcae483a54569ee03238370344930b40f9383f59d57ef492bb51cbef4ee7816580f241065f87be173244e67038f9fb7ff62eee49700132f2e5471243",
+        "review_id": "8e3bbb1b6c62a8669b3dbf3b88c9c4799eb805579c29ed45cd6252e8c0a8e7da4bc28a3b34cad03b0e3e722b4bf57a879c3c393066f9549fd05a1c2a0a6fbe73",
+        "judge": {
+            "soundness": "3.5",
+            "overall_assessment": "3.5"
+        }
+    },
+    "11": {
+        "paper_id": "eaca542661268eb9133a16c5687395c2dee7418879eeb0cab01d2fc85cbb18c6786bc524ce23293d2ac2551b08223117e8618c6557ab0b2381b732ea773de131",
+        "review_id": "63dafe1880562d2cdc759c33e754d638b8115120973b62984cd41e386e7475f21d6ab580faca3fecc22c71ec7b424e129b1476698b855dffef4a01266ad164db",
+        "judge": {
+            "soundness": "4",
+            "overall_assessment": "4"
+        }
+    },
+    "12": {
+        "paper_id": "3f8e59529648a4a834945db36346c63a7cc24b011722cb8607d3fba23a87f773d64681077b75e92cae3ca2e1ef8f2b74f4c61b9608a23381e05187c8e2f8ef4b",
+        "review_id": "9da4c936d5a459aa6cfa199ce9036b338446af08f2c7ee921d78ac5001e13b641d4b7ef04d1d2df0c310f9200d49fb43d04e5a7dd9880487a1be40c90259897a",
+        "judge": {
+            "soundness": "4",
+            "overall_assessment": "4"
+        }
+    }
+}

@@ -1,0 +1,226 @@
+{
+    "0": {
+        "paper_id": "ea2fcaadea43b14cd757b899060486935bbc8ae9aa1f5e09d6593e11fbfc7482d9e6b01198b4144b4f4587be071ea4436d377e42b8f20df4c9ad77d190acbea4",
+        "review_id": "f44f0ca236369e5e597d2b8b8d05ec1a98c69e2cf68fd94a6accde8c749771328614c1d07a06141e170ce4c7d2ff6cbba39c2a4184adf16423c2bad2b120aac9",
+        "aspects": {
+            "strengths": {
+                "0": [
+                    "Methodology",
+                    "Novelty",
+                    "Data/Task"
+                ],
+                "1": [
+                    "Data/Task"
+                ]
+            },
+            "weaknesses": {
+                "0": [
+                    "Evaluation"
+                ],
+                "1": [
+                    "Result",
+                    "Experiment",
+                    "Data/Task",
+                    "Analysis",
+                    "Methodology"
+                ]
+            }
+        },
+        "human_review": {
+            "strengths": {
+                "0": "Introducing such a novel task of analyzing the structure of opposing arguments is beneficial for testing language models' ability to understand implicit information in texts. This, in turn, enhances their comprehension of context and reasoning capabilities.",
+                "1": "The annotation process of the dataset maintains a high level of consistency, ensured through carefully designed templates and expert review. This ensures the quality of the dataset."
+            },
+            "weaknesses": {
+                "0": "This is a newly proposed task, so it might be insufficient to evaluate the capability of CA structure extraction using only F1 (patterns) Precision (slots) evaluation metrics. This is because the same sentence may have different perspectives for understanding. Why not select some samples for manual evaluation?",
+                "1": "Only selecting a few LLMs for experimentation might result in insufficient experimental evidence to fully support the analysis of the dataset in this paper. It would be beneficial to analyze the dataset from different perspectives. For example, how do smaller models perform after fine-tuning on this dataset? Also, what is the impact of the number of examples in the in-context learning prompts selected for LLMs on their performance? These additional analyses could provide a more comprehensive understanding of the dataset's characteristics and the behavior of various models on it."
+            }
+        },
+        "llm_review": {
+            "strengths": {
+                "0": "The paper's methodology is a significant strength, as it introduces a novel task of CA logical structure analysis and creates a comprehensive set of logic patterns based on Argumentation Schemes. The data collection and task design are also noteworthy, as they provide a valuable resource for assessing the limits of current large language models. The novelty of the task and the thoroughness of the methodology make this paper a valuable contribution to the field.",
+                "1": "The dataset created for this task is a notable strength, as it achieves high annotator agreement and coverage, making it a reliable resource for future research in CA logical structure analysis. The fact that the dataset is focused on a specific topic with a large amount of counterarguments makes it particularly useful for assessing the current limits of large language models."
+            },
+            "weaknesses": {
+                "0": "One weakness of the paper is the evaluation methodology, which relies solely on lexical overlaps without factoring in semantic information, making it a strict and potentially limited measure of the models' performance.",
+                "1": "The results of the experiments are somewhat disappointing, with low scores for both template selection and slot-filler extraction, even when evaluating models with multi-pattern annotations. This suggests that the task is highly challenging for current large language models, and the analysis of the results could be more thorough, considering multiple aspects such as data, task, experiment, analysis, and methodology. Additionally, the dataset is limited to three topics, which may not be representative of the broader range of topics that the task could be applied to."
+            },
+            "soundness": "3.5",
+            "overall_assessment": "3"
+        }
+    },
+    "1": {
+        "paper_id": "4d56bde71a33d412724e11253d44bcdb6eb88bd86e325faddfd1752caa1e9634a80a214c473f6c9ca05ec3e7c5ace6f7e20f8206ec9de5f859951572e4e1a105",
+        "review_id": "852e98e66333fe7ad9714dcbfa742e47b8e435a08295c9580680a8b1c3f6b98e37f0ea56b1eacfad9ae779c3b680a891e25571a660828354b27650d87c9e0ac5",
+        "aspects": {
+            "strengths": {
+                "0": [
+                    "Presentation"
+                ],
+                "1": [
+                    "Methodology",
+                    "Novelty"
+                ],
+                "2": [
+                    "Methodology"
+                ],
+                "3": [
+                    "Methodology",
+                    "Result"
+                ]
+            },
+            "weaknesses": {
+                "0": [
+                    "Methodology",
+                    "Data/Task",
+                    "Result"
+                ],
+                "1": [
+                    "Comparison"
+                ],
+                "2": [
+                    "Result",
+                    "Presentation"
+                ]
+            }
+        },
+        "human_review": {
+            "strengths": {
+                "0": "The paper is well-written and easy to understand.",
+                "1": "This is the first application of a Fast-Slow approach to bridge the gap between continual and non-continual TTA in ASR.",
+                "2": "The paper enhances the SUTA loss function with a sample buffer to prevent model collapse. Additionally, it introduces a domain shift indicator (LII) and DSUTA with a Dynamic Reset Strategy to handle time-varying domains.",
+                "3": "The proposed methods show significant improvement in both single-domain and time-varying domains, particularly in challenging scenarios."
+            },
+            "weaknesses": {
+                "0": "Synthetic Dataset Limitation: The performance validation relies primarily on the synthetic Librispeech-C dataset, raising concerns about the generalizability of the results to real-world data.",
+                "1": "A more thorough comparison on time-varying domains is needed.",
+                "2": "Ambiguity in Results Presentation: For instance, the meaning of the axes in Figures 5 and 6 is not clearly explained, which could lead to misinterpretation of the results."
+            }
+        },
+        "llm_review": {
+            "strengths": {
+                "0": "The paper is well-organized and clearly presented, making it easy to follow and understand the proposed methodology and results.",
+                "1": "The proposed Fast-slow TTA framework and Dynamic SUTA method demonstrate significant novelty and improvement in methodology, showing great potential for advancing the field of ASR.",
+                "2": "The methodology is well-developed, with a clear and detailed explanation of the fast-slow TTA framework and Dynamic SUTA, making it easy to replicate and build upon.",
+                "3": "The results demonstrate the effectiveness of the proposed method, with significant improvements over baseline methods, and the methodology is well-supported by the results, showing a clear understanding of the research question."
+            },
+            "weaknesses": {
+                "0": "The methodology, data, and results may be limited by the focus on a specific type of domain shift (background noises) and the use of a particular type of end-to-end ASR model (CTC-based), which may not be generalizable to other domains or models.",
+                "1": "The comparison to other methods, such as AWMC, may not be comprehensive, and additional comparisons to other state-of-the-art methods would strengthen the paper.",
+                "2": "The results may be impacted by the presentation of the data, and additional visualizations or analyses could help to further support the findings and make the results more accessible to readers."
+            },
+            "soundness": "4",
+            "overall_assessment": "4"
+        }
+    },
+    "2": {
+        "paper_id": "c28e525283c0b7390216f732607d0c64b5d17a62543684d743b64981de62d6b85a6c9d360141c216cd3baee7f6f94023a6ab40eba23aaaa6b2606cf9e509442c",
+        "review_id": "3c930622ec1af37dc2f232f3f63f12799b32c8b25c8615316d31ddbc36dbd9f0dc7128e28fa121f62dae65f304ec0c177b80ec356945e1e23b079d06ae5d5632",
+        "aspects": {
+            "strengths": {
+                "0": [
+                    "Related Work"
+                ],
+                "1": [
+                    "Methodology"
+                ],
+                "2": [
+                    "Data/Task",
+                    "Result"
+                ]
+            },
+            "weaknesses": {
+                "0": [
+                    "Definition/Description/Detail/Discussion/Explanation/Interpretation",
+                    "Experiment"
+                ],
+                "1": [
+                    "Intuition/Justification/Motivation/Validation",
+                    "Result"
+                ],
+                "2": [
+                    "Comparison"
+                ]
+            }
+        },
+        "human_review": {
+            "strengths": {
+                "0": "The related works section covers prior works clearly.",
+                "1": "The paper addresses an interesting problem which can be valuable to the AI Planning research community",
+                "2": "Authors devised a sampling strategy for LM training data that includes a higher proportion of search nodes near the end, than the beginning, outperforming baselines by 8% fewer iterations and outperforming models that were trained with double the data."
+            },
+            "weaknesses": {
+                "0": "Please justify your choices for loss function by adding more description. It is not clear how these two losses are used together. Is there any coefficient when you put these two loss functions together? Or do you use them separately as your experiment shows. It is a bit confusing.",
+                "1": "Is this always true in all scenarios? \"sampling with a higher proportion of search nodes near the end\" leads to better performance? Please justify better.",
+                "2": "What would be the other alternatives to Eq. (6) for assigning higher value to nodes closer to the goal? It would be interesting to have a comparison."
+            }
+        },
+        "llm_review": {
+            "strengths": {
+                "0": "The paper provides a thorough review of related work, demonstrating a clear understanding of the existing research in the field of combining language models with A* search algorithms.",
+                "1": "The methodology proposed in the paper is well-structured and easy to follow, with a clear explanation of the mathematical model used to quantify the contribution of nodes towards reducing the search length.",
+                "2": "The experimental results demonstrate the effectiveness of the proposed approach, with significant improvements in search length and wall-clock time on both maze and sokoban domains, and the data collection methodology is well-described."
+            },
+            "weaknesses": {
+                "0": "The paper could benefit from a more detailed explanation of the experimental setup and the choice of hyperparameters, as well as a more in-depth discussion of the results and their implications, to facilitate better understanding and reproducibility.",
+                "1": "The intuition behind the proposed distribution for sampling nodes is not fully justified, and the motivation for using a specific temperature value is not clearly explained, which may raise questions about the validity of the approach and its potential for generalization to other domains.",
+                "2": "The comparison to other methods is limited, and it would be beneficial to include a more comprehensive comparison to existing approaches, including those that use different sampling strategies or heuristic functions, to provide a more complete understanding of the strengths and weaknesses of the proposed approach."
+            },
+            "soundness": 4,
+            "overall_assessment": 4
+        }
+    },
+    "3": {
+        "paper_id": "38f72f46a3c72e131ee8b9bf36a29842c151505fb66c8c29de16ae524881d65eb3173abfc16f94fcde8893fcc797be358fbce659a4f82a8e6e50bca193fd69b0",
+        "review_id": "2eff61e3383d619162b34202481957951c31775ae0cee6b90926ad8558979bbf60f62db6394885ae0fe01729aa6dbdb602dfc4eee008ad72ff586f139361eaaf",
+        "aspects": {
+            "strengths": {
+                "0": [
+                    "Data/Task"
+                ],
+                "1": [
+                    "Methodology",
+                    "Result"
+                ]
+            },
+            "weaknesses": {
+                "0": [
+                    "Methodology",
+                    "Data/Task"
+                ],
+                "1": [
+                    "Methodology"
+                ],
+                "2": [
+                    "Methodology",
+                    "Data/Task",
+                    "Evaluation"
+                ]
+            }
+        },
+        "human_review": {
+            "strengths": {
+                "0": "McMarket is one of the most extensive datasets in this domain, covering multiple languages and markets, which could be highly beneficial for future research.",
+                "1": "The integration of LLMs, like GPT-4, showed significant improvements over traditional methods in both tasks under study."
+            },
+            "weaknesses": {
+                "0": "The dataset, primarily derived from user-generated content, may contain inherent biases, which could skew the results or effectiveness of the QA systems developed using it.",
+                "1": "Some parts of the methodology, particularly those involving the use of AI models for generating and ranking answers, lacks the necessary detail to allow reproducibility.",
+                "2": "The paper heavily relies on large language models (LLMs) for dataset annotation and evaluation without thoroughly examining the limitations or biases these models might introduce."
+            }
+        },
+        "llm_review": {
+            "strengths": {
+                "0": "The paper proposes a novel task of Multilingual Cross-market Product-based Question Answering (MCPQA) and introduces a large-scale dataset named McMarket, which covers over 2 million questions across 13 marketplaces and 8 languages, demonstrating a significant contribution to the field of product-related question answering.",
+                "1": "The paper's methodology is robust, and the results show the superiority of cross-market methods in the MCPQA task, with experiments conducted on both single- and cross-market scenarios, providing a comprehensive evaluation of the task and verifying the effectiveness of the proposed approach."
+            },
+            "weaknesses": {
+                "0": "The paper's methodology and data collection process may have some limitations, such as the potential for biased or inaccurate information in the reviews and QA pairs, and the challenges associated with language barriers and data availability in multiple languages, which may impact the reliability and generalizability of the results.",
+                "1": "The paper's methodology may benefit from further refinement, particularly in terms of handling language diversity and improving data quality, to enhance the performance of non-English content and address the limitations associated with low-resource languages.",
+                "2": "The paper's evaluation methodology and metrics may not be comprehensive enough, and the results may be impacted by the choice of evaluation metrics and the experimental setup, which could be further improved to provide a more thorough assessment of the proposed approach and its limitations."
+            },
+            "soundness": "4",
+            "overall_assessment": "4"
+        }
+    }
+}

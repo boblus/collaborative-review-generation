@@ -1,0 +1,2551 @@
+{
+    "0": {
+        "paper_id": "4d56bde71a33d412724e11253d44bcdb6eb88bd86e325faddfd1752caa1e9634a80a214c473f6c9ca05ec3e7c5ace6f7e20f8206ec9de5f859951572e4e1a105",
+        "review_id": "852e98e66333fe7ad9714dcbfa742e47b8e435a08295c9580680a8b1c3f6b98e37f0ea56b1eacfad9ae779c3b680a891e25571a660828354b27650d87c9e0ac5",
+        "aspects": {
+            "strengths": {
+                "0": [
+                    "Presentation"
+                ],
+                "1": [
+                    "Methodology",
+                    "Novelty"
+                ],
+                "2": [
+                    "Methodology"
+                ],
+                "3": [
+                    "Methodology",
+                    "Result"
+                ]
+            },
+            "weaknesses": {
+                "0": [
+                    "Methodology",
+                    "Data/Task",
+                    "Result"
+                ],
+                "1": [
+                    "Comparison"
+                ],
+                "2": [
+                    "Result",
+                    "Presentation"
+                ]
+            }
+        },
+        "human_review": {
+            "strengths": {
+                "0": "The paper is well-written and easy to understand.",
+                "1": "This is the first application of a Fast-Slow approach to bridge the gap between continual and non-continual TTA in ASR.",
+                "2": "The paper enhances the SUTA loss function with a sample buffer to prevent model collapse. Additionally, it introduces a domain shift indicator (LII) and DSUTA with a Dynamic Reset Strategy to handle time-varying domains.",
+                "3": "The proposed methods show significant improvement in both single-domain and time-varying domains, particularly in challenging scenarios."
+            },
+            "weaknesses": {
+                "0": "Synthetic Dataset Limitation: The performance validation relies primarily on the synthetic Librispeech-C dataset, raising concerns about the generalizability of the results to real-world data.",
+                "1": "A more thorough comparison on time-varying domains is needed.",
+                "2": "Ambiguity in Results Presentation: For instance, the meaning of the axes in Figures 5 and 6 is not clearly explained, which could lead to misinterpretation of the results."
+            }
+        },
+        "llm_review": {
+            "strengths": {
+                "0": "The paper presents a well-organized and clear presentation of their research findings, with a logical flow from the introduction to the conclusion.",
+                "1": "The methodology section is comprehensive, introducing a novel Fast-slow TTA framework that effectively combines both continual and non-continual TTA approaches.",
+                "2": "The methodology is novel, as the proposed Dynamic SUTA (DSUTA) with a dynamic reset strategy offers significant improvements over existing TTA methods in handling multi-domain and long data streams.",
+                "3": "The experimental results demonstrate that the proposed method outperforms both non-continual and continual TTA baselines, particularly in multi-domain time-varying data scenarios."
+            },
+            "weaknesses": {
+                "0": "The methodology section could be more concise and focused, as it provides a detailed explanation of the framework but may overwhelm the reader with unnecessary technical details.",
+                "1": "The comparison with existing methods is thorough, but the paper could benefit from including more baseline comparisons to better contextualize the improvements.",
+                "2": "The paper focuses on noisy speech datasets, limiting the generalizability of the results to other types of domain shifts, such as different accents or speaker characteristics."
+            },
+            "soundness": "The study is well-supported with rigorous experimental results and a clear methodology. The framework is technically sound and demonstrates significant improvements over existing approaches.",
+            "overall_assessment": "This paper makes a valuable contribution to the field with a novel methodological framework. While it shows strong empirical results, it could benefit from more comprehensive comparisons and broader impact evaluation."
+        }
+    },
+    "1": {
+        "paper_id": "c28e525283c0b7390216f732607d0c64b5d17a62543684d743b64981de62d6b85a6c9d360141c216cd3baee7f6f94023a6ab40eba23aaaa6b2606cf9e509442c",
+        "review_id": "3c930622ec1af37dc2f232f3f63f12799b32c8b25c8615316d31ddbc36dbd9f0dc7128e28fa121f62dae65f304ec0c177b80ec356945e1e23b079d06ae5d5632",
+        "aspects": {
+            "strengths": {
+                "0": [
+                    "Related Work"
+                ],
+                "1": [
+                    "Methodology"
+                ],
+                "2": [
+                    "Data/Task",
+                    "Result"
+                ]
+            },
+            "weaknesses": {
+                "0": [
+                    "Definition/Description/Detail/Discussion/Explanation/Interpretation",
+                    "Experiment"
+                ],
+                "1": [
+                    "Intuition/Justification/Motivation/Validation",
+                    "Result"
+                ],
+                "2": [
+                    "Comparison"
+                ]
+            }
+        },
+        "human_review": {
+            "strengths": {
+                "0": "The related works section covers prior works clearly.",
+                "1": "The paper addresses an interesting problem which can be valuable to the AI Planning research community",
+                "2": "Authors devised a sampling strategy for LM training data that includes a higher proportion of search nodes near the end, than the beginning, outperforming baselines by 8% fewer iterations and outperforming models that were trained with double the data."
+            },
+            "weaknesses": {
+                "0": "Please justify your choices for loss function by adding more description. It is not clear how these two losses are used together. Is there any coefficient when you put these two loss functions together? Or do you use them separately as your experiment shows. It is a bit confusing.",
+                "1": "Is this always true in all scenarios? \"sampling with a higher proportion of search nodes near the end\" leads to better performance? Please justify better.",
+                "2": "What would be the other alternatives to Eq. (6) for assigning higher value to nodes closer to the goal? It would be interesting to have a comparison."
+            }
+        },
+        "llm_review": {
+            "strengths": {
+                "0": "The paper provides a comprehensive review of related work in the intersection of A* search and language models, highlighting the gap it addresses.",
+                "1": "The methodology is well-structured and includes a clear framework for analyzing and comparing different training strategies for A* heuristics using language models.",
+                "2": "The paper conducts thorough experiments across multiple domains (maze and sokoban) and uses multiple metrics to evaluate the effectiveness of their proposed method."
+            },
+            "weaknesses": {
+                "0": "The definition and explanation of the heuristic function and its relationship to A* search could be clearer, potentially benefiting from more detailed diagrams or a simpler explanation for readers unfamiliar with A*.",
+                "1": "The motivation and validation of their approach could be more thoroughly explained to provide additional context for the choice of methodology.",
+                "2": "The comparison with existing methods in related work is somewhat limited, which could have provided deeper insights into the novelty of their approach."
+            },
+            "soundness": "The study provides a solid methodological framework and supports its claims with empirical evidence from multiple domains. The experiments are well-conducted, and the results demonstrate the effectiveness of their approach. However, some aspects of the methodology could benefit from additional detail or validation.",
+            "overall_assessment": "The paper is good and makes a meaningful contribution to the field. It is well-written and the results are promising, but there is room for improvement in certain aspects of clarity and depth."
+        }
+    },
+    "2": {
+        "paper_id": "38f72f46a3c72e131ee8b9bf36a29842c151505fb66c8c29de16ae524881d65eb3173abfc16f94fcde8893fcc797be358fbce659a4f82a8e6e50bca193fd69b0",
+        "review_id": "2eff61e3383d619162b34202481957951c31775ae0cee6b90926ad8558979bbf60f62db6394885ae0fe01729aa6dbdb602dfc4eee008ad72ff586f139361eaaf",
+        "aspects": {
+            "strengths": {
+                "0": [
+                    "Data/Task"
+                ],
+                "1": [
+                    "Methodology",
+                    "Result"
+                ]
+            },
+            "weaknesses": {
+                "0": [
+                    "Methodology",
+                    "Data/Task"
+                ],
+                "1": [
+                    "Methodology"
+                ],
+                "2": [
+                    "Methodology",
+                    "Data/Task",
+                    "Evaluation"
+                ]
+            }
+        },
+        "human_review": {
+            "strengths": {
+                "0": "McMarket is one of the most extensive datasets in this domain, covering multiple languages and markets, which could be highly beneficial for future research.",
+                "1": "The integration of LLMs, like GPT-4, showed significant improvements over traditional methods in both tasks under study."
+            },
+            "weaknesses": {
+                "0": "The dataset, primarily derived from user-generated content, may contain inherent biases, which could skew the results or effectiveness of the QA systems developed using it.",
+                "1": "Some parts of the methodology, particularly those involving the use of AI models for generating and ranking answers, lacks the necessary detail to allow reproducibility.",
+                "2": "The paper heavily relies on large language models (LLMs) for dataset annotation and evaluation without thoroughly examining the limitations or biases these models might introduce."
+            }
+        },
+        "llm_review": {
+            "strengths": {
+                "0": "The paper introduces a novel task (MCPQA) and a large-scale dataset (McMarket) in the domain of product-related question answering, addressing a significant gap in cross-market and multilingual contexts.",
+                "1": "The methodology is sound, with thorough experimental evaluation across various models and scenarios, providing a comprehensive benchmark for future research."
+            },
+            "weaknesses": {
+                "0": "The dataset may suffer from potential biases and inaccuracies due to user-generated content.",
+                "1": "The temporal analysis of data availability across marketplaces could introduce biases in the results.",
+                "2": "The computational complexity and resource requirements for dataset generation are not thoroughly discussed, potentially affecting reproducibility."
+            },
+            "soundness": "The study is well-conducted with a clear research focus, thorough experimentation, and valid evaluation metrics. However, some limitations in dataset quality and language coverage slightly reduce its overall soundness.",
+            "overall_assessment": "The paper is a strong contribution to the field with significant potential, but it has notable shortcomings that need addressing before it would be considered top-notch."
+        }
+    },
+    "3": {
+        "paper_id": "a9ff676f49a8d12373550407f55b00465f11841801d4822daaab007c3be3f454553269c958ba3f1d79fa16802efb64f449ebf200fdbf5d756d3b7b6ba3a7f694",
+        "review_id": "9507d39c6f5e56c8f528f632bfac194e4f84f32a9c381b2ca9fee02d50884e5b7a1dad40132ee346b7807afa282df1c62fac3867e240d2d0801c80f9853cec05",
+        "aspects": {
+            "strengths": {
+                "0": [
+                    "Methodology"
+                ],
+                "1": [
+                    "Methodology",
+                    "Data/Task",
+                    "Result",
+                    "Experiment"
+                ],
+                "2": [
+                    "Experiment",
+                    "Result",
+                    "Presentation",
+                    "Methodology"
+                ],
+                "3": [
+                    "Methodology",
+                    "Ablation",
+                    "Experiment"
+                ]
+            },
+            "weaknesses": {
+                "0": [
+                    "Novelty"
+                ],
+                "1": [
+                    "Methodology"
+                ],
+                "2": [
+                    "Ablation",
+                    "Definition/Description/Detail/Discussion/Explanation/Interpretation",
+                    "Experiment"
+                ]
+            }
+        },
+        "human_review": {
+            "strengths": {
+                "0": "The authors proposed a new objective to learn adversarial suffixes for jailbreaking LLMs, which is currently a hot and important topic for their safety.",
+                "1": "The proposed DeGCG has been demonstrated to be effective through the experimental results. It also shows advanced properties, such as efficient learning of adversarial suffixes and transferabilities among different datasets and LLMs.",
+                "2": "The paper is clearly written and well-organized. It is easy to follow the authors' ideas and understand their approaches. The authors use clear figures, i.e., Figure 2, to show the procedure of their method. The notations and experimental results are clear and easy to read.",
+                "3": "The authors have conducted extensive experiments to demonstrate the effectiveness of DeGCG using various LLMs under different settings. They also discuss several important effects of the attack method via ablation studies."
+            },
+            "weaknesses": {
+                "0": "This paper's novelty is limited. The proposed DeGCG is based on GCG, with just a slight change in the objective.",
+                "1": "The authors should have reported the queries' perplexity after adding the adversarial suffixes to evaluate the stealthiness of the proposed method for jailbreaking attacks. Additionally. they should have provided some examples to show what the adversarial suffixes are learned from DeGCG. If they are gibberish words,  they are also easy to detect and filter by some defense methods [1].",
+                "2": "The ablation study on the two terms in the loss function is unclear. The authors should have provided more details of the experiments. \n\n[1] Zihao Xu, Yi Liu, Gelei Deng, Yuekang Li, and Stjepan Picek. 2024. Llm jailbreak attack versus defense techniques–a comprehensive study. arXiv preprint arXiv:2402.1345"
+            }
+        },
+        "llm_review": {
+            "strengths": {
+                "0": "The paper introduces a novel two-stage transfer learning framework (DeGCG) that significantly improves the efficiency of adversarial suffix searching in aligned language models, addressing key limitations of existing methods.",
+                "1": "The experimental results demonstrate strong empirical support across multiple models and datasets, showcasing the effectiveness of the proposed methodology in both cross-model and cross-data transfer scenarios.",
+                "2": "The paper provides a comprehensive analysis of the ablation study, comparing different initialization methods and their impact on the performance of the target models.",
+                "3": "The methodology is well-justified and the experimental setup is thorough, ensuring reproducibility and robustness of the results."
+            },
+            "weaknesses": {
+                "0": "The theoretical underpinnings of the two-stage framework are not deeply explored, leaving some room for explaining why the approach works at a higher level.",
+                "1": "The focus on open-source models may limit the generalizability of the findings to commercial models like GPT-4 or others not evaluated in this study.",
+                "2": "The ablation study, while present, could be expanded to include more comprehensive comparisons, particularly regarding the impact of different suffix initialization strategies."
+            },
+            "soundness": "4.0",
+            "overall_assessment": "4.0"
+        }
+    },
+    "4": {
+        "paper_id": "0be34345b6f719aa9cc5e06b8d3e0af8018471e40b964622bd1d6cd21a393de3b5eca441a0a6557ed26f2e3b24f5e851ebbfff230eccac25894e8b23696e93bd",
+        "review_id": "0533a9872fdb636bedb8e855f65d1e7bd93aefe0d6adcdc2077cf33f214fae069792cd705f76d5208155b3b13f7c29f9dd0d761fce23da62355c3b67b7e67977",
+        "aspects": {
+            "strengths": {
+                "0": [
+                    "Methodology"
+                ],
+                "1": [
+                    "Methodology",
+                    "Presentation"
+                ],
+                "2": [
+                    "Methodology",
+                    "Data/Task",
+                    "Experiment"
+                ]
+            },
+            "weaknesses": {
+                "0": [
+                    "Methodology",
+                    "Data/Task"
+                ],
+                "1": [
+                    "Methodology"
+                ],
+                "2": [
+                    "Methodology",
+                    "Data/Task",
+                    "Experiment"
+                ]
+            }
+        },
+        "human_review": {
+            "strengths": {
+                "0": "The paper thoroughly investigates the critical issue of fairness in large language models (LLMs) when they are used to process tabular data, emphasizing its significant implications for societal applications and decision-making processes.",
+                "1": "The manuscript is meticulously crafted and systematically organized, with figures that effectively and lucidly illustrate the underlying framework employed throughout the study.",
+                "2": "The authors embarked on a comprehensive series of experiments designed to evaluate the fairness of LLMs across a diverse array of datasets and LLMs, each subjected to a variety of experimental settings. These findings unveil the pivotal factors influencing the fairness of LLMs within the in-context learning (ICL) framework, offering profound insights into the dynamics at play."
+            },
+            "weaknesses": {
+                "0": "The authors only consider two datsets, which may not be necessarily sufficient for the evaluation of the framework. As there are plentiful tabular datasets, the authors should consider using more datasets.",
+                "1": "The authors use various LLMs for evaluation. However, the performance of the framework on smaller LMs, such as LLaMA, could also be important and necessitates investigations.",
+                "2": "The authors only focus on binary classification tasks. However, the fairness problems of LLMs may involve more classification tasks and even generation.\n\nThe authors added experiments with smaller LLMs, which helped improve the comprehensiveness of the experiments. Nevertheless, other concerns regarding the variety of datasets and tasks are not completely addressed. In fact, there is a recent fairness benchmark that could be considered for evaluation:\n\nCEB: Compositional Evaluation Benchmark for Fairness in Large Language Models."
+            }
+        },
+        "llm_review": {
+            "strengths": {
+                "0": "The methodology introduces a novel FCG algorithm for selecting diverse and representative samples, which is efficient and effective.",
+                "1": "Extensive experiments across various LLMs and datasets validate the effectiveness of the proposed method in improving fairness.",
+                "2": "The paper provides clear and thorough results that are likely to be of significant interest to the ACL community."
+            },
+            "weaknesses": {
+                "0": "The focus is limited to binary classification tasks, which may not fully address more complex real-world scenarios with multiple sensitive features.",
+                "1": "The study assumes equal weighting of fairness and performance metrics, which might not align with real-world applications requiring dynamic balancing.",
+                "2": "The use of pre-trained models without fine-tuning limits the understanding of how the method impacts model retraining."
+            },
+            "soundness": "The methodology is well-structured but could benefit from addressing multi-class tasks and long-term impacts.",
+            "overall_assessment": "This paper makes a significant contribution to the field with a novel methodology and thorough experimentation, but it has some limitations that could be explored in future work."
+        }
+    },
+    "5": {
+        "paper_id": "8a845df4f8f17b389d93f61944d96a8ac3002a0955fd9e0d07d9596f573190f484965c3c3faa20f91cd5086ec121b3845727d77dfdeca9a8abc7d0fc5fd66592",
+        "review_id": "9f069bfaac9c45a241753187d72497345aa661aceff67ae71f80d57e5f704832ccf2aa14a6be11c084eb6880705118cdad1e49b52f5bd9d610dadd87f7a4af1d",
+        "aspects": {
+            "strengths": {
+                "0": [
+                    "Methodology",
+                    "Novelty",
+                    "Data/Task"
+                ],
+                "1": [
+                    "Methodology"
+                ],
+                "2": [
+                    "Methodology",
+                    "Experiment"
+                ]
+            },
+            "weaknesses": {
+                "0": [
+                    "Definition/Description/Detail/Discussion/Explanation/Interpretation",
+                    "Result"
+                ],
+                "1": [
+                    "Methodology",
+                    "Intuition/Justification/Motivation/Validation",
+                    "Data/Task",
+                    "Result"
+                ],
+                "2": [
+                    "Intuition/Justification/Motivation/Validation",
+                    "Result"
+                ]
+            }
+        },
+        "human_review": {
+            "strengths": {
+                "0": "Novel method: The paper is the first work to integrate multiple prompting methods into the sequence-level distillation and proposes the method to construct the high-quality data, considering two different prompting methods.",
+                "1": "The method is intuitive. This paper is well-written and easy to follow the authors' thoughts.",
+                "2": "Experiments are pretty solid and cover nearly every aspect of the methodology to demonstrate its effectiveness."
+            },
+            "weaknesses": {
+                "0": "Some results are surprising for me and lack enough explanation. For example, in Table 1, when changing CoT to PoT, why can we gain so much improvement (34.5 to 74.0 on SVAMP) on T5 and GPT2. Could authors add more explanation to the result improvement.",
+                "1": "From Figure 9 (Few-shot Template on StrategyQA), I find that the PoT for StrategyQA, the common sense QA task, the code structure is simple and all the reasoning steps is in the docstrings of the function and I'm not so sure why such prompting could bring solid improvement than only using CoT. Could authors also do more explanation for the motivation of their method on the common sense reasoning dataset?",
+                "2": "I find that in Table 3, only increasing N, we can gain more improvement, especially for PoT but not so much on CoT. Could authors give me more intuition about the gap between CoT and PoT here?"
+            }
+        },
+        "llm_review": {
+            "strengths": {
+                "0": "The methodology is innovative, introducing a novel Mixed Distillation framework that effectively combines CoT and PoT for SLMs.",
+                "1": "The work presents a novel framework, which is a significant contribution to the field of distilling reasoning abilities into smaller models.",
+                "2": "Extensive experiments across multiple tasks demonstrate the effectiveness of the methodology, showcasing its practicality and validity."
+            },
+            "weaknesses": {
+                "0": "The explanation of PoT is somewhat vague and could benefit from more detailed clarification.",
+                "1": "The results section is dense with data, which may make it challenging for readers to follow the reasoning process clearly.",
+                "2": "The methodology, particularly the multi-task loss function and mixed thought data creation, is complex and could be simplified for better understanding."
+            },
+            "soundness": "4.5",
+            "overall_assessment": "4.5"
+        }
+    },
+    "6": {
+        "paper_id": "a48b82466ece28de801115448cdb615d0f271ca3719a979d98696847c03ecd499b42cf0c490b1f3506feaceba707b1f4be3e17e2807c8d15c4a0066633160704",
+        "review_id": "62c9e47137b0fa1c7fade0d525223cfce92b386c5308f66ae2a0dbaf1951d8e3bac6c69540629fb3b34eb8c73a8bf6bb542af96bbc84ee04eb73829b9df02261",
+        "aspects": {
+            "strengths": {
+                "0": [
+                    "Methodology",
+                    "Analysis"
+                ],
+                "1": [
+                    "Methodology",
+                    "Result"
+                ],
+                "2": [
+                    "Result",
+                    "Presentation"
+                ]
+            },
+            "weaknesses": {
+                "0": [
+                    "Novelty",
+                    "Contribution"
+                ],
+                "1": [
+                    "Intuition/Justification/Motivation/Validation"
+                ],
+                "2": [
+                    "Comparison"
+                ]
+            }
+        },
+        "human_review": {
+            "strengths": {
+                "0": "Comprehensive analysis of the framework: The authors tested each loss function (subsec 5.1.1~5.1.3) and demonstrated its generalizability by applying it to multiple tasks and backbone models.",
+                "1": "High performance gain: The framework achieves state-of-the-art results, verified by t-tests.",
+                "2": "Well-structured: The writing addresses the three main challenges (cross-lingual language consistency, ranking stability, and input size robustness) and provides solutions for each."
+            },
+            "weaknesses": {
+                "0": "It is unclear whether the identification of the three challenges is a novel contribution, or the challenges are well-known but the solution is novel. There is a need to discuss other works according to such challenges to better contextualize this contribution.",
+                "1": "Additionally, the three challenges are not clearly related, which may affect the focus and coherence of the paper's motivation.",
+                "2": "Baseline Selection: The baselines should be chosen based on the answer to the previous question. Current baselines seem to only focus on cross-lingual language consistency (not sure), and that may be the reason that McCrolin achieves SOTA."
+            }
+        },
+        "llm_review": {
+            "strengths": {
+                "0": "The paper presents a novel methodology for cross-lingual retrieval question answering with a multi-consistency training framework (McCrolin). The approach addresses significant challenges in the field by leveraging multi-task learning to enhance cross-lingual consistency, rank stability, and input-size robustness.",
+                "1": "The analysis is comprehensive, covering various aspects of cross-lingual retrieval and providing detailed experimental results that demonstrate state-of-the-art performance across multiple benchmarks.",
+                "2": "The experimental results are compelling, showing that McCrolin outperforms competitors in cross-lingual retrieval tasks, achieving the best performance across several metrics."
+            },
+            "weaknesses": {
+                "0": "The novelty and contribution of the work could be more clearly articulated. The paper could benefit from a more explicit explanation of how McCrolin differs from and improves upon existing methods.",
+                "1": "The intuition and motivation behind the proposed framework could be stronger. The paper could provide more background on why multi-task learning is particularly suited for cross-lingual retrieval.",
+                "2": "The comparison to existing methods is somewhat generic and could be more specific about the exact aspects of previous approaches that McCrolin addresses more effectively."
+            },
+            "soundness": "The study is sound and thorough. The methodology is well-defined, and the experimental results are supported by extensive validation across multiple benchmarks. The framework demonstrates significant improvements over existing approaches.",
+            "overall_assessment": "This paper is of significant interest and represents a strong contribution to the field of cross-lingual retrieval. The framework is well-designed and demonstrates strong empirical results. However, the novelty and comparison sections could be enhanced for clarity and impact."
+        }
+    },
+    "7": {
+        "paper_id": "ae58d59d0093e14d677de74a82c9a2db0b6e9fe498f677d43e21ad7309af6e16daa556eb78f1faac04e97fa9b789e89a1fe13597587c0c506006d88a7f237930",
+        "review_id": "b0ef8a56fe4f0f9d60371abae37af339207ef0146d1b5f252489b55230656144bce4aac37a695427c21807ed172e5015eccc0b66747b6c98ee53f8ed0539d88f",
+        "aspects": {
+            "strengths": {
+                "0": [
+                    "Methodology",
+                    "Novelty"
+                ],
+                "1": [
+                    "Methodology",
+                    "Contribution"
+                ],
+                "2": [
+                    "Methodology",
+                    "Data/Task",
+                    "Result"
+                ]
+            },
+            "weaknesses": {
+                "0": [
+                    "Methodology",
+                    "Related Work",
+                    "Comparison"
+                ],
+                "1": [
+                    "Methodology",
+                    "Definition/Description/Detail/Discussion/Explanation/Interpretation"
+                ],
+                "2": [
+                    "Intuition/Justification/Motivation/Validation",
+                    "Result",
+                    "Experiment"
+                ]
+            }
+        },
+        "human_review": {
+            "strengths": {
+                "0": "This paper introduces a novel approach by transitioning from VAE to AE, with a specific focus on modeling a compact latent space and preserving the language model's capabilities.",
+                "1": "The introduction of empirical prior estimation from learned latent vectors is a significant contribution. This method supports sampling during generation and addresses the challenges of simplistic prior distributions in VAE.",
+                "2": "This paper presents strong empirical results, demonstrating that the proposed AE models outperform SOTA VAE-based models in terms of text quality and diversity on standard benchmarks."
+            },
+            "weaknesses": {
+                "0": "Current baseline methods (2019-2022) are somewhat outdated and lack up-to-date literature for comparison.",
+                "1": "The methodological details, particularly the orthogonal regularization and empirical prior estimation, could be more clearly explained. Some sections are dense and may be difficult for readers to fully grasp without prior knowledge.",
+                "2": "In the introduction section, the final part is not detailed enough. It would be useful to illustrate this further by stating which experimental results demonstrate the validity of certain aspects of the study."
+            }
+        },
+        "llm_review": {
+            "strengths": {
+                "0": "The paper presents a novel methodology for text generation using Autoencoders (AE) with empirical priors, which is a significant departure from traditional Variational Autoencoders (VAE). The approach addresses key limitations of VAEs and demonstrates strong empirical results.",
+                "1": "The methodology is well-organized and the contributions to the field of text generation are clear. The use of empirical priors for sampling during generation is a notable technical advancement.",
+                "2": "The experimental results on standard benchmarks such as Yelp and Yahoo demonstrate that the proposed method outperforms existing VAE-based models in terms of quality and diversity."
+            },
+            "weaknesses": {
+                "0": "The related work section could be more comprehensive and better integrated with the rest of the paper.",
+                "1": "Some parts of the methodology are unnecessarily repetitive, which could be streamlined for clarity.",
+                "2": "The comparison with VAE models is thorough, but the discussion of how the empirical prior was chosen could be more detailed."
+            },
+            "soundness": "The study is well-conducted with a clear methodology and empirical validation. The experimental results are strong, but there could be more detailed statistical analysis to further solidify the claims.",
+            "overall_assessment": "This paper is solid work with clear contributions to the field of text generation. While it shows promise, there is room for improvement in certain areas such as the depth of related work and the clarity of some sections. Overall, it is a good submission that would benefit from minor revisions."
+        }
+    },
+    "8": {
+        "paper_id": "7bddbbbbfb9f015ebadb18d079460e858312d4e0e7da565b50aac8caf9c78e4a2774253f8267ee8290f1a3779723636d19460972dbc7c42e5e11094987e590a6",
+        "review_id": "94270cb1d1af4ceed458cee4d08d3fdd9dbd352b2929edab5cd2a269072afb84006b4501f685c75168056e227e1af54dd7b1671c4b375057e8bb862148fe4cc1",
+        "aspects": {
+            "strengths": {
+                "0": [
+                    "Methodology"
+                ],
+                "1": [
+                    "Methodology"
+                ]
+            },
+            "weaknesses": {
+                "0": [
+                    "Methodology",
+                    "Analysis"
+                ],
+                "1": [
+                    "Methodology"
+                ],
+                "2": [
+                    "Result"
+                ]
+            }
+        },
+        "human_review": {
+            "strengths": {
+                "0": "Similar to a concurrent work [1], the authors find that consistent directions exists for refusal or acceptance of a prompt.",
+                "1": "This insight is then used to propose a method to find this direction which can enhance and complement other whitebox jailbreak attacks. - This mainly involves moving the representation of current attack in the direction of the acceptance direction.\n\n[1] Refusal in Language Models Is Mediated by a Single Direction https://arxiv.org/abs/2406.11717"
+            },
+            "weaknesses": {
+                "0": "The analysis mainly applies for models whose weights are accessible and thus excludes some of the frontier models.",
+                "1": "The optimization based approach to move the representation in the acceptance direction can lead to the prompt being unfaithful to the original intent of the i initial jailbreaking prompt and requires powerful LLM as a judge to avoid such drift in semantics.",
+                "2": "The  improvements over baseline for some models/attacks appear less significant based on the empirical results presented."
+            }
+        },
+        "llm_review": {
+            "strengths": {
+                "0": "The paper presents a novel framework for analyzing jailbreak attacks in LLMs through representation space analysis, which is a significant methodological advancement.",
+                "1": "The integration of PCA and empirical validation across multiple models demonstrates practical value and robustness."
+            },
+            "weaknesses": {
+                "0": "The methodology may be complex for non-experts due to the use of PCA and the requirement for white-box access.",
+                "1": "The analysis focuses primarily on white-box attacks and does not explore black-box methods, limiting its scope.",
+                "2": "The results, while showing improved ASR, do not fully address the broader impact on LLM safety mechanisms."
+            },
+            "soundness": "4.5",
+            "overall_assessment": "Top-Notch: This paper presents groundbreaking insights into jailbreak attacks and their mechanisms, offering a comprehensive methodological framework that significantly advances the field."
+        }
+    },
+    "9": {
+        "paper_id": "45d4d840fd5ef1660c40f6d4c03d48310aa3468e234711627d7052dc5413a4d25276a77126dfa6bb5c73666e6e88a4418691d87fd45188f47ada032877b674b4",
+        "review_id": "ad4f9ee393b2d478e4fcb754de26bfb25cfd17d741fd310b9aadfc8a69bb9d52f33e9900c30e3a0fa243d6b6f06713778faa4e464dddc263a386da3f35767e6f",
+        "aspects": {
+            "strengths": {
+                "0": [],
+                "1": [
+                    "Methodology",
+                    "Data/Task"
+                ],
+                "2": [
+                    "Methodology",
+                    "Intuition/Justification/Motivation/Validation",
+                    "Experiment"
+                ]
+            },
+            "weaknesses": {
+                "0": [
+                    "Methodology"
+                ],
+                "1": [
+                    "Data/Task",
+                    "Evaluation"
+                ],
+                "2": [
+                    "Methodology",
+                    "Result"
+                ]
+            }
+        },
+        "human_review": {
+            "strengths": {
+                "0": "CasCoD introduces a two-step learning process that significantly mitigates the issue of spurious correlations, a common limitation in current distillation practices.",
+                "1": "The method is shown to enhance the generalizability of reasoning for SLMs across various datasets, demonstrating its effectiveness in both IND and OOD settings.",
+                "2": "The methodology is rigorously validated through extensive experiments, showing clear improvements over baseline models and previous approaches."
+            },
+            "weaknesses": {
+                "0": "The success of the method heavily depends on the quality of CoTs generated by teacher models, which if flawed, could propagate errors to the student models.",
+                "1": "The selection of datasets for evaluation could inherently favor the proposed method, especially if the datasets share similar characteristics that are particularly suited to the cascading learning process.",
+                "2": "The performance of CasCoD might be sensitive to the tuning of hyperparameters such as the loss weighting factor α, which can affect the balance between learning rationales and answers."
+            }
+        },
+        "llm_review": {
+            "strengths": {
+                "0": "The methodology is novel and effectively addresses the issue of spurious correlations in traditional CoT distillation methods, which limits generalization.",
+                "1": "The experimental results demonstrate strong performance across both in-domain and out-of-domain tasks, showcasing the effectiveness of the proposed Cascading Decomposed CoTs Distillation method.",
+                "2": "The approach is methodologically rigorous, decomposing the learning process into two cascaded steps and providing detailed explanations of the rationale and answer learning steps, ensuring clarity and thoroughness."
+            },
+            "weaknesses": {
+                "0": "The paper is dense and may be challenging for readers unfamiliar with CoT distillation or language model training.",
+                "1": "The methodology is complex and requires a deep understanding of Chain-of-Thoughts (CoT) mechanisms and their implications for model performance.",
+                "2": "The discussion of limitations is somewhat brief and could benefit from further elaboration on how these limitations were identified and addressed."
+            },
+            "soundness": "4.5",
+            "overall_assessment": "The paper makes a significant contribution to the field of CoT distillation with a novel and effective methodology. While the results are strong, some aspects of the paper could be improved with additional explanations and a more comprehensive discussion of limitations."
+        }
+    },
+    "10": {
+        "paper_id": "3b9ee53710e63a012db0daf5e0b09203ec3f8ebc50092a5a55a5b04a9ac6c2fe8aaa5bbd5377f6d3796b1af0dffeb1efbc042629826d308f0d4e495b073ea435",
+        "review_id": "284dcb85e1ff69087e208ffbe829a2d79cddd0579f9a722af580f78693c90801fd36ec632471b1f6ef30565957d27a95785409093c123b0b9cf87230fdc32b99",
+        "aspects": {
+            "strengths": {
+                "0": [
+                    "Methodology",
+                    "Result",
+                    "Experiment",
+                    "Analysis"
+                ],
+                "1": [
+                    "Result",
+                    "Evaluation",
+                    "Experiment"
+                ],
+                "2": [
+                    "Analysis"
+                ]
+            },
+            "weaknesses": {
+                "0": [
+                    "Experiment"
+                ],
+                "1": [
+                    "Novelty",
+                    "Comparison"
+                ],
+                "2": [
+                    "Result",
+                    "Experiment",
+                    "Analysis"
+                ]
+            }
+        },
+        "human_review": {
+            "strengths": {
+                "0": "The experiment results are explicitly effective and demonstrate the paper’s analysis, such as the correlation between the first token and the prefixed key.",
+                "1": "C-ROME is capable of dealing with collapse cases effectively. The experiment result exemplifies that C-ROME has a significant restorative effect on the edit efficacy metric.",
+                "2": "The relationship between collapse cases and the token length of the edit question’s subject is quite interesting, which was neglected in the previous analysis."
+            },
+            "weaknesses": {
+                "0": "The experiment of unprefixed k* and prefixed k* lacks of innovation, because the difference in their distributions is intuitive. The representations of k* with prefixes will be integrated with the random-sampled prefixes in the self-attention module. Even if their next token prediction results may be similar at the last layer, their representations still show significant differences in distribution at ROME’s edit layer (17th layer for GPT2-XL with 48 layers).",
+                "1": "Compared to method ROME, method C-ROME does not present any novel changes over method ROME, indicating that this paper may lack sufficient workload.",
+                "2": "The analysis based on Llama is not sufficiently convincing. The experimental results do not demonstrate the improvements of C-ROME on Llama, and the analysis of Llama in the paper is also questionable."
+            }
+        },
+        "llm_review": {
+            "strengths": {
+                "0": "The methodology is thorough, providing a comprehensive analysis of the causes of LLM collapse in model editing.",
+                "1": "The experimental results are presented with sufficient detail and provide clear evidence to support the claims about ROME's collapse.",
+                "2": "The analysis of the key distributions and their impact on model behavior is thorough and insightful."
+            },
+            "weaknesses": {
+                "0": "The paper focuses on specific models (GPT-2-XL, GPT-J) and may have limited generalizability to other architectures.",
+                "1": "The discussion of the proposed solution's impact is somewhat limited, and its broader implications could be explored more deeply.",
+                "2": "The comparison with other editing methods or existing literature is not extensive, which may limit the paper's impact."
+            },
+            "soundness": "4.5",
+            "overall_assessment": "The paper is a strong contribution to the understanding of model collapse in editing, with a sound methodology and thorough analysis. However, it would benefit from broader generalization and more extensive comparisons with other methods."
+        }
+    },
+    "11": {
+        "paper_id": "e325710df7aead22e9cdad007978bcdeee4e57d7f8a13aca3c4407611061b1c36e05b324358e90105f2212b7dc294b6fd1cdd26cb26d33cb6e0415879ef64a81",
+        "review_id": "178f7b34d6258d7f78646759c623ea4a9cb9240eda2a15d76dadfc116976c438497f0d427b5c753d7c3e946e82ff251758d305121daa9a9158db94a7b72deee4",
+        "aspects": {
+            "strengths": {
+                "0": [
+                    "Experiment",
+                    "Presentation",
+                    "Methodology"
+                ],
+                "1": [
+                    "Methodology"
+                ],
+                "2": [
+                    "Methodology"
+                ]
+            },
+            "weaknesses": {
+                "0": [
+                    "Methodology"
+                ],
+                "1": [
+                    "Methodology",
+                    "Result"
+                ],
+                "2": [
+                    "Methodology"
+                ]
+            }
+        },
+        "human_review": {
+            "strengths": {
+                "0": "well written, easy to read, easy to follow, introducing the method and experiment to reader fluently.",
+                "1": "the ideal is simple yet efficient, fully utilized the LLMs to enhance existing models by providing ABSA models with simplified, clearer sentences as input, the paper demonstrates that ATOSS significantly improves the performance of sentiment quadruplet extraction tasks, such as ASQP and ACOS. This highlights the substantial impact that sentence structure can have on the effectiveness of sentiment analysis.",
+                "2": "ATOSS is designed as a \"play-and-plug\" module that can be seamlessly integrated with various ABSA models, including both fine-tuned and large language models (LLMs). This allows the benefits of the sentence simplification to be leveraged without requiring any modifications to the underlying ABSA models."
+            },
+            "weaknesses": {
+                "0": "the Direct preference optimization (DPO) part leads to the decrease of the generalizability of this method, a model-specific training procedure is requirement when it comes a new model. Thus the \"play-and-plug\" is not applicable on this method.",
+                "1": "Besides, It doesn't look like DPOs have a very big performance advantage, and their complexity is higher, also limits the generalizability of the method. I think it was there simply because the authors want to make the whole method more complex.",
+                "2": "the method is pretty easy and simple, the workload is small too. This article is more suitable as a short paper."
+            }
+        },
+        "llm_review": {
+            "strengths": {
+                "0": "The paper presents novel methodology in the form of the ATOSS module, which effectively simplifies complex sentences to improve aspect-based sentiment analysis. This contributes to the broader field of natural language processing by addressing a significant challenge in processing compound sentences.",
+                "1": "The methodology is well-documented, providing a clear explanation of the ATOSS module's design, implementation, and experimental results. This transparency enhances the reproducibility of the work.",
+                "2": "The experimental results demonstrate significant improvements in ABSA models' performance across multiple datasets, highlighting the practical effectiveness of the proposed approach."
+            },
+            "weaknesses": {
+                "0": "The methodology section lacks some clarity in explaining how the ATOSS module was trained and validated, particularly in the initial stages of the research.",
+                "1": "The results do not fully address potential edge cases or provide a detailed error analysis for challenging scenarios, which could limit the paper's impact on the field.",
+                "2": "The paper heavily relies on the use of LLMs, which introduces dependencies on external models and their associated biases, potentially limiting the scalability and generalizability of the approach."
+            },
+            "soundness": "4.5",
+            "overall_assessment": "Top-Notch"
+        }
+    },
+    "12": {
+        "paper_id": "edf1ceb210c35f1cddd0c160298d0c32b75e09e4672e6c3cd4bf698b5c6a3280c54280c86fba7b56f78c691650d135d57e5763acc2c6707ad0ecef6f15996da9",
+        "review_id": "90bf4ad6c16fb58f1e8b16fb5ef83f17ecda112e8078034a08ad8a7e14453e146be58c65b909749b2f0ba67d55c8041228c92c487aab822da45481564296aa19",
+        "aspects": {
+            "strengths": {
+                "0": [
+                    "Data/Task",
+                    "Evaluation"
+                ],
+                "1": [
+                    "Methodology",
+                    "Novelty"
+                ],
+                "2": [
+                    "Methodology",
+                    "Data/Task",
+                    "Result",
+                    "Experiment"
+                ]
+            },
+            "weaknesses": {
+                "0": [
+                    "Data/Task",
+                    "Definition/Description/Detail/Discussion/Explanation/Interpretation"
+                ],
+                "1": [
+                    "Data/Task"
+                ],
+                "2": [
+                    "Methodology"
+                ]
+            }
+        },
+        "human_review": {
+            "strengths": {
+                "0": "**Comprehensive Dataset**: The OEE-CFC dataset is extensive and well-annotated, covering a wide range of event types and argument roles, including complex and shared arguments. This makes it a valuable resource for training and evaluating event extraction models.",
+                "1": "**Novel Methodology**: The authors developed a general open event template that includes not only common roles like subject, object, and time but also more nuanced roles such as background, manner, and scope. This comprehensive approach provides a deeper understanding of event semantics and enhances the extraction process.",
+                "2": "**Insightful Empirical Results**: The experiments conducted using the PAIE framework and the four designed prompts demonstrate the dataset's practical significance. The explicit continuous prompt, in particular, achieved the best performance, validating the dataset's utility in real-world applications."
+            },
+            "weaknesses": {
+                "0": "**Detailed Annotation Process**: The dataset setup is complex and detailed, making the annotation task more challenging than traditional event extraction tasks. It's crucial to know how annotators performed their tasks and how the quality of annotation work was controlled. This aspect requires a more detailed description.",
+                "1": "**Annotation Cost**: There is no mention of the cost of the annotation work. Providing information on the time and resources required for annotation would help in understanding the feasibility of replicating or extending this work.",
+                "2": "**Inconsistent Model Development**: The abstract mentions the development of two event extraction models, but only one is discussed in detail in the subsequent sections. Clarifying this discrepancy and providing details on both models would improve the paper's coherence and completeness."
+            }
+        },
+        "llm_review": {
+            "strengths": {
+                "0": "The paper addresses an important and underexplored task in event extraction by focusing on unconventional entities and complex scenarios in Chinese financial commentaries.",
+                "1": "The methodology is comprehensive, with a well-defined open event template and detailed annotation process.",
+                "2": "The dataset (OEE-CFC) is extensive, containing a large number of events and arguments, making it a valuable resource for future research."
+            },
+            "weaknesses": {
+                "0": "The focus on Chinese financial commentaries limits the generalizability of the dataset to other domains and languages.",
+                "1": "The definition and explanation of some event roles could be more precise and detailed.",
+                "2": "The methodology section could benefit from more information about the annotation process and inter-annotator agreement."
+            },
+            "soundness": "4.0",
+            "overall_assessment": "This paper makes a reasonable contribution, but some minor revisions could enhance its broader impact and applicability."
+        }
+    },
+    "13": {
+        "paper_id": "d00aa34b7e17383c765a49a99a7a30ba262096d0ccb39bf41d9674ccc8ccbf509ababd909e56db41ad5df363fb063ffd9244c1c0531765cb4499c13290406ee8",
+        "review_id": "a1c684fddf3f72ed4e0b2176d7134d7fb7e64cb001e1169d60b9b9ed7d9d294efab3cd5166941bbc3acba31dfe3a8c4b30ec237a37dd98b6bce3d9e507a8da4a",
+        "aspects": {
+            "strengths": {
+                "0": [
+                    "Methodology",
+                    "Contribution",
+                    "Data/Task"
+                ],
+                "1": [
+                    "Data/Task",
+                    "Experiment"
+                ],
+                "2": [
+                    "Presentation"
+                ]
+            },
+            "weaknesses": {
+                "0": [
+                    "Methodology"
+                ],
+                "1": [
+                    "Methodology",
+                    "Data/Task"
+                ],
+                "2": [
+                    "Methodology",
+                    "Data/Task",
+                    "Comparison"
+                ]
+            }
+        },
+        "human_review": {
+            "strengths": {
+                "0": "The paper tackles an important research question. It addresses a significant gap in understanding how large language models (LLMs) encode and adapt to task-specific information through instruction tuning. It contributes by identifying distinct layers in LLMs where general to task-specific transitions occur, which extends the understanding of multi-task learning mechanisms",
+                "1": "The paper conducts experiments across a wide range of over 60 NLP tasks, using the Flan dataset, which encompasses both language understanding and generation tasks",
+                "2": "Figure 3 is very interesting and conveys the idea clearly."
+            },
+            "weaknesses": {
+                "0": "Nor the acronym nor the technique were mentioned in the cited paper technique called Model-Oriented Sub-population and Spectral Anal ysis (MOSSA (MOSSA; Zhao et al. 2022),",
+                "1": "The assumption of uniform data size and the use of single-task control models might oversimplify real-world scenarios where task datasets vary significantly in size and complexity.",
+                "2": "While the study compares Llama 2-SFT with task-specific fine-tuned control models, it might benefit from additional comparisons with other state-of-the-art models or broader benchmarks to validate its findings across different settings."
+            }
+        },
+        "llm_review": {
+            "strengths": {
+                "0": "The paper presents a comprehensive methodology for analyzing the impact of instruction tuning on large language models, which is a significant contribution to the understanding of multi-task learning in LLMs.",
+                "1": "The study provides novel insights into how different tasks influence the representations of pre-trained LLMs and how instruction tuning affects these representations across a diverse set of over 60 NLP tasks.",
+                "2": "The findings are supported by rigorous empirical analysis using advanced matrix analysis tools and statistical metrics like CKA, which adds credibility to the conclusions."
+            },
+            "weaknesses": {
+                "0": "The methodology relies heavily on the use of Llama 2, which may limit the generalizability of the findings to other model architectures or fine-tuning approaches.",
+                "1": "The analysis focuses exclusively on NLP tasks, missing insights from other domains like code tasks, which could provide additional context for understanding task-specific representations.",
+                "2": "The comparison of the experimental model with the control models could have benefited from a more detailed analysis of task-specific versus general representations across different model architectures."
+            },
+            "soundness": "4.0",
+            "overall_assessment": "3.5"
+        }
+    },
+    "14": {
+        "paper_id": "14e9fe9668d2faf2e87562f830e72f6b97d3b653166c11bb46d2f3f29ed382bb76290d9902aabfa3447bb239a3ffe3668514ad5e5e13ce08121ce288f236c0d0",
+        "review_id": "b36e08f9ec6e44de1675de89f7b4d7dc4efbdc5c2fd49e6d7ab2b064777074bec48988bb3016f7becf5b8a39186b09b20e5ce9bc8d0ff14913f256b955a9ea46",
+        "aspects": {
+            "strengths": {
+                "0": [
+                    "Methodology",
+                    "Result"
+                ],
+                "1": [
+                    "Result",
+                    "Experiment",
+                    "Comparison",
+                    "Intuition/Justification/Motivation/Validation",
+                    "Methodology"
+                ],
+                "2": [
+                    "Methodology"
+                ],
+                "3": [
+                    "Methodology",
+                    "Data/Task"
+                ]
+            },
+            "weaknesses": {
+                "0": [
+                    "Methodology"
+                ],
+                "1": [
+                    "Methodology",
+                    "Data/Task"
+                ],
+                "2": [
+                    "Intuition/Justification/Motivation/Validation",
+                    "Data/Task",
+                    "Result",
+                    "Experiment"
+                ],
+                "3": [
+                    "Methodology"
+                ]
+            }
+        },
+        "human_review": {
+            "strengths": {
+                "0": "The introduction of NNN provides a simple yet effective way to enhance multimodal retrieval performance without the need for additional training. This method's applicability across different models and datasets highlights its versatility.",
+                "1": "The experimental results are comprehensive, showing consistent improvements in retrieval accuracy for both text-to-image and image-to-text tasks. The inclusion of multiple baselines (DBNorm, QBNorm, DualIS) and a variety of models strengthens the validity of the findings.",
+                "2": "The paper addresses the critical issue of gender bias in multimodal retrieval. The ability of NNN to reduce bias while maintaining or improving accuracy is particularly noteworthy and addresses a significant concern in the deployment of AI systems.",
+                "3": "The method's computational efficiency, with sublinear runtime relative to the reference database size, makes it suitable for real-world applications where computational resources may be limited."
+            },
+            "weaknesses": {
+                "0": "While the method shows promising results for contrastive multimodal models, its applicability to models with dedicated cross-attention mechanisms remains uncertain. This limitation should be acknowledged and explored in future work.",
+                "1": "NNN's reliance on a reference database could be a limitation in scenarios where such a database is unavailable or challenging to curate. Exploring methods to mitigate this dependency would be beneficial.",
+                "2": "The experiments primarily focus on well-known datasets (MS-COCO and Flickr30k). Including more diverse datasets, especially those with different characteristics or from different domains, could further validate the method's robustness.",
+                "3": "The need for hyperparameter tuning (α and k) might complicate the method's implementation. Providing more guidelines or an automated approach for selecting these parameters could enhance usability."
+            }
+        },
+        "llm_review": {
+            "strengths": {
+                "0": "The paper presents a novel methodology, Nearest Neighbor Normalization (NNN), which efficiently improves retrieval performance without additional training.",
+                "1": "The results demonstrate consistent improvements across multiple models and datasets, with significant gains in retrieval accuracy.",
+                "2": "The methodology is well-validated with extensive empirical testing and comparison against existing methods like QBNorm and DBNorm.",
+                "3": "The approach provides a clear intuition and justification for how NNN works, backed by experimental validation."
+            },
+            "weaknesses": {
+                "0": "The methodology could benefit from more detailed explanation of how the bias correction works at a high level.",
+                "1": "The results on crossmodal models are not as comprehensive, as the method is slower for these cases.",
+                "2": "The paper could provide more insight into the generalizability of the method across different reference datasets and tasks.",
+                "3": "The limitations section could better address potential impacts of the method on real-world applications."
+            },
+            "soundness": "4.5",
+            "overall_assessment": "4.5"
+        }
+    },
+    "15": {
+        "paper_id": "e57353cc0b3d8cd9c430479fd833cb0ed7797df5452b400ef9729f3ca225261a3e0c21f53483c1b2aec3b0da86e73888b967847793b4a20ac94be85d39b1e01e",
+        "review_id": "8111a667d5fa2a7723d5ddf90cae1f8d9ce7678ececcba3db6b40aa42aca7727266b3e4b76990c1bb721175493aeac3322b281f7cd0af2b2aaa00f101328711f",
+        "aspects": {
+            "strengths": {
+                "0": [
+                    "Methodology"
+                ],
+                "1": [
+                    "Methodology",
+                    "Result",
+                    "Evaluation"
+                ]
+            },
+            "weaknesses": {
+                "0": [
+                    "Methodology"
+                ],
+                "1": [
+                    "Methodology",
+                    "Result",
+                    "Evaluation",
+                    "Comparison"
+                ],
+                "2": [
+                    "Data/Task",
+                    "Theory"
+                ]
+            }
+        },
+        "human_review": {
+            "strengths": {
+                "0": "The proposed prompt optimization framework is easy to understand and can be applied to both open-source LLMs and proprietary models. Also, the high correlation between the fairness measure and evaluation performance makes this framework somewhat plausible.",
+                "1": "This work mentions the connection and difference between the proposed preference fairness measure and other confidence measures or bias measures, which facilitates more comprehensive research on the robustness and fairness of model evaluation."
+            },
+            "weaknesses": {
+                "0": "Only two open-source LLMs are used in this study, which makes the generality of the prompt optimization approach questionable. Adding more Open-source and proprietary models will make this approach more convincing.",
+                "1": "Although other confidence measures are compared with the proposed approach in terms of their correlation with evaluation performance in Figure 3, it is unknown how well they are used as the optimization objective. There is no guarantee that a low correlation with evaluation performance will result in bad performance when used as the prompt optimization objective.",
+                "2": "The authors claim their preference fairness measure can indicate \"fairness\", but it is subject to the label distribution of datasets. Therefore the proposed preference fairness measure does not have theoretical advantages over context-free confidence."
+            }
+        },
+        "llm_review": {
+            "strengths": {
+                "0": "The paper presents a novel methodology, ZEPO, which is a zero-shot prompt optimization framework designed to improve the fairness of LLM evaluators without requiring labeled data.",
+                "1": "The methodology is supported by comprehensive experimental results across multiple models (Mistral 7B and Llama-3 8B) and evaluation metrics, demonstrating significant improvements in alignment with human judgments."
+            },
+            "weaknesses": {
+                "0": "The code release is only available on an anonymous link and not publicly accessible, which may limit reproducibility.",
+                "1": "The methodology is data-intensive, relying on a large amount of unlabeled data, which may not always be feasible in all research settings.",
+                "2": "The scope of the task is narrow, focusing only on pairwise evaluations, and the framework has not been extensively tested on more complex tasks like multi-choice question formats."
+            },
+            "soundness": "The methodology is technically sound and well-justified. The results are supported by extensive experiments and thorough analysis of the impact of prompt optimization on evaluation fairness.",
+            "overall_assessment": "The paper makes significant contributions to the field of LLM evaluation with a novel framework. While the results are promising, there is room for expansion to test the framework on a broader range of tasks and to include more theoretical analysis."
+        }
+    },
+    "16": {
+        "paper_id": "139a56bf6112e2bc59aa9a225235f33bce75e107de6db25f18f89ad6a0db6930b0e84ffc78be582dba647facc158495a1b023beda3fc1463c4b21c8a09113ac7",
+        "review_id": "76e2827bdf408fdd223f1cb2d69330c6b8f036405fe101bf82557222db609b3f32bc22b44b158e100d5c1645f74d303099a24fb342beca9f598da166e4cd0051",
+        "aspects": {
+            "strengths": {
+                "0": [
+                    "Methodology",
+                    "Data/Task"
+                ],
+                "1": [
+                    "Methodology",
+                    "Data/Task",
+                    "Result"
+                ]
+            },
+            "weaknesses": {
+                "0": [
+                    "Data/Task"
+                ],
+                "1": [
+                    "Methodology",
+                    "Data/Task"
+                ],
+                "2": [
+                    "Methodology",
+                    "Intuition/Justification/Motivation/Validation",
+                    "Comparison"
+                ]
+            }
+        },
+        "human_review": {
+            "strengths": {
+                "0": "This task provides a well-suited scenario for complex, multiparty dialogues. Along with the framework, the authors also contribute to heavily annotated datasets which can benefits the collaborative dialogue community.",
+                "1": "By treating the task as a probabilistic clustering problem, the method can jointly optimize the identification of probing and causal interventions and the links between them, leading to more accurate and meaningful clusters."
+            },
+            "weaknesses": {
+                "0": "The reliance on GPT for generating annotations may introduce bias into the training data. Conducting a consistency check with human annotations on a subset of the data would help validate the labeling.",
+                "1": "In Equation 1, the joint modeling appears to independently model the three variables, which is counterintuitive. Does that mean these three tasks can be independently trained? It would be helpful to clarify if the joint modeling is intended to function as a multi-task setting.",
+                "2": "For baseline comparison, including a Longformer without joint modeling as an additional ablation would help validate the model design."
+            }
+        },
+        "llm_review": {
+            "strengths": {
+                "0": "The paper presents a novel methodology for modeling deliberation chains in collaborative dialogues, which is both theoretically grounded and practically implemented. The use of two well-established datasets (DeliData and Weights Task Dataset) provides a solid empirical foundation for evaluating their approach.",
+                "1": "The methodology is comprehensive, incorporating insights from coreference resolution and leveraging advanced modeling techniques. The evaluation against multiple baselines and datasets demonstrates the robustness and effectiveness of their approach."
+            },
+            "weaknesses": {
+                "0": "The dataset annotations, particularly for the Weights Task Dataset, may be influenced by the limitations of GPT-3.5-turbo-0125 in accurately capturing causal and probing utterances, potentially introducing noise into the results.",
+                "1": "The study assumes a linear order of utterances, which may not hold in more complex or multimodal scenarios, potentially limiting the generalizability of the framework.",
+                "2": "The methodology's dependence on dense paraphrasing for the Weights Task Dataset might overlook non-verbal cues, which could provide additional insights into collaborative deliberation."
+            },
+            "soundness": "4.5",
+            "overall_assessment": "4.5"
+        }
+    },
+    "17": {
+        "paper_id": "e8ebc5efec5ffb0aeac12a36b45c55c083f8734568c9f8dc24efc1dee4200c287b01ed316d7ad2a7e4b33722ffa8d8e047ce846203dccec12b8475ec3940f1c6",
+        "review_id": "498a41fa6ebdb1fce0c8f1ac77ea27a4767882c3a6ea2573b8ec14d7fcd1a30cb48d3baa192bf496daa002a84b9f8df4f16d4e4a444d994efe604ce2a7858a18",
+        "aspects": {
+            "strengths": {
+                "0": [
+                    "Data/Task"
+                ],
+                "1": [
+                    "Data/Task",
+                    "Analysis"
+                ],
+                "2": [
+                    "Methodology",
+                    "Data/Task",
+                    "Result"
+                ]
+            },
+            "weaknesses": {
+                "0": [
+                    "Data/Task",
+                    "Result",
+                    "Analysis"
+                ],
+                "1": [
+                    "Experiment",
+                    "Comparison",
+                    "Data/Task",
+                    "Evaluation",
+                    "Methodology"
+                ],
+                "2": [
+                    "Novelty",
+                    "Experiment",
+                    "Data/Task",
+                    "Presentation",
+                    "Contribution"
+                ]
+            }
+        },
+        "human_review": {
+            "strengths": {
+                "0": "The paper proposes a new multi-turn emotional support dialogue dataset generated by ChatGPT, which can mitigate the difficulty of collecting real-scenario emotional support dialogues.",
+                "1": "The paper conducts detailed characteristic analysis on their dataset to show the high quality of the dataset.",
+                "2": "Fine-tuning on multiple LLMs shows the dataset could improve the dialogue generation performances of LLMs"
+            },
+            "weaknesses": {
+                "0": "The paper lacks a clear definition of the key features of emotional support. Effective data synthesis should demonstrate how closely the dataset simulates these key features of the original context. Consequently, the diversity analysis appears ill-founded, and the quality analysis section is too brief to be fully understood without references to a result table.",
+                "1": "Regarding the experiments, it is intuitive that fine-tuning LLMs on a specific task dataset can enhance evaluation quality. In section 3.2.1, the authors compare three methods of data generation but fail to verify if the complex data simulation is truly necessary by not comparing these methods in their experiments.",
+                "2": "The paper's main focus is unclear. The authors outline their contributions to dataset creation methods, datasets, and experiments, but the novelty of the main topic remains vague. The authors may need to revise the paper to eliminate redundant parts and clarify the primary focus."
+            }
+        },
+        "llm_review": {
+            "strengths": {
+                "0": "The paper addresses an important and underexplored problem in mental health support by introducing a method to transform single-turn dialogues into multi-turn conversations.",
+                "1": "The study provides a comprehensive analysis of the proposed method's effectiveness across multiple large language models, ensuring robustness and generalizability.",
+                "2": "The authors made their datasets and models publicly available, which is a valuable contribution to the research community."
+            },
+            "weaknesses": {
+                "0": "The dataset may not fully capture the complexity of real-life counseling interactions due to its reliance on QA pairs.",
+                "1": "The experimental evaluation could benefit from more detailed human evaluations to ensure the models' effectiveness in real-world scenarios.",
+                "2": "The method's reliance on LLMs might not yet meet the standards for real-world clinical applications."
+            },
+            "soundness": "The methodology is sound, but there is potential for more comprehensive evaluation, especially in terms of human evaluation and real-world applicability.",
+            "overall_assessment": "The paper is innovative and makes a significant contribution to the field of mental health support through the introduction of SMILE and the associated dataset. It has the potential to significantly impact future research and applications in this domain, though further refinement in evaluation methods is recommended."
+        }
+    },
+    "18": {
+        "paper_id": "f721458a4b6e1612009ac5485eab6d1dcf94d4681d72ca6bd41a6c650eea1c869132deeb342adfafcb4560fa30aa28d4c7abf7710d7c1db1e9e30d3846a8ed62",
+        "review_id": "39f990ad8140e63f159895d7ade8eeeba4bb82fbbbcb7386485c1b473254e962b0dfe682cabb9eba9a801c2a848ff001815d8c9cebee0548df93e1bcf2ec0096",
+        "aspects": {
+            "strengths": {
+                "0": [
+                    "Methodology",
+                    "Analysis"
+                ],
+                "1": [
+                    "Methodology",
+                    "Novelty",
+                    "Definition/Description/Detail/Discussion/Explanation/Interpretation"
+                ],
+                "2": [
+                    "Data/Task",
+                    "Result",
+                    "Evaluation"
+                ],
+                "3": [
+                    "Methodology"
+                ],
+                "4": [
+                    "Methodology",
+                    "Result"
+                ]
+            },
+            "weaknesses": {
+                "0": [
+                    "Methodology",
+                    "Novelty"
+                ],
+                "1": [
+                    "Methodology",
+                    "Data/Task"
+                ],
+                "2": [
+                    "Methodology",
+                    "Experiment"
+                ],
+                "3": [
+                    "Methodology",
+                    "Result"
+                ],
+                "4": []
+            }
+        },
+        "human_review": {
+            "strengths": {
+                "0": "Well-organized and clearly written paper that provides a detailed analysis of existing attribution methods' shortcomings.",
+                "1": "Introduces MIRAGE, a novel approach leveraging model internals for answer attribution, offering better interpretability and controllability.",
+                "2": "Thoroughly evaluated on multilingual datasets and against human-produced annotations, showing promising results.",
+                "3": "Efficient method that doesn't require additional training or external validation models.",
+                "4": "Demonstrates comparable performance to self-citation methods while offering finer-grained control over attribution parameters."
+            },
+            "weaknesses": {
+                "0": "Limited innovation, as it primarily applies the PECORE method to citations without addressing significant new challenges.",
+                "1": "On the XOR-AttriQA dataset, the method performs better only when using the annotated data from that dataset, but its generalizability has not been verified on other datasets.",
+                "2": "Lacks experiments on larger parameter models. It's unclear whether MIRAGE still has advantages over self-citation when using larger models.",
+                "3": "Performance sensitivity to attribution method choice and filtering thresholds.",
+                "4": "Potential issues with duplicate information across multiple documents leading to misleading attributions."
+            }
+        },
+        "llm_review": {
+            "strengths": {
+                "0": "The methodology used in MIRAGE is robust and innovative, leveraging model internals for answer attribution, which is a novel approach in the field.",
+                "1": "The work provides a detailed analysis of how MIRAGE functions, including its definition, explanation, and interpretation, making it easy for readers to understand the framework.",
+                "2": "The study evaluates MIRAGE on multiple datasets, including both short-form and long-form QA, which strengthens the validity of the results.",
+                "3": "The methodology is well-defined and clearly explained, contributing to the clarity of the research.",
+                "4": "The results demonstrate that MIRAGE outperforms existing methods in terms of accuracy and efficiency, highlighting its effectiveness."
+            },
+            "weaknesses": {
+                "0": "The methodology requires some parameter tuning, which may limit its ease of use for researchers without prior knowledge of the framework.",
+                "1": "The study is focused on a limited range of model sizes and languages, which may affect its generalizability to broader applications.",
+                "2": "The reliance on a specific NLI model for evaluation introduces potential biases and limitations in the results.",
+                "3": "The application of MIRAGE is currently limited to specific use cases, which may restrict its adoption in diverse scenarios.",
+                "4": "There are no results provided on how MIRAGE performs on larger models or across more languages, which could be a significant limitation."
+            },
+            "soundness": "The study is well-thought-out and provides sufficient support for its claims, though it could benefit from additional experiments on a broader range of models and languages.",
+            "overall_assessment": "This paper represents solid work with significant potential for future development and application in the field of answer attribution."
+        }
+    },
+    "19": {
+        "paper_id": "6fe2dd8bd9f0b6a05fd7ff26d17f7417074bcc091e15448077fe9c65529df0ec63c6c055709799c9b6c84045d2123b5c508d31df0dcfe42a62f6c44c7da13bcf",
+        "review_id": "520ae57110edcdea7097e95a4f05a76c4f5d7787421c1b463d5163e1472f7a64d0c8b3e99a4e13acf43f71215d0e9d824e68668e1a6daece6935b6d1c857ad74",
+        "aspects": {
+            "strengths": {
+                "0": [
+                    "Methodology",
+                    "Result"
+                ],
+                "1": [
+                    "Methodology",
+                    "Experiment"
+                ]
+            },
+            "weaknesses": {
+                "0": [
+                    "Methodology",
+                    "Result"
+                ],
+                "1": [
+                    "Presentation"
+                ],
+                "2": [
+                    "Methodology",
+                    "Result",
+                    "Analysis"
+                ],
+                "3": [
+                    "Methodology"
+                ]
+            }
+        },
+        "human_review": {
+            "strengths": {
+                "0": "The paper raises awareness for an important issue - the lack of competence and the degradation in performance in LLMs when presented with an instruction with errors.",
+                "1": "The methods for generating mistakes are valid and well-thought-of and the experiments include a variety of LLMs. The types of mistakes included also demonstrate thinking about the current trends of incorporating multi-modal input, though not considered as possible outputs."
+            },
+            "weaknesses": {
+                "0": "The authors claim that they used GPT-4 to detect mistakes in user prompts to estimate the percentage of errors in prompts. The authors did not mention what is the performance of GPT-4 in such a task (of identifying errors of different types), did they manually check the outputs from GPT-4 to see that it indeed identified mistakes?",
+                "1": "Figure 1 does not show that more than 40% of inputs have errors because various types of errors can occur in one data point. For instance, a typo might be counted twice as a typo and a grammar mistake, or the distracting content could have spelling or grammar errors.",
+                "2": "Missing statistical analysis of results - what decrease was most significant? which model was most resilience to the different error types?",
+                "3": "The method for fixing errors by using LLMs to re-pass the prompt is very simplistic and was only demonstrated for Mistral as the mistake-fixer."
+            }
+        },
+        "llm_review": {
+            "strengths": {
+                "0": "The methodology is comprehensive, evaluating multiple types of noise and their impact across different models, which is a strength.",
+                "1": "The experimental results provide valuable insights into the resilience of LLMs to various types of noise, which is significant for real-world applications."
+            },
+            "weaknesses": {
+                "0": "The paper's presentation could be more clear and concise to enhance readability.",
+                "1": "The analysis of cooperative versus non-cooperative distractions could be more detailed to provide deeper insights.",
+                "2": "The dataset is limited to English, which restricts the generalizability of the findings to multilingual scenarios.",
+                "3": "The conclusion does not fully tie together the key findings, leaving some aspects unresolved."
+            },
+            "soundness": "The study is thorough in methodology and provides specific results, but it is limited by the dataset constraints and scope.",
+            "overall_assessment": "The paper is good but could benefit from improvements in clarity, depth of analysis, and broader applicability."
+        }
+    },
+    "20": {
+        "paper_id": "12fe7c81cab50577667c489e758e7b1fa22206daf240352351494a2c983bbd36f0d8d4994d5a3c9eee6021f47ac32112e4c582da894691821e3a2d25f19670f3",
+        "review_id": "60337fca130af303c416e8ce88f6aede5a005bd01c2565583f558d4e559d657beb5229263fda7a7503e6f99a80733dc4d18f202254d00a513a0712fd82cfaf83",
+        "aspects": {
+            "strengths": {
+                "0": [
+                    "Methodology"
+                ],
+                "1": [
+                    "Methodology",
+                    "Data/Task",
+                    "Result",
+                    "Experiment"
+                ],
+                "2": [
+                    "Methodology",
+                    "Data/Task"
+                ],
+                "3": [
+                    "Methodology"
+                ]
+            },
+            "weaknesses": {
+                "0": [
+                    "Methodology"
+                ],
+                "1": [
+                    "Methodology",
+                    "Data/Task",
+                    "Result",
+                    "Evaluation"
+                ],
+                "2": [
+                    "Methodology",
+                    "Data/Task",
+                    "Definition/Description/Detail/Discussion/Explanation/Interpretation"
+                ]
+            }
+        },
+        "human_review": {
+            "strengths": {
+                "0": "The paper proposes a unique solution to the problem of aligning images with long texts by integrating VLMs with LLMs, which is a substantial advancement in the field.",
+                "1": "The introduction of new benchmarks for image-long text retrieval tasks provides a robust framework for evaluating the proposed method, and the experimental results show clear performance gains.",
+                "2": "The multi-stage training process effectively bridges the gap between VLM and LLM embeddings without the need for extensive new data, making the approach scalable and practical for real-world applications.",
+                "3": "The ability to connect images with various long texts has significant potential applications in diverse fields such as medical imaging, remote sensing, and multimedia retrieval."
+            },
+            "weaknesses": {
+                "0": "The reliance on a projection module to align embeddings introduces additional complexity and potential challenges in maintaining semantic consistency across modalities.",
+                "1": "While the method shows impressive results on curated datasets, its performance on less structured, real-world data remains to be thoroughly evaluated.",
+                "2": "The paper could benefit from more detailed explanations of how the multi-stage training improves alignment and why the chosen benchmarks are particularly suitable for demonstrating the method's strengths."
+            }
+        },
+        "llm_review": {
+            "strengths": {
+                "0": "The methodology introduced is innovative and effective, allowing for the connection of images with long texts without requiring additional image-long text pairs.",
+                "1": "The approach demonstrates strong empirical results and experimental validation across multiple benchmarks, showcasing the effectiveness of MATE in cross-modal retrieval tasks.",
+                "2": "The methodology addresses an underexplored area in vision-language models, offering a new direction for research in cross-modal interactions.",
+                "3": "The comprehensive evaluation framework using diverse datasets and metrics provides a robust assessment of the proposed method."
+            },
+            "weaknesses": {
+                "0": "The paper is dense and may require additional explanation to be fully accessible to a broader audience.",
+                "1": "The methodology's complexity could potentially be a barrier for readers unfamiliar with the underlying concepts.",
+                "2": "The experimental setup could benefit from more details on the generalization and scalability of the results to real-world scenarios."
+            },
+            "soundness": "The paper is well-supported with extensive experimental results and a thorough methodology. The study provides clear scientific claims and adequately supports them with empirical evidence. The methodology is technically sound and the results demonstrate the effectiveness of the proposed approach.",
+            "overall_assessment": "This paper represents solid work with significant interest for the broader natural language processing community. It advances the field by addressing an important but underexplored area. However, minor revisions could enhance clarity and accessibility."
+        }
+    },
+    "21": {
+        "paper_id": "669c5df84d7d679e4bdc50160bd9184723b8c176c491ed38e613ed5032b6ee5b1f01fa2792ba544de740f8ff9b7e7b35624ca7e77b2e0c88b6ff9bc63856d112",
+        "review_id": "348a43c08b1470e24d8c2ac2243f4af5c819afc1b8a8daf6fcd55c0feba9ed4defc3764414f480ad42703758308a4c29a033feb0b79874b08dc411356198d191",
+        "aspects": {
+            "strengths": {
+                "0": [
+                    "Methodology",
+                    "Data/Task"
+                ],
+                "1": [
+                    "Methodology",
+                    "Result",
+                    "Experiment"
+                ],
+                "2": [
+                    "Evaluation"
+                ],
+                "3": [
+                    "Ablation",
+                    "Definition/Description/Detail/Discussion/Explanation/Interpretation",
+                    "Experiment"
+                ]
+            },
+            "weaknesses": {
+                "0": [
+                    "Definition/Description/Detail/Discussion/Explanation/Interpretation"
+                ],
+                "1": [
+                    "Definition/Description/Detail/Discussion/Explanation/Interpretation",
+                    "Related Work"
+                ]
+            }
+        },
+        "human_review": {
+            "strengths": {
+                "0": "The authors curate a new ChallengeWMT dataset using existing WMT datasets that target source texts mistranslated by multiple SOTA machine translation models. Given the increasing quality of MT-generated translations, this resource can help identify failure cases of LLMs.",
+                "1": "Extensive experiments on multiple languages show that DUAT improves translation quality (as measured by COMET and BLEURT) across the board when the underlying LLM is GPT-3.5, except English-icelandic, where they conduct further experiments using GPT-4 to show that using an even powerful LLM to generate and guide the translation can be helpful.",
+                "2": "Human evaluation shows that the generated translations are less literal and are driven by the general understanding capabilities of LLMs.",
+                "3": "Additional ablation experiments are performed to study how the number and source of interpretations (source or target side) impact final translation quality."
+            },
+            "weaknesses": {
+                "0": "As already noted by the authors, the process is expensive as it requires prompting LLMs to generate interpretations and translations using these interpretations and it is unclear to what extent some of these steps could be made faster by a) relying on external knowledge bases; b) filtering interpretations without generating translations and c) when to ask for these interpretations. Adding some discussion on this could be helpful.",
+                "1": "There are some concurrent recent works with post-editing with LLMs given an initial translation and error explanations and it might be helpful to add that to related work discussion.\n\nReferences: Guiding Large Language Models to Post-Edit Machine Translation with Error Annotations, xTower: A Multilingual LLM for Explaining and Correcting Translation Errors, LLMRefine: Pinpointing and Refining Large Language Models via Fine-Grained Actionable Feedback"
+            }
+        },
+        "llm_review": {
+            "strengths": {
+                "0": "The paper introduces a novel translation process, DUAT, which addresses the misalignment between translation-specific and general understanding in large language models. This is a significant contribution to the field of machine translation.",
+                "1": "The methodology is well-structured, with clear components for difficult word detection, cross-lingual interpretation, and interpretation quality control. The results are supported by both automatic metrics and human evaluations, demonstrating the effectiveness of the proposed method.",
+                "2": "The evaluation framework is comprehensive, utilizing both automatic metrics like COMET and BLEURT, as well as human evaluations to assess the impact of the proposed method. This thorough evaluation adds credibility to the findings.",
+                "3": "The ablation studies and experiments provide valuable insights into the contributions of each component of DUAT. The experimental setup is detailed, making it easier to replicate and build upon the work."
+            },
+            "weaknesses": {
+                "0": "The explanation of certain aspects of the methodology and results is dense and could be clearer for a broader audience.",
+                "1": "The discussion of related work could be more comprehensive, particularly in connecting to existing methodologies and how DUAT differs or builds upon them."
+            },
+            "soundness": "The study is well-supported with thorough experimentation, including human evaluations and ablation studies. The methodology is technically sound, and the contributions are clearly demonstrated through empirical results.",
+            "overall_assessment": "The paper makes a significant contribution to the field with a novel methodology that addresses a clear problem in machine translation. While it could be improved with a clearer explanation and broader related work discussion, the overall impact is positive and valuable."
+        }
+    },
+    "22": {
+        "paper_id": "33e0f6ee999900da88c22ce08eb69a4299db7902480d0d7b26e1b9a8cdf70bd74647a9cefa566873bed6feb915ed24c2a377d2de70cb62fd80da2ee2fc805b58",
+        "review_id": "754bb4127efe5cc9ec362fa8953f6f9628e465cb2234cd33507700ce758b18a66188517285f6714feaad6df58c8deedbd405ba820e45997c98eceafa1b52c13a",
+        "aspects": {
+            "strengths": {
+                "0": [
+                    "Methodology",
+                    "Data/Task"
+                ],
+                "1": [
+                    "Methodology",
+                    "Data/Task",
+                    "Experiment"
+                ],
+                "2": [
+                    "Definition/Description/Detail/Discussion/Explanation/Interpretation"
+                ],
+                "3": [
+                    "Methodology"
+                ],
+                "4": [
+                    "Definition/Description/Detail/Discussion/Explanation/Interpretation"
+                ]
+            },
+            "weaknesses": {
+                "0": [
+                    "Methodology",
+                    "Data/Task"
+                ],
+                "1": [
+                    "Methodology"
+                ],
+                "2": [
+                    "Methodology",
+                    "Result"
+                ],
+                "3": [
+                    "Methodology"
+                ],
+                "4": [
+                    "Data/Task",
+                    "Result",
+                    "Comparison"
+                ]
+            }
+        },
+        "human_review": {
+            "strengths": {
+                "0": "The paper introduces a unique multi-agent debate framework for hate speech detection, addressing the challenge of generalization across datasets with different labeling criteria",
+                "1": "The authors conduct experiments on five different datasets, demonstrating the framework's effectiveness across various contexts",
+                "2": "The debate process and final judgment provide interpretable reasoning for the hate speech classification decisions",
+                "3": "The framework incorporates different labeling criteria as independent perspectives, allowing for an improved approach to hate speech detection",
+                "4": "The authors discuss how PREDICT could be extended to other social science research topics"
+            },
+            "weaknesses": {
+                "0": "The study focuses only on Korean datasets, which may limit its generalizability to other languages and cultures",
+                "1": "The multi-agent debate approach may be more computationally intensive and complex to implement compared to traditional classification methods",
+                "2": "The performance of PREDICT relies heavily on the underlying LLMs, which may introduce biases or inconsistencies",
+                "3": "The current implementation only allows for two rounds of debate, which may not be sufficient for more complex cases",
+                "4": "The paper doesn't compare PREDICT's performance with other advanced hate speech detection methods beyond majority voting and in-dataset baselines"
+            }
+        },
+        "llm_review": {
+            "strengths": {
+                "0": "The paper presents a novel methodology for hate speech detection using a multi-agent-based framework, which is a significant contribution to the field.",
+                "1": "The methodology is applied and evaluated on five representative public benchmarks, demonstrating its effectiveness in generalized hate speech detection.",
+                "2": "The paper provides a detailed description and discussion of the PREDICT framework, explaining its components and how it addresses the challenges of hate speech detection.",
+                "3": "The methodology is well-defined and logically structured, with clear explanations of the PRE and DICT phases.",
+                "4": "The paper discusses the importance of pluralistic approaches in hate speech detection and how PREDICT achieves this through multi-agent debate simulation."
+            },
+            "weaknesses": {
+                "0": "The paper is somewhat verbose and could be more concise, especially in the related work section.",
+                "1": "The methodology section could be more concise and focused on the key steps.",
+                "2": "The evaluation lacks comparison with state-of-the-art methods in hate speech detection.",
+                "3": "The dataset collection details are somewhat vague, and the exact implementation specifics are not provided.",
+                "4": "The discussion of potential limitations and future work is limited."
+            },
+            "soundness": "4.0",
+            "overall_assessment": "3.5"
+        }
+    },
+    "23": {
+        "paper_id": "aa1540c6b73896dbdd2574f811ec2d83ff7366de3997e28d5d543a20109947d8614001f11be1b738edc29a28505dc9ba16dbaa9acc21549682012e8087ea9087",
+        "review_id": "82f44812791c15d838de96b500f9c8529bd0c3e5ebfa664108dbbe278840f60aa606d3383b792a14acf8653cfdadd23ed5c946a055620c93bff4f45c4ee4af21",
+        "aspects": {
+            "strengths": {
+                "0": [
+                    "Methodology",
+                    "Novelty"
+                ],
+                "1": [
+                    "Methodology",
+                    "Intuition/Justification/Motivation/Validation",
+                    "Data/Task",
+                    "Experiment"
+                ],
+                "2": [
+                    "Presentation"
+                ]
+            },
+            "weaknesses": {
+                "0": [
+                    "Methodology"
+                ],
+                "1": [
+                    "Definition/Description/Detail/Discussion/Explanation/Interpretation"
+                ],
+                "2": [
+                    "Methodology",
+                    "Definition/Description/Detail/Discussion/Explanation/Interpretation",
+                    "Result"
+                ]
+            }
+        },
+        "human_review": {
+            "strengths": {
+                "0": "BAPO introduces the use of $y_b$ as an anchor during Preference Alignment to preserve the model's original knowledge. This is a novel concept that can be useful for future methods, as it helps reduce knowledge forgetting during the personalized preference alignment process.",
+                "1": "The effectiveness of the BAPO method is validated through experiments on multiple datasets and different types of preferences.",
+                "2": "The paper is well written and easy to read."
+            },
+            "weaknesses": {
+                "0": "The paper does not clarify whether $y_b$ is sampled before training or during the training process. If $y_b$ is sampled during training, a discussion on the training time analysis would be beneficial. The sampling hyper-parameters also should be provided.",
+                "1": "The definition of \"knowledge\" is not clearly specified. It remains unclear whether preserving $y_b$ also retains its expression form, thereby potentially leading to a decline in performance during personalized preference alignment.",
+                "2": "The concept of alignment tax, a common issue in preference alignment, is not fully addressed. It would be valuable to discuss whether the proposed method can improve performance beyond personalized preference alignment scenarios."
+            }
+        },
+        "llm_review": {
+            "strengths": {
+                "0": "The paper introduces a novel methodology, BAPO, which effectively addresses the challenge of preserving global knowledge during personalized preference optimization in LLMs. The use of base responses as an anchor is a clever and intuitive approach.",
+                "1": "The methodology is well-validated through extensive experiments across various datasets (P-Soups and DSP), demonstrating the robustness and effectiveness of BAPO in maintaining global knowledge and general alignment while accommodating diverse user preferences. The theoretical analysis provides a solid foundation for the proposed approach.",
+                "2": "The paper provides a clear and organized presentation of the research, with a well-structured abstract, methodology, and results sections. The use of tables and figures aids in understanding the experimental outcomes."
+            },
+            "weaknesses": {
+                "0": "The methodology section could benefit from more detailed explanations of the underlying assumptions and how they were validated. Specifically, the role of the base response in preserving knowledge could be explored in more depth.",
+                "1": "There is a lack of discussion about the potential impact of BAPO on specific user groups or sub-communities, which could limit its broader applicability.",
+                "2": "While the experimental results are presented, the discussion of their statistical significance and the magnitude of the observed effects could be more detailed. Additionally, the comparison with other preference optimization methods (e.g., RSO, IPO) could provide a clearer understanding of BAPO's advantages and limitations."
+            },
+            "soundness": "The study is well-conceived and methodologically sound. The use of multiple datasets and metrics for evaluation adds credibility to the findings. The theoretical analysis supports the proposed method, and the experiments demonstrate its effectiveness. The references to prior work are comprehensive and relevant.",
+            "overall_assessment": "This paper makes a significant contribution to the field of LLM alignment by introducing a novel method for preserving knowledge during preference optimization. While there is room for improvement in the discussion of limitations and expandability, the work is impactful and will likely attract interest in the ACL community."
+        }
+    },
+    "24": {
+        "paper_id": "377fbe8b0690a89fc7312404e7a3359d5b68cfd12ba17282826f3bfb482e2b5856afdc1e67e9bc9ff9f64b6f045fdd167d783ca69952ff67ebaefeb6e6d4c94b",
+        "review_id": "f85557b6a4c8669c75de3ae17f6d88050c02de332d4e2197fae6bf8f6bb1ac61fe866103fe10b09f1960e345457efbfdf5a9a9f962470187f7cbae67a51a1456",
+        "aspects": {
+            "strengths": {
+                "0": [
+                    "Methodology",
+                    "Novelty",
+                    "Data/Task"
+                ],
+                "1": [
+                    "Methodology",
+                    "Comparison"
+                ],
+                "2": [
+                    "Data/Task",
+                    "Result",
+                    "Experiment"
+                ]
+            },
+            "weaknesses": {
+                "0": [
+                    "Methodology",
+                    "Result"
+                ],
+                "1": [
+                    "Novelty",
+                    "Contribution",
+                    "Methodology",
+                    "Comparison"
+                ],
+                "2": [
+                    "Methodology",
+                    "Data/Task",
+                    "Result"
+                ]
+            }
+        },
+        "human_review": {
+            "strengths": {
+                "0": "The introduction of HAST, which combines the strengths of self-training and active learning, represents a novel approach to reducing labeled data requirements in text classification.",
+                "1": "The paper thoroughly reproduces four existing self-training approaches, providing a solid foundation for comparison.",
+                "2": "The experiments demonstrate that HAST achieves competitive results on three out of four datasets using significantly less labeled data."
+            },
+            "weaknesses": {
+                "0": "Self-training with pseudo-labels inherently risks propagating errors from incorrect pseudo-labels. While the authors introduce regularization techniques to mitigate this, the paper does not fully address how noise in pseudo-labels can impact long-term model performance and stability.",
+                "1": "Some elements of the proposed method, such as the use of KNN for pseudo-labeling, may overlap with existing techniques in semi-supervised learning and active learning. What are the unique contributions and advantages of HAST over these existing methods?",
+                "2": "The effectiveness of self-training heavily relies on the quality of the unlabeled data used to generate pseudo-labels. If the unlabeled data is noisy or not representative of the target domain, the performance of the proposed method may degrade."
+            }
+        },
+        "llm_review": {
+            "strengths": {
+                "0": "The methodology is innovative as it effectively combines self-training with active learning to reduce the reliance on labeled data, which is a significant contribution to the field.",
+                "1": "The study provides a comprehensive comparison with existing approaches, demonstrating the effectiveness of the proposed method through extensive benchmarking.",
+                "2": "The approach addresses the data/task challenge by significantly reducing the amount of labeled data required, leveraging pre-trained language models for efficient training."
+            },
+            "weaknesses": {
+                "0": "The methodology has limitations in the threshold-based approach for pseudo-label selection, which can lead to inconsistent pseudo-labels and noise propagation.",
+                "1": "The contribution is somewhat limited by the focus on single-label classification, which does not generalize well to multi-label settings.",
+                "2": "The results show variable performance across different datasets, indicating that the approach may not be universally effective."
+            },
+            "soundness": "3.5: The study provides sufficient support for its major claims and arguments, though some aspects could benefit from additional detail and exploration.",
+            "overall_assessment": "3.5: The paper makes a reasonable contribution to the field with potential for minor revisions to enhance its impact and applicability."
+        }
+    },
+    "25": {
+        "paper_id": "93d7c734657daed84147cd57f35bae370ae8be7feac74cc0a20e42fdffba4fa35cb8ea84cca92f180315149c54275b991cc68b0db2381488ad1ab1746b8cf42c",
+        "review_id": "b1af0beeb2add1b01056acb2909ae83975d5c8451d2a245eb78114202a311f9248c36d1a3b1258f920d2265c3f1d745b8f9218206ae37953ad0f5e6d85356c7b",
+        "aspects": {
+            "strengths": {
+                "0": [
+                    "Methodology"
+                ],
+                "1": [
+                    "Methodology",
+                    "Data/Task",
+                    "Evaluation"
+                ],
+                "2": [
+                    "Methodology",
+                    "Result"
+                ]
+            },
+            "weaknesses": {
+                "0": [
+                    "Data/Task",
+                    "Result"
+                ],
+                "1": [
+                    "Presentation",
+                    "Methodology"
+                ],
+                "2": [],
+                "3": [
+                    "Methodology"
+                ]
+            }
+        },
+        "human_review": {
+            "strengths": {
+                "0": "The setup of the task, and the proposed technique is well positioned and motivated to be helpful for LLM ownership protection",
+                "1": "Thorough evaluation on multiple datasets, multiple LLMs and different hyperparameters show that the effectiveness of the proposed method",
+                "2": "The result is promising, it’s surprising to see the proposed method deliver similar performance without accessing the original weights"
+            },
+            "weaknesses": {
+                "0": "Evaluation datasets are all multiple choice questions, it’s crucial to show the performance on longer generation tasks such as dialogue and story generation etc. It might be assumed that choosing an answer is much easier than generating a long paragraph",
+                "1": "Need further clarification for several clarification questions: Do you assume the model weights will not be provided to downstream users when distributing the models?",
+                "2": "Not sure how the authorization process works: would the TaylorMLP distributed after authorization, or they will be distributed before authorization? What specifically are distributed after authorization?",
+                "3": "Limitation of the proposed method: downstream users cannot fine-tune the model even if they acknowledge the original developer, as they don’t have access to the model weights. However, most open-source distribution of LLMs are used for downstream tuning"
+            }
+        },
+        "llm_review": {
+            "strengths": {
+                "0": "The paper presents an innovative methodology (TaylorMLP) for protecting LLM ownership and preventing abuse through the use of Taylor series transformation.",
+                "1": "Empirical experiments demonstrate the effectiveness of TaylorMLP across multiple datasets and model architectures, providing strong evidence of its results.",
+                "2": "The methodology is theoretically well-founded with proofs of convergence and comprehensive evaluation metrics."
+            },
+            "weaknesses": {
+                "0": "The experimental results are limited to specific datasets and model architectures, which may not generalize well to other contexts.",
+                "1": "Some sections of the paper lack clarity and organization, which could make it less accessible to readers.",
+                "2": "The methodology could benefit from more detailed explanations and examples to better understand its application.",
+                "3": "The methodology description is somewhat repetitive and could be streamlined."
+            },
+            "soundness": "4.0",
+            "overall_assessment": "4.5"
+        }
+    },
+    "26": {
+        "paper_id": "69934822a02d9bbaf7cab04102cd594960b06faf5a0df24c5bf718df9abee2a251c4e38c2977ddecbb8222fbd3e98b8ea55c4c04c66e38e6d327b73c57370269",
+        "review_id": "4738d4c625ae426919856d0e9c46626df371be572778520753eafa8c4ab42e2ff5c952f9acff290f2558d9504b58cc188198d02c3dd75e86779d80f66b818818",
+        "aspects": {
+            "strengths": {
+                "0": [
+                    "Data/Task"
+                ],
+                "1": [
+                    "Data/Task",
+                    "Result",
+                    "Comparison"
+                ]
+            },
+            "weaknesses": {
+                "0": [
+                    "Methodology",
+                    "Result"
+                ],
+                "1": [
+                    "Experiment",
+                    "Comparison",
+                    "Data/Task",
+                    "Definition/Description/Detail/Discussion/Explanation/Interpretation",
+                    "Evaluation",
+                    "Ablation"
+                ],
+                "2": [
+                    "Result",
+                    "Experiment",
+                    "Comparison",
+                    "Data/Task",
+                    "Methodology"
+                ]
+            }
+        },
+        "human_review": {
+            "strengths": {
+                "0": "W2C data pipeline generates and filters data without having human annotators, only by using the VLMs and Grounding Dino.",
+                "1": "Compared to ShareGPT4V, training VLMs with the data generated by W2C yields better results in VQA and visual grounding benchmarks."
+            },
+            "weaknesses": {
+                "0": "The W2C method contains many steps and is not intuitive to follow. Although many ablations were done, it was still hard to understand which part of the W2C contributed more to the improvement in VQA capabilities of the VLMs.",
+                "1": "It wasn’t clear why the comparison between detailed descriptions and code generation was done in a different settings and evaluation benchmarks than the other experiments and ablations (such as in Table 3 and Table 4). It is fine to make ablations on some of the dataset in the benchmark, but it should be consistent that all ablations will be done on the same datasets.",
+                "2": "All experiments were done using LLaVA based models, but how does it compare to other SOTA models? Is using W2C data construction pipeline improves over other VLMs?"
+            }
+        },
+        "llm_review": {
+            "strengths": {
+                "0": "The paper introduces a novel Data/Task pipeline for generating and filtering multi-modal data using Vision-Language Models, which reduces reliance on expensive human annotators and specialists.",
+                "1": "The methodology (W2C) is supported by comprehensive empirical results across various benchmarks, demonstrating its effectiveness in improving VLM performance on visual question answering and grounding tasks."
+            },
+            "weaknesses": {
+                "0": "The methodology lacks detailed discussion on the theoretical underpinnings or alternative approaches, which could provide deeper insight into its design choices.",
+                "1": "Some experimental results, particularly in OCR-centric scenarios, may not fully generalize due to the limited diversity of the dataset.",
+                "2": "The ablation studies could be expanded to explore more aspects of the methodology, such as different prompt designs or additional filtering strategies."
+            },
+            "soundness": "The study provides sufficient support for its major claims and methodologies, with well-conducted experiments and thorough ablation studies. However, there are minor gaps in theoretical discussion and generalizability.",
+            "overall_assessment": "This paper presents a valuable contribution to the field with a novel data construction pipeline. While it shows strong empirical support and practical utility, there are minor limitations that should be addressed to fully meet the standards of a top-tier ACL submission."
+        }
+    },
+    "27": {
+        "paper_id": "464051cb9e605ead04e6ada55260e2595261baeb8045bdd9ffa622a65b10ac57c7aeea55f096999ef6c9cfc609d8716b4368ce7f1511cd4172ccc221eb5956b5",
+        "review_id": "f1c07b586595aab30aaf3dc9fcfcc4d63ad41131121e9b57323bf3c7f433cbae9c3dc89ce286c96d323cf006cdab6fe0b433b8abcc97b4701e1153d078b10956",
+        "aspects": {
+            "strengths": {
+                "0": [
+                    "Methodology"
+                ],
+                "1": [
+                    "Methodology",
+                    "Presentation"
+                ],
+                "2": [
+                    "Methodology",
+                    "Contribution",
+                    "Analysis"
+                ]
+            },
+            "weaknesses": {
+                "0": [
+                    "Definition/Description/Detail/Discussion/Explanation/Interpretation",
+                    "Comparison",
+                    "Related Work"
+                ],
+                "1": [
+                    "Methodology",
+                    "Comparison",
+                    "Related Work"
+                ],
+                "2": [
+                    "Data/Task",
+                    "Evaluation"
+                ]
+            }
+        },
+        "human_review": {
+            "strengths": {
+                "0": "The paper addresses an import problem, long context compression, which is crucial for efficient LLM inference (although this paper focuses on the compression time rather than LLM inference speed).",
+                "1": "The method’s careful design (prefix-LM-style attention map, RoPE on cross-attention, etc.) adds value to the proposed method. The visualizations provided are clear and detailed.",
+                "2": "The analysis of what Cross-Attention learns (Sec. 4.3) seems to be an important contribution."
+            },
+            "weaknesses": {
+                "0": "The paper lacks a discussion and comparison with Key-Value cache compression studies [1,2,3,4]. [1] Model Tells You What to Discard: Adaptive KV Cache Compression for LLMs [2] SnapKV: LLM Knows What You are Looking for Before Generation [3] H2O: Heavy-Hitter Oracle for Efficient Generative Inference of LLMs [4] Soaring from 4K to 400K: Extending LLM’s Context with Activation Beacon",
+                "1": "The method closely resembles the Q-Former architecture used in Visual-LLMs (LVMs) [5, 6]. While the adaptation for text context compression is valuable, the paper should discuss and compare with previous Q-Former style works. [5] BLIP-2: Bootstrapping Language-Image Pre-Training with Frozen Image Encoders and LLMs. [6] Qwen-VL: A Versatile VL Model for Understanding, Localization, Text Reading and Beyond.",
+                "2": "Some widely used long-context benchmarks, such as LongBench and Needle-In-a-Haystack (NIH), are not included in the evaluation."
+            }
+        },
+        "llm_review": {
+            "strengths": {
+                "0": "The paper presents a novel methodology using cross-attention and digest tokens for context compression, which is both innovative and effective.",
+                "1": "The methodology is clearly explained and supported by detailed experimental results, making the contributions tangible.",
+                "2": "The work makes a significant contribution to reducing computational costs in LLM inference, and the analysis is comprehensive."
+            },
+            "weaknesses": {
+                "0": "The detailed technical explanation may be dense for non-experts.",
+                "1": "Comparisons with existing methods could provide deeper insights into the novel aspects of the work.",
+                "2": "The experiments are thorough, but they are limited to specific datasets, which might not fully generalize."
+            },
+            "soundness": "The methodology is sound and well-supported by rigorous experimentation. The paper provides clear explanations and results, and the contributions are significant.",
+            "overall_assessment": "This is a strong paper with a valuable contribution to the field. It would benefit from minor revisions to enhance clarity and broader evaluation."
+        }
+    },
+    "28": {
+        "paper_id": "661bcc106c0f650fdab820f29f2ed525b4a99bc1aa153064eb3d1da37db39bd8a14cabd5fb0b5101bd03269b3c4a19249e730a820ebe0c3fb6622b2d4104679f",
+        "review_id": "b2bd95d7ddae3eee61fa74ba0105c0b5cdf2ddb41109627d344130f89e43fe40c8d3bdb406519cf745ded0fbd25bcf2749fcfd3952342eee6b5e4c8317d08faf",
+        "aspects": {
+            "strengths": {
+                "0": [
+                    "Methodology",
+                    "Novelty"
+                ],
+                "1": [
+                    "Methodology",
+                    "Result",
+                    "Experiment"
+                ],
+                "2": [
+                    "Methodology"
+                ],
+                "3": [
+                    "Methodology",
+                    "Result"
+                ]
+            },
+            "weaknesses": {
+                "0": [
+                    "Methodology"
+                ],
+                "1": [
+                    "Methodology",
+                    "Related Work"
+                ],
+                "2": [
+                    "Methodology"
+                ]
+            }
+        },
+        "human_review": {
+            "strengths": {
+                "0": "The introduction of AlignedCoT as a method to align LLM prompts with their native style is a novel and creative approach that addresses the gap between LLM understanding and human-written prompts.",
+                "1": "The experimental results clearly show that AlignedCoT improves the performance of LLMs in various reasoning tasks, outperforming traditional human-crafted prompts.",
+                "2": "AlignedCoT can be easily integrated with other in-context learning methods like Complex CoT and Auto-CoT, showing its versatility and potential for broader application.",
+                "3": "The technique helps LLMs better detect logical errors in questions, which is a valuable improvement for tasks requiring high accuracy and reliability."
+            },
+            "weaknesses": {
+                "0": "Is this method exclusively suitable for mathematical reasoning? It would be valuable to explore its application to commonsense reasoning tasks, such as CSQA, and symbolic reasoning tasks, like last letter concatenation.",
+                "1": "The process of generating reasoning chains through prompting LLMs and making modifications during the process is already a common practice, as exemplified by the paper https://arxiv.org/abs/2304.11657. Could the authors further emphasize the distinctions between their work and this, as well as other related works? The focus on native style appears to be simply the generation of reasoning chains by the LLM itself.",
+                "2": "I am skeptical about the feasibility of achieving fine-grained refinement in the second step. It seems challenging to accomplish this through prompting the LLM alone, unless external tools or higher-level LLMs are utilized."
+            }
+        },
+        "llm_review": {
+            "strengths": {
+                "0": "The methodology is well-structured and rigorous, with clear steps for creating and validating the AlignedCoT prompting technique.",
+                "1": "The paper introduces a novel technique (AlignedCoT) and provides extensive empirical validation across multiple datasets, demonstrating significant performance improvements.",
+                "2": "The methodology is innovative and addresses an important gap in existing CoT methods by focusing on native-style prompting.",
+                "3": "The results are supported by thorough experiments, including multiple baselines and ablation studies, showcasing the effectiveness of AlignedCoT."
+            },
+            "weaknesses": {
+                "0": "The paper is highly technical and may not be accessible to a broad audience without prior knowledge of the field.",
+                "1": "The related work section lacks a comprehensive synthesis, making it difficult to understand the paper's position within the existing literature.",
+                "2": "The scope of the experiments is somewhat narrow, focusing primarily on mathematical and commonsense reasoning tasks."
+            },
+            "soundness": "4.5",
+            "overall_assessment": "4.5"
+        }
+    },
+    "29": {
+        "paper_id": "af1381f4d5ec72d8c99d6c2ea86f4cd55673e212830f6241f3e3afd298da64414d290bf6d87bb0eacf4527af7c0a4a8ff79c9246c19685a085ba63fc615e55bf",
+        "review_id": "79232c8de57f23d04c2b17cfd314632d8ed12f00096b2ddbc142cc3b29f3c4ab8ec92355d29aa633e1528e80caa19d94d7ccff8018105e36d0a23c9c401865a6",
+        "aspects": {
+            "strengths": {
+                "0": [
+                    "Methodology",
+                    "Novelty"
+                ],
+                "1": [
+                    "Methodology",
+                    "Data/Task",
+                    "Result",
+                    "Evaluation"
+                ],
+                "2": [
+                    "Methodology",
+                    "Data/Task"
+                ],
+                "3": [
+                    "Methodology",
+                    "Comparison",
+                    "Analysis"
+                ],
+                "4": [
+                    "Methodology"
+                ]
+            },
+            "weaknesses": {
+                "0": [
+                    "Methodology"
+                ],
+                "1": [
+                    "Methodology"
+                ],
+                "2": [
+                    "Data/Task"
+                ],
+                "3": [
+                    "Methodology",
+                    "Data/Task",
+                    "Result"
+                ],
+                "4": [
+                    "Data/Task",
+                    "Evaluation"
+                ]
+            }
+        },
+        "human_review": {
+            "strengths": {
+                "0": "The integration of CoT reasoning with multimodal inputs is a novel approach that addresses the challenges of detecting subtle misogynous content in memes.",
+                "1": "The framework is rigorously evaluated on multiple datasets, showcasing its robustness and generalizability.",
+                "2": "The use of hierarchical cross-attention mechanisms enhances the model's ability to weigh different aspects of the multimodal data effectively.",
+                "3": "The paper provides a thorough analysis, including qualitative case studies and quantitative comparisons with baseline models, highlighting the strengths and weaknesses of the proposed method.",
+                "4": "The model incorporates cultural diversity and contextual understanding, which are crucial for accurately identifying misogynous content across different cultures."
+            },
+            "weaknesses": {
+                "0": "The proposed model's complexity might pose challenges for real-world deployment, especially in terms of computational resources and scalability.",
+                "1": "The paper notes instances where the model overgeneralizes certain terms or images, leading to misclassifications, which suggests that the model might sometimes fail to balance between different cues effectively.",
+                "2": "Some misclassifications are attributed to annotation errors in the dataset, which indicates a dependency on the quality of the annotated data.",
+                "3": "Despite efforts to include cultural diversity, the model may still carry implicit biases from the training data, which could affect its performance on unseen or nuanced misogynous content.",
+                "4": "The evaluation, while thorough, is limited to certain datasets."
+            }
+        },
+        "llm_review": {
+            "strengths": {
+                "0": "The methodology is robust and novel, introducing a multimodal CoT framework for detecting misogynous memes.",
+                "1": "The empirical evaluation is thorough, with both qualitative and quantitative analysis, and comparison with baseline models.",
+                "2": "The framework addresses the cultural diversity and nuances in detecting misogynous content effectively.",
+                "3": "The methodology is well-detailed, covering various aspects from problem formulation to network training.",
+                "4": "The dataset is extensive, including MAMI and MIMIC, and evaluates across different languages and cultural contexts."
+            },
+            "weaknesses": {
+                "0": "The methodology is complex and may be difficult for non-experts to understand.",
+                "1": "There is a risk of overfitting to specific datasets, limiting generalizability.",
+                "2": "The model struggles with certain edge cases, such as cartoonish images or subtle references.",
+                "3": "The dataset includes offensive content, which may concern some readers.",
+                "4": "The error analysis could better address potential biases in the model."
+            },
+            "soundness": "4.0",
+            "overall_assessment": "4.0"
+        }
+    },
+    "30": {
+        "paper_id": "b8b339ec4214dd6d569725715ae94cd157cb7ba7b4ebc1dcbc2d635ea555518fdfc451d946279998632b04f055d821d84eb63b0c56d0c821aa7f4a0db832d8c2",
+        "review_id": "b302d291b95d3dc9bdc881ae960d1e453ddcffe24441d2aecae06f8e7ff4fd1b4bce2d581b888f3e5aa819e6c81dcb4655adc184f008c7b7b18a7c3fc4559357",
+        "aspects": {
+            "strengths": {
+                "0": [
+                    "Methodology"
+                ],
+                "1": [
+                    "Definition/Description/Detail/Discussion/Explanation/Interpretation",
+                    "Presentation"
+                ]
+            },
+            "weaknesses": {
+                "0": [
+                    "Data/Task",
+                    "Result",
+                    "Experiment",
+                    "Analysis"
+                ],
+                "1": [
+                    "Methodology"
+                ],
+                "2": [
+                    "Data/Task",
+                    "Significance"
+                ]
+            }
+        },
+        "human_review": {
+            "strengths": {
+                "0": "The paper provides a thorough and comprehensive overview of the existing methods for length extrapolation in Transformers, specifically on positional encoding ones.",
+                "1": "Detailed explanations and categorisations of both absolute and relative positional encodings are well-presented, which is helpful in the understanding of their impact on length extrapolation."
+            },
+            "weaknesses": {
+                "0": "The paper lacks empirical analysis, such as detailed experimental results comparing different methods on standardised benchmarks (this is stated in the limitation section). As a survey paper, it is a bit short.",
+                "1": "There is an overemphasis on positional encoding, with less attention given to other factors influencing length extrapolation, such as model architecture and pretraining.",
+                "2": "While the need for standardised benchmarks is highlighted, the paper does not propose specific solutions or guidelines for achieving this, reducing its impact in addressing this critical issue."
+            }
+        },
+        "llm_review": {
+            "strengths": {
+                "0": "The paper provides a comprehensive and systematic survey of existing methods in length extrapolation of Transformers, which is a significant contribution to the field.",
+                "1": "The paper offers detailed explanations and discussions on various positional encodings (PEs), making it an excellent resource for understanding the topic."
+            },
+            "weaknesses": {
+                "0": "The analysis primarily focuses on LLMs and real-world scenarios, with limited coverage of smaller-scale tasks and synthetic experiments.",
+                "1": "The paper is more of a review and synthesis of existing work rather than presenting novel contributions or experiments.",
+                "2": "The discussion of the impact of positional encodings on downstream tasks and model inductive biases is limited, and the evaluation is mostly focused on language modeling."
+            },
+            "soundness": "The paper is well-supported by existing literature and provides a thorough review of the field. However, it does not break new ground in original research.",
+            "overall_assessment": "The paper is a solid and valuable contribution to the field but does not represent groundbreaking work."
+        }
+    },
+    "31": {
+        "paper_id": "f612e7803d9447cf73abf8b6ab5359bf32fa889ffa32c631954470192298619492ede7e3cc4777ad3102b72f8131b02410b33a129224a5bd61d8d47465512dff",
+        "review_id": "0a582a23bde3fa93bab52756a83dc3291b7758191c10ec02986ee1ccf6c4ff20bb4fdd9d38019aee9cc7dec51f189a4d5e3d757c7e8d30da5b3ece3671c317fc",
+        "aspects": {
+            "strengths": {
+                "0": [
+                    "Methodology"
+                ],
+                "1": [
+                    "Methodology",
+                    "Data/Task",
+                    "Result"
+                ],
+                "2": [
+                    "Methodology",
+                    "Result",
+                    "Experiment",
+                    "Analysis"
+                ]
+            },
+            "weaknesses": {
+                "0": [
+                    "Methodology",
+                    "Related Work"
+                ],
+                "1": [
+                    "Methodology",
+                    "Related Work",
+                    "Analysis"
+                ],
+                "2": [
+                    "Methodology",
+                    "Result",
+                    "Comparison"
+                ]
+            }
+        },
+        "human_review": {
+            "strengths": {
+                "0": "The studied task is crucial for adapting LLMs to specialized domains, as it addresses the challenges of optimizing model performance in specific areas such as clinical applications.",
+                "1": "The proposed method demonstrates excellent performance, showing significant improvements in various clinical tasks through techniques like continuous pre-training, instruct fine-tuning, NEFTune, and complex prompt engineering.",
+                "2": "The authors provide a analysis of the experimental results, highlighting the impact of each technique on model performance and offering insights into the effectiveness of different fine-tuning strategies."
+            },
+            "weaknesses": {
+                "0": "It is not clear which part of the proposed method are from prior works and which parts of the work is proposed by authors.",
+                "1": "Some analysis are too shallow and are discussed in prior works, such as the usage of NEFT (L517-539), as well as the benefits of using prompt engineering (L540-L562).",
+                "2": "It would be better to study the effect of different pretraining corpus (e.g. Pubmed, medical textbook) and compare their performance."
+            }
+        },
+        "llm_review": {
+            "strengths": {
+                "0": "The methodology is comprehensive and well-structured, systematically investigating multiple techniques for optimizing clinical LLMs.",
+                "1": "The methodology, data/task, and results are robust, with thorough evaluation across different models and tasks.",
+                "2": "The methodology is solid, results are clear, experiments are comprehensive, and the analysis provides valuable insights."
+            },
+            "weaknesses": {
+                "0": "The methodology is somewhat complex and could be more clearly explained; related work section is lengthy and could be more focused on recent studies.",
+                "1": "The methodology, related work, and analysis could be more concise and focused; some findings are incremental.",
+                "2": "The results could be more comparative, and the analysis could explore why certain techniques are more effective."
+            },
+            "soundness": "3.5",
+            "overall_assessment": "3.5"
+        }
+    },
+    "32": {
+        "paper_id": "966fc1dbc3a5c2dcca4090b4c821b558260cb85c8a2998aba243c007c60d66e1f51bd9c42c8a2b0c0c07b6de8405dd658ffc738a614c94320aaf1119ddb77026",
+        "review_id": "f401aa5bfad10643120437dd04dbe45d46c66608fe90d05c89331f742b429cce6351300032d561a938dfcfbe470321324da7c08278721cb53fd6bd65a7cda281",
+        "aspects": {
+            "strengths": {
+                "0": [
+                    "Methodology",
+                    "Definition/Description/Detail/Discussion/Explanation/Interpretation"
+                ],
+                "1": [
+                    "Methodology"
+                ],
+                "2": [
+                    "Methodology",
+                    "Experiment"
+                ]
+            },
+            "weaknesses": {
+                "0": [
+                    "Contribution"
+                ],
+                "1": [
+                    "Methodology",
+                    "Result",
+                    "Comparison"
+                ],
+                "2": [
+                    "Ablation",
+                    "Result"
+                ]
+            }
+        },
+        "human_review": {
+            "strengths": {
+                "0": "The method section describes the proposed method and its components in detail. Especially, each component is explained thoroughly and supported by appropriate citations.",
+                "1": "Utilizing BLIP-2 model for attribute generation is an interesting idea. This external knowledge may offer information not easily captured with only a few-shot examples.",
+                "2": "Both base-to-novel generalization and domain generalization experiments are conducted."
+            },
+            "weaknesses": {
+                "0": "There is no need to limit the BLIP-2 model to generate in “one-word” because the answers from BLIP-2 will be encoded to a single embedding vector and used as a target for the Attribute Extractor. This raises the question about the necessity of ‘single-word prediction’ (which seems to be the key contribution).",
+                "1": "The demonstration of cosine similarity (Figure 3) alone is not sufficient to show that the attribute extractor effectively extracts information predicted from BLIP-2. The performance of the ‘oracle’ setting, using BLIP-2 embeddings (i.e., the target of L_attr loss) instead of predicted ones, should be presented. Also, a direct comparison between estimated and BLIP-2 embeddings is necessary.",
+                "2": "Based on the ablation results (Table 3), adding attribute information does not appear to be a critical factor for performance improvement. In other words, visual prompting, instance conditioning, and regularization contribute significantly more."
+            }
+        },
+        "llm_review": {
+            "strengths": {
+                "0": "The paper introduces a novel and interpretable prompt-tuning method, IntCoOp, which effectively integrates attribute-level inductive biases into the prompt-tuning process, enhancing the interpretability and performance of vision-language models like CLIP.",
+                "1": "The methodology is well-explained and validated through extensive experiments across diverse datasets, demonstrating the robustness and effectiveness of IntCoOp in various downstream tasks.",
+                "2": "The integration of multi-head attention modules and attribute extraction networks within the prompt-tuning framework is a methodological advancement that provides both interpretability and strong empirical results."
+            },
+            "weaknesses": {
+                "0": "The paper's contributions could be better contextualized within the broader research landscape, particularly in terms of how it builds upon or differs from existing methods like CoOp and CoCoOp.",
+                "1": "The results, while impressive, are primarily demonstrated on a limited number of downstream tasks, and the generalizability beyond these tasks could be explored further.",
+                "2": "The ablation studies, while comprehensive, could benefit from a more detailed discussion of the trade-offs between different design choices, such as the impact of the number of visual tokens and the conditioning mechanism."
+            },
+            "soundness": "4.5",
+            "overall_assessment": "Top-Notch"
+        }
+    },
+    "33": {
+        "paper_id": "fd36c0dc1e73bfb1ee21aa675a29d6c50611b8dcef676a386f3b8a67e8460b9f0f06667aa6620f663c2eb0dc44f899a68307cb6549956c9f9094636181fe9f7f",
+        "review_id": "1e90dbf28bcd24ff610d5774ff20a64c128ecce2b9bf8731e4f22b79b4cd76d6c1647599cb1ae3edcba6dbfa88f34c44b81ee44a94bc001407ede37171c81e61",
+        "aspects": {
+            "strengths": {
+                "0": [
+                    "Methodology",
+                    "Novelty"
+                ],
+                "1": [
+                    "Data/Task",
+                    "Result",
+                    "Experiment",
+                    "Comparison"
+                ],
+                "2": [
+                    "Methodology",
+                    "Result",
+                    "Definition/Description/Detail/Discussion/Explanation/Interpretation",
+                    "Presentation"
+                ]
+            },
+            "weaknesses": {
+                "0": [
+                    "Methodology",
+                    "Presentation",
+                    "Comparison"
+                ],
+                "1": [
+                    "Result"
+                ],
+                "2": [
+                    "Experiment",
+                    "Comparison"
+                ]
+            }
+        },
+        "human_review": {
+            "strengths": {
+                "0": "Novel approach using semantic representations to improve AVQA. It uses source-wise learnable tokens to extract semantic features from audio and visual inputs and employs a source-aware semantic representation block to align audio-visual features. In addition, it also applies multi-modal spatial and temporal attention to focus on relevant regions, with integrated features using a fusion network for final answer prediction.",
+                "1": "Comprehensive experiments and comparisons with existing methods. It outperforms existing AVQA methods on the Music-AVQA dataset, especially for complex question types. It also achieves 89.9% accuracy on the AVQA-Yang dataset, surpassing previous methods. Ablation studies demonstrate the effectiveness of the proposed components.",
+                "2": "Visualization of model attention helps interpret results."
+            },
+            "weaknesses": {
+                "0": "The authors focused on Source-wise Learnable Tokens to extract semantically compact features from videos and employ Source-aware Semantic Representation to align these with visual and audio features. Visualizing and comparing the features in latent space would be helpful to demonstrate SaSR-Net as a better representation method.",
+                "1": "From Table 1, SaSR-Net seems to perform poorly on single-modality questions. I would like to see further elaborations on potential reasons.",
+                "2": "Computational costs should be discussed and compared for multi-modal experiments."
+            }
+        },
+        "llm_review": {
+            "strengths": {
+                "0": "The methodology is novel and introduces a unique approach to integrating audio and visual features using source-wise learnable tokens and semantic representation blocks.",
+                "1": "The experimental results demonstrate significant improvements over existing methods, particularly in audio-visual question answering tasks, as shown by the comparison with baseline models and ablation studies.",
+                "2": "The paper provides a clear definition and detailed explanation of the methodology, including the architecture of the model and the technical details of the implementation."
+            },
+            "weaknesses": {
+                "0": "The presentation of the paper is somewhat dense and may be challenging for readers unfamiliar with the specific domain or technical details.",
+                "1": "The methodology is complex and could benefit from additional ablation studies to further validate its effectiveness across different scenarios.",
+                "2": "The experimental comparisons with other methods could be more thoroughly discussed, particularly in terms of how the proposed model handles edge cases or noisy data."
+            },
+            "soundness": "The methodology is technically sound with thorough experimentation. However, there could be more details on the ablation studies and reproducibility aspects to further strengthen the claims.",
+            "overall_assessment": "The paper makes significant contributions to the field with a novel framework for audio-visual question answering. However, it could benefit from clearer explanations and more comprehensive comparisons with existing methods."
+        }
+    },
+    "34": {
+        "paper_id": "b6b4ac68276547a86d5b4b7adf86e8f336fe93174a1c81b69119342552d883dc3e92b0c7c3ba4f1caecc54b1c36226d0f9050da8b5af273040145f00c833ade6",
+        "review_id": "a2895d701f1e21aa3db5aa639a53a5f6b61a2b2580f038d6e0c6e6f2a73e1a58fd7da2c0925eb252ce4c75c5698ca7c13018be5f0b0374d71f30762e41f3f79f",
+        "aspects": {
+            "strengths": {
+                "0": [
+                    "Methodology",
+                    "Novelty"
+                ],
+                "1": [
+                    "Methodology",
+                    "Result"
+                ],
+                "2": [
+                    "Methodology",
+                    "Data/Task",
+                    "Experiment"
+                ]
+            },
+            "weaknesses": {
+                "0": [
+                    "Methodology"
+                ],
+                "1": [
+                    "Methodology",
+                    "Evaluation"
+                ],
+                "2": [
+                    "Definition/Description/Detail/Discussion/Explanation/Interpretation",
+                    "Result",
+                    "Analysis"
+                ]
+            }
+        },
+        "human_review": {
+            "strengths": {
+                "0": "The paper introduces a unique approach to TKG reasoning by addressing the asynchronous evolution of events, which has not been adequately considered in previous works.",
+                "1": "The proposed dual-level aggregation framework is well-designed and effectively captures both local and global temporal dependencies, improving the accuracy of entity representations.",
+                "2": "Extensive experiments on six datasets show that NEDA significantly outperforms existing methods, providing strong empirical evidence for its effectiveness."
+            },
+            "weaknesses": {
+                "0": "The framework's complexity might lead to scalability issues when applied to very large TKGs. The paper could benefit from a discussion on the computational efficiency and possible optimizations.",
+                "1": "The proposed method is evaluated only on TKG reasoning tasks. It would be interesting to see its applicability and performance on related tasks, such as temporal link prediction or temporal knowledge graph completion.",
+                "2": "The natural division strategy for patch selection is not deeply analyzed. Further discussion on its limitations and potential improvements could strengthen the paper."
+            }
+        },
+        "llm_review": {
+            "strengths": {
+                "0": "The methodology is novel and well-defined, introducing a unique approach to handling asynchronous event evolution in TKG reasoning.",
+                "1": "The experimental results demonstrate significant improvements over existing methods, showcasing the effectiveness of the proposed framework.",
+                "2": "The methodology is comprehensive, encompassing detailed design aspects of patch construction, intra-patch encoding, and inter-patch attention mechanisms."
+            },
+            "weaknesses": {
+                "0": "The methodology explanation could be more accessible to non-experts due to the complexity of the technical details.",
+                "1": "The evaluation metrics and their interpretation could be more deeply discussed to provide clearer insights into the framework's performance.",
+                "2": "The definition and discussion of the target entity's evolution across patches could be more detailed to address potential limitations."
+            },
+            "soundness": "4.5",
+            "overall_assessment": "4.5"
+        }
+    },
+    "35": {
+        "paper_id": "9496d0153547eab93d04bb34d8796a620ee1999b4d5a4601ee9361c1e10f214ea4ac999a4b5f7b73952c1c3244d27a10f12165daf1e198673ee6181fd4f1ab3c",
+        "review_id": "7da4f1f6164a433544a0dfdd59485de785e48aae8b9e9486cc3680ebe68672f5ddb98ce3d05f247d08d34791812227665f23869f12bb6daaac397336c89f0678",
+        "aspects": {
+            "strengths": {
+                "0": [
+                    "Methodology",
+                    "Data/Task"
+                ],
+                "1": [
+                    "Methodology",
+                    "Intuition/Justification/Motivation/Validation",
+                    "Result"
+                ],
+                "2": [
+                    "Result"
+                ]
+            },
+            "weaknesses": {
+                "0": [
+                    "Methodology",
+                    "Data/Task"
+                ],
+                "1": [
+                    "Methodology",
+                    "Intuition/Justification/Motivation/Validation",
+                    "Result"
+                ],
+                "2": [
+                    "Result"
+                ]
+            }
+        },
+        "human_review": {
+            "strengths": {
+                "0": "Limited exploration in the dimensions: the authors did not explore or discuss the completeness of the four criteria of retrieval, i.e. is there any possibility of existence of a new criterion, or these four criteria is complete? Further, the authors chose benchmarks specialised for these criteria, which may lead to selection bias for testing.  The authors can possibily argue by experimenting their method on a general dataset and analysize the failure cases.",
+                "1": "Classfier training: Training classifiers rather than training LoRA modules or few-shot prompting needs justification. LoRA or fewshot prompting requires little computation but may achieve comparable or better performance.",
+                "2": "Failure cases unaddressed in TAQA and FreshQA. Performance of UAR on TAQA and FreshQA is worse than that of Always-Ret. For these tasks, does it mean we can simply set to always retrieval and omit the classification? Especially when the retrieval rate if TAQA if UAR is near 100%."
+            },
+            "weaknesses": {
+                "0": "Limited exploration in the dimensions: the authors did not explore or discuss the completeness of the four criteria of retrieval, i.e. is there any possibility of existence of a new criterion, or these four criteria is complete? Further, the authors chose benchmarks specialised for these criteria, which may lead to selection bias for testing.  The authors can possibily argue by experimenting their method on a general dataset and analysize the failure cases.",
+                "1": "Classfier training: Training classifiers rather than training LoRA modules or few-shot prompting needs justification. LoRA or fewshot prompting requires little computation but may achieve comparable or better performance.",
+                "2": "Failure cases unaddressed in TAQA and FreshQA. Performance of UAR on TAQA and FreshQA is worse than that of Always-Ret. For these tasks, does it mean we can simply set to always retrieval and omit the classification? Especially when the retrieval rate if TAQA if UAR is near 100%."
+            }
+        },
+        "llm_review": {
+            "strengths": {
+                "0": "The methodology is robust, introducing a novel framework for active retrieval with four orthogonal criteria, ensuring efficient and comprehensive decision-making.",
+                "1": "The experimental results demonstrate superior performance of UAR compared to existing methods across various tasks, providing strong empirical support for its effectiveness.",
+                "2": "The authors provide valuable open-source resources, including code, data, and models, contributing to the research community."
+            },
+            "weaknesses": {
+                "0": "The experiments primarily focus on short text generation, limiting broader applicability to longer texts or multiple retrieval calls.",
+                "1": "The active retrieval criteria may not cover all possible real-world scenarios due to reliance on the authors' practical experience.",
+                "2": "The use of a single-layer MLP might limit the model's capacity compared to deeper networks."
+            },
+            "soundness": "The study presents a well-conducted methodology with thorough experiments and acknowledges limitations, providing a sound and reproducible framework. However, some aspects of the intuition behind the approach could be explored further.",
+            "overall_assessment": "This paper is solid research with significant contributions to the field of active retrieval, though it could benefit from expanded coverage of real-world scenarios and more in-depth exploration of its mechanisms."
+        }
+    },
+    "36": {
+        "paper_id": "e81e5ad2e9041776c65e9fef80da7604888857b4ee4575953940f2286ae35dc38e67c7e0a413c2e79e6c6774d5e5382caacb2422d2a1cf4e9486f9e8141e6996",
+        "review_id": "d3d823384409045ddb78f990fc16f9fad3de0bc9d7e55333c91758d3d51868050f696e574d8de2485e6dfe43c703a847abe6544dc4b4e83eb09936d00438b061",
+        "aspects": {
+            "strengths": {
+                "0": [
+                    "Experiment"
+                ]
+            },
+            "weaknesses": {
+                "0": [
+                    "Data/Task",
+                    "Result"
+                ],
+                "1": [
+                    "Methodology",
+                    "Definition/Description/Detail/Discussion/Explanation/Interpretation",
+                    "Result",
+                    "Comparison"
+                ],
+                "2": [
+                    "Methodology",
+                    "Intuition/Justification/Motivation/Validation",
+                    "Experiment"
+                ]
+            }
+        },
+        "human_review": {
+            "strengths": {
+                "0": "The experiments are well-organized and reasonably comprehensive, effectively supporting the insights and conclusions drawn in the paper. It is particularly intriguing for this reviewer to observe the efficacy of granularity expansion in achieving these positive results."
+            },
+            "weaknesses": {
+                "0": "Although the task performance results would depend on the quality of the generated atomic facts, its impact on the task performance is not discussed.",
+                "1": "Similarly, the performance outcomes could also vary with an NLI model utilized. Nevertheless, almost no discussions are presented that makes comparisons with models other than SUMMAC and/or substantiate the adoption of SUMMAC.",
+                "2": "The criterion for expanding the context, namely that max(e_k, c_k, n_k) ≠ e_k, may seem intuitive, but it might be overly simplistic. This hypothesis should be experimentally validated."
+            }
+        },
+        "llm_review": {
+            "strengths": {
+                "0": "The paper provides a comprehensive evaluation of their proposed method FIZZ through rigorous experimentation, comparing it against multiple baselines and datasets, which demonstrates its effectiveness in detecting factual inconsistencies in abstractive summarization."
+            },
+            "weaknesses": {
+                "0": "The empirical evaluation is limited to a single benchmark dataset (AGGRE FACT) and does not generalize to other domains or languages.",
+                "1": "The methodology involves computationally intensive coreference resolution and granularity expansion, which may limit its practical applicability in real-time settings.",
+                "2": "The definition of atomic facts is somewhat vague and subjective, which could impact reproducibility and interpretation."
+            },
+            "soundness": "The study is well-supported by thorough experimentation and provides clear results. However, the methodology has some computational and definitional limitations, but the overall approach is sound and contributes meaningfully to the field.",
+            "overall_assessment": "The paper represents solid work with significant interest for the ACL community, but it would benefit from additional empirical validation across diverse domains and languages, as well as methodological improvements to address computational efficiency and reproducibility."
+        }
+    },
+    "37": {
+        "paper_id": "4ce988821dcaca99dc9240d6369bba8e1f57239abec7a7725a98bb019038f92b498b708a0f344d21af95686741f6c58ccca977f5b85a51c723a9fce4ef1be42c",
+        "review_id": "9d6e53c765ec0296d9f4912eb07c872e14bde969f7b5935b2eeb9a51cd9c4fe485f8dd84dfd8c0a2aeba5b38718c193d4c184e7564b9ffd71f608bbb5450164f",
+        "aspects": {
+            "strengths": {
+                "0": [
+                    "Methodology"
+                ],
+                "1": [
+                    "Methodology"
+                ],
+                "2": [
+                    "Methodology",
+                    "Result",
+                    "Evaluation"
+                ],
+                "3": [
+                    "Result",
+                    "Experiment"
+                ]
+            },
+            "weaknesses": {
+                "0": [
+                    "Analysis"
+                ],
+                "1": [
+                    "Definition/Description/Detail/Discussion/Explanation/Interpretation",
+                    "Presentation"
+                ],
+                "2": [
+                    "Data/Task",
+                    "Result"
+                ],
+                "3": [
+                    "Methodology",
+                    "Result",
+                    "Analysis"
+                ]
+            }
+        },
+        "human_review": {
+            "strengths": {
+                "0": "Improving efficiency in long document tasks is an important research problem.",
+                "1": "While I am not an expert in this field, it seems that the authors have surveyed, organized and implemented a comprehensive set of methods to reduce memory usage in long sequence modeling. These were applied to several LLMs (where possible) and the results seem to agree.",
+                "2": "The methods were evaluated on a large set of 16 long document tasks. As the compression ratios are given, the trade off between compression and performance becomes visible.",
+                "3": "The experimental results can be useful to researchers and practitioners working with these and related methods."
+            },
+            "weaknesses": {
+                "0": "The analysis mostly remains on the surface.",
+                "1": "For example, an interesting result from Figure 2 is that coding tasks seems to suffer less from compression methods than other tasks (noted in L456ff), but there is no attempt to explain this. Figure 2 itself is mentioned only once in the main text.",
+                "2": "While Table 2 shows results split into 7 task types, only two of them (Code and Needle) are mentioned in the main text. It would be interesting if there are other task- or instance specific phenomena that can be observed.",
+                "3": "Do the results agree between the different LLMs tested?\n\n(The authors have added analyses to their author response)"
+            }
+        },
+        "llm_review": {
+            "strengths": {
+                "0": "The paper provides a comprehensive benchmark for evaluating long context-capable approaches, covering a wide range of methods and tasks.",
+                "1": "The methodology is well-organized and the benchmark is reproducible and extensible through opensource code.",
+                "2": "The work reveals numerous previously unknown phenomena and offers actionable insights for future research.",
+                "3": "The evaluation is thorough, assessing 11 methods under 65 settings and providing detailed results."
+            },
+            "weaknesses": {
+                "0": "The paper is somewhat lengthy, which may make it overwhelming for readers.",
+                "1": "The dataset focuses on input tasks rather than long generation tasks, which limits its scope.",
+                "2": "The analysis is dense and could be more accessible to a broader audience.",
+                "3": "There is limited discussion of how pretraining differences affect model comparisons."
+            },
+            "soundness": "The methodology is sound, with thorough evaluation of multiple approaches and tasks. However, some aspects of pretraining and dataset limitations could impact the robustness of comparisons.",
+            "overall_assessment": "The paper is significant for its comprehensive benchmark, but further work is needed to enhance clarity and comprehensiveness."
+        }
+    },
+    "38": {
+        "paper_id": "a1e8874d0f6aae7934d02c138b4140539954b2aec75753e083a8e5cb951321759c9295381da05913d99824ef0f080aa2ff04055514ba17f552601adda6a0ba81",
+        "review_id": "3e9329011e5537bc5010a3626a68793282709fa21d7a901631960ab0594b604d8cc0c0072090a7653ebe085757541b204befbf42a57bfbafc8c179569c5188b8",
+        "aspects": {
+            "strengths": {
+                "0": [
+                    "Methodology"
+                ],
+                "1": [
+                    "Methodology",
+                    "Result"
+                ],
+                "2": [
+                    "Methodology",
+                    "Result",
+                    "Experiment"
+                ],
+                "3": [
+                    "Presentation"
+                ]
+            },
+            "weaknesses": {
+                "0": [
+                    "Result",
+                    "Definition/Description/Detail/Discussion/Explanation/Interpretation",
+                    "Presentation"
+                ],
+                "1": [
+                    "Result"
+                ],
+                "2": [
+                    "Methodology"
+                ]
+            }
+        },
+        "human_review": {
+            "strengths": {
+                "0": "PER-PCS significantly reduces computational and storage requirements, achieving 7x faster computation and 38x less storage compared to training individual PEFTs.",
+                "1": "PER-PCS maintains model ownership and fine-grained personalization for target users. It also shows robustness in terms of the number of sharers, sharer selection strategy, and the number of PEFT parameters shared.",
+                "2": "Extensive experiments demonstrating effectiveness and efficiency. The experiments demonstrate that PER-PCS outperforms non-personalized baselines and PEFT retrieval methods across 6 personalization tasks, with performance comparable to training individual PEFTs (OPPU) but much lower computational and storage costs.",
+                "3": "Overall, the manuscript is well-organized and well-written."
+            },
+            "weaknesses": {
+                "0": "From Figure 3, it seems that increasing the number of users who consent to share their personal PEFT will not help improve performance. I would like to see a more detailed explanation of why.",
+                "1": "In several tasks like LaMP-1, PER-PCS+RAG seems not to contribute and even causes a performance drop (compared with PER-PCS Base). I am curious about the potential reasons behind this.",
+                "2": "In the method section, why are the PEFT pieces selected in an autoregressive way? Can we directly weigh the average/merge all the left parameters with the gating score you have learned?"
+            }
+        },
+        "llm_review": {
+            "strengths": {
+                "0": "The paper introduces a novel framework, PER-PCS, which efficiently enables users to share and assemble personalized PEFT models without centralizing user data.",
+                "1": "The methodology is comprehensive, addressing a clear problem in the field of personalized large language models and providing a technically sound solution.",
+                "2": "The experimental results demonstrate significant improvements across multiple tasks, showcasing the effectiveness of the proposed framework.",
+                "3": "The paper presents a modular approach that promotes privacy preservation, which is a key strength in the context of data-sensitive applications."
+            },
+            "weaknesses": {
+                "0": "The abstract and introduction are lengthy and could be more concise to better engage the reader.",
+                "1": "The methodology section is overly detailed, which may make it challenging for some readers to follow.",
+                "2": "The discussion of related work is somewhat limited in depth and breadth, missing some key comparisons with prior work."
+            },
+            "soundness": "The paper is well-supported with clear scientific claims and sufficient evidence through experiments. The methodology is technically sound and logically structured. The ethical considerations are adequately addressed.",
+            "overall_assessment": "The paper has interesting contributions and a solid methodology, making it suitable for publication. However, improvements in presentation and clarity are recommended."
+        }
+    },
+    "39": {
+        "paper_id": "715c52e4d116188594664e3cf1db0bcaca01d68c13169c040f008b087d55b1553236bfe75f17d5f907d3393fc971f742b11ef8331992245030577ce7a2a5ca36",
+        "review_id": "67e02d2bbc3c8571f0f0a94170e0cdddd62dbc026bdef776a756e9f1f0ec148e0da1e5f7e1032156231bb29e6154f3a129ca5fb1fe45d6f276dfd5804d2f98a3",
+        "aspects": {
+            "strengths": {
+                "0": [
+                    "Methodology",
+                    "Evaluation"
+                ],
+                "1": [
+                    "Experiment",
+                    "Intuition/Justification/Motivation/Validation",
+                    "Result",
+                    "Evaluation"
+                ],
+                "2": [
+                    "Methodology"
+                ]
+            },
+            "weaknesses": {
+                "0": [
+                    "Evaluation"
+                ],
+                "1": [
+                    "Data/Task",
+                    "Result",
+                    "Experiment"
+                ],
+                "2": [
+                    "Methodology",
+                    "Result",
+                    "Evaluation"
+                ]
+            }
+        },
+        "human_review": {
+            "strengths": {
+                "0": "The article introduces a new self-evaluation method that leverages the model's own features, avoiding dependence on external APIs and concerns about privacy leakage.",
+                "1": "The experimental results show that the self-evaluation method based on softmax distribution achieves higher accuracy than some existing evaluation methods, validating the feasibility of this approach.",
+                "2": "This method is not only applicable to existing smaller models (e.g., 7B parameter models) but also holds potential for larger-scale models."
+            },
+            "weaknesses": {
+                "0": "Simple Variants: The new metrics proposed (such as entropy and variance of the softmax distribution) are merely simple variants of existing signals, lacking in-depth analysis and explanation of their benefits and drawbacks. These variants do not demonstrate unique advantages in practical applications.",
+                "1": "Lack of Comprehensiveness: The article does not provide sufficient experimental evidence to support its conclusions. The experiments mainly focus on smaller-scale models and do not consider a wider range of models and larger datasets, which is not good for the confidence of the conclusions.",
+                "2": "Practical Issues: Although the self-evaluation method theoretically has certain advantages, there are still practical issues, i.e., can higher glass-box metric performance provide strong evidence that one model is better than the other on a given task. How can these general evaluations results finally affect the model development remains an issue."
+            }
+        },
+        "llm_review": {
+            "strengths": {
+                "0": "The methodology introduces novel glass-box features for LLM self-evaluation, addressing an important gap in the field.",
+                "1": "The experimental results demonstrate the effectiveness of the proposed methods on public benchmarks, providing clear evidence of their utility.",
+                "2": "The paper offers promising directions for future applications of self-evaluation in areas like self-reflection and reward modeling."
+            },
+            "weaknesses": {
+                "0": "The reliance on GPT-4 for annotations may not capture diverse human evaluations.",
+                "1": "Experiments are limited to 7B-sized models, potentially affecting generalizability to larger models.",
+                "2": "The evaluation metrics may not fully capture all aspects of response quality."
+            },
+            "soundness": "The study is well-conceived and provides sufficient support for its claims. However, it could benefit from more comprehensive experiments and human evaluations to validate the robustness of the findings.",
+            "overall_assessment": "The work is innovative and contributes significantly to the field of LLM evaluation. It has the potential to impact future research, but it could be further strengthened with additional validation and broader experiments."
+        }
+    },
+    "40": {
+        "paper_id": "47ea300921f3ea34e615ba73b9458bd72040be5de2c6b69fc0910e3f1c4430635042a4a748393775f693707cfb9d7a3fb9c44986fb3f2aba2e4cd2401e02af77",
+        "review_id": "7909eab9385fa6a73412f2c62cc0bf3db73165eb77aab41c645a57906b6e5fa055662c23d1d64507239fd6b1769a4af018e90aa30126e3ffb88253a67a808e5b",
+        "aspects": {
+            "strengths": {
+                "0": [
+                    "Methodology",
+                    "Data/Task",
+                    "Analysis"
+                ],
+                "1": []
+            },
+            "weaknesses": {
+                "0": [
+                    "Methodology"
+                ],
+                "1": [
+                    "Data/Task"
+                ],
+                "2": [
+                    "Evaluation"
+                ]
+            }
+        },
+        "human_review": {
+            "strengths": {
+                "0": "The analysis of over 1.2 million posts allows for robust statistical insights and the development of a well-informed model.",
+                "1": "The use of Informed and Stylized LLMs to transform stigmatizing language into empathetic expressions is innovative and addresses a significant social issue."
+            },
+            "weaknesses": {
+                "0": "The study is limited to Reddit, which may not generalize to other social media platforms where user demographics and discussion dynamics differ.",
+                "1": "The manual annotation process could introduce biases, particularly in subjective interpretations of what constitutes stigmatizing language.",
+                "2": "The evaluation of the de-stigmatized content might not fully capture whether the rephrased messages maintain the original intent and emotional tone of the user."
+            }
+        },
+        "llm_review": {
+            "strengths": {
+                "0": "The methodology is robust, as it involves a comprehensive analysis of a large dataset (over 1.2 million posts) to identify and categorize stigmatizing language towards PWUS.",
+                "1": "The study addresses a significant and important task of understanding and developing tools to reduce stigma, which is a pressing issue in the field of substance use disorders."
+            },
+            "weaknesses": {
+                "0": "The paper's focus on Reddit data may limit its generalizability to other platforms and cultural contexts.",
+                "1": "The task scope is somewhat narrow, as it only considers non-drug-related Reddit communities and may overlook broader online spaces.",
+                "2": "The evaluation primarily relies on human judgment, which can be subjective, and lacks robust automated metrics to ensure objectivity."
+            },
+            "soundness": "4.5",
+            "overall_assessment": "The paper is solid and makes meaningful contributions to the field, but some aspects of methodology and evaluation could be strengthened for broader impact."
+        }
+    }
+}

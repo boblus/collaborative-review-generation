@@ -1,0 +1,132 @@
+{
+    "0": {
+        "paper_id": "ea2fcaadea43b14cd757b899060486935bbc8ae9aa1f5e09d6593e11fbfc7482d9e6b01198b4144b4f4587be071ea4436d377e42b8f20df4c9ad77d190acbea4",
+        "review_id": "f44f0ca236369e5e597d2b8b8d05ec1a98c69e2cf68fd94a6accde8c749771328614c1d07a06141e170ce4c7d2ff6cbba39c2a4184adf16423c2bad2b120aac9",
+        "human_review": {
+            "strengths": {
+                "0": "Introducing such a novel task of analyzing the structure of opposing arguments is beneficial for testing language models' ability to understand implicit information in texts. This, in turn, enhances their comprehension of context and reasoning capabilities.",
+                "1": "The annotation process of the dataset maintains a high level of consistency, ensured through carefully designed templates and expert review. This ensures the quality of the dataset."
+            },
+            "weaknesses": {
+                "0": "This is a newly proposed task, so it might be insufficient to evaluate the capability of CA structure extraction using only F1 (patterns) Precision (slots) evaluation metrics. This is because the same sentence may have different perspectives for understanding. Why not select some samples for manual evaluation?",
+                "1": "Only selecting a few LLMs for experimentation might result in insufficient experimental evidence to fully support the analysis of the dataset in this paper. It would be beneficial to analyze the dataset from different perspectives. For example, how do smaller models perform after fine-tuning on this dataset? Also, what is the impact of the number of examples in the in-context learning prompts selected for LLMs on their performance? These additional analyses could provide a more comprehensive understanding of the dataset's characteristics and the behavior of various models on it."
+            }
+        },
+        "llm_review": {
+            "strengths": "1. Novel task definition: CA logical structure analysis is a new, well-motivated problem that connects argumentation theory with educational feedback.\n2. Inventive template set: Ten hand‑crafted logic patterns grounded in the Argument from Consequences scheme, designed to capture a wide range of counter‑argument strategies.\n3. Empirical effort: An annotation study on 778 counter‑arguments with 5,172 sentences, achieving a Krippendorff’s α of 0.50 and 86.5 % coverage of the template set.\n4. Public release: The dataset and model scripts are made openly available, encouraging replication and extension.\n5. Baseline evaluation: Experiments with several large language models (few‑shot and fine‑tuned) demonstrate the difficulty of the task, providing a clear benchmark for future work.",
+            "weaknesses": "1. Limited scope of argumentation schemes: the entire template inventory is built only from Argument from Consequences, ignoring the richer set of ~60 schemes.\n2. Small and narrow data: only three topics (death penalty, homework, part‑time jobs) and 778 CA instances may not generalize to broader discourse.\n3. Moderate inter‑annotator agreement: α=0.50 is acceptable but indicates substantial ambiguity in the task, especially for multi‑pattern sentences.\n4. Evaluation metrics and thresholds are simplistic (e.g., RougeL >0.5 for slot extraction), potentially over‑penalizing semantically correct but lexically varied outputs.\n5. Weak baseline performance: all models score <0.61 F1 for template selection and <0.30 precision for slot extraction, but the analysis does not explore why or how to improve significantly.\n6. Lack of external validation: no comparison to existing implicit discourse recognition or argument mining datasets, nor any user study showing the usefulness of the proposed feedback.\n7. Potential over‑engineering: the 10 template patterns, while comprehensive, may be too fine‑grained for practical annotation and modeling, leading to annotation fatigue and modeling errors.\n8. Minor methodological gaps: no discussion of hyperparameter tuning for fine‑tuning, no error analysis on different topic domains, and no ablation studies on template importance.",
+            "soundness": "3.5",
+            "overall_assessment": "3.0"
+        }
+    },
+    "1": {
+        "paper_id": "4d56bde71a33d412724e11253d44bcdb6eb88bd86e325faddfd1752caa1e9634a80a214c473f6c9ca05ec3e7c5ace6f7e20f8206ec9de5f859951572e4e1a105",
+        "review_id": "852e98e66333fe7ad9714dcbfa742e47b8e435a08295c9580680a8b1c3f6b98e37f0ea56b1eacfad9ae779c3b680a891e25571a660828354b27650d87c9e0ac5",
+        "human_review": {
+            "strengths": {
+                "0": "The paper is well-written and easy to understand.",
+                "1": "This is the first application of a Fast-Slow approach to bridge the gap between continual and non-continual TTA in ASR.",
+                "2": "The paper enhances the SUTA loss function with a sample buffer to prevent model collapse. Additionally, it introduces a domain shift indicator (LII) and DSUTA with a Dynamic Reset Strategy to handle time-varying domains.",
+                "3": "The proposed methods show significant improvement in both single-domain and time-varying domains, particularly in challenging scenarios."
+            },
+            "weaknesses": {
+                "0": "Synthetic Dataset Limitation: The performance validation relies primarily on the synthetic Librispeech-C dataset, raising concerns about the generalizability of the results to real-world data.",
+                "1": "A more thorough comparison on time-varying domains is needed.",
+                "2": "Ambiguity in Results Presentation: For instance, the meaning of the axes in Figures 5 and 6 is not clearly explained, which could lead to misinterpretation of the results."
+            }
+        },
+        "llm_review": {
+            "strengths": "The paper proposes a novel Fast‑slow Test‑time Adaptation (TTA) framework that seamlessly integrates continual and non‑continual TTA, enabling the model to leverage knowledge across samples while protecting against catastrophic over‑fitting. The introduced Dynamic SUTA (DSUTA) method extends the state‑of‑the‑art SUTA by adding a meta‑parameter update schedule and a buffer‑based gradient update, which empirically leads to faster convergence and lower WER. A key contribution is the dynamic reset strategy, which statistically detects large distribution shifts and resets the model to the pre‑trained version only when necessary; this removes the need for hand‑crafted reset frequencies and improves robustness on long, multi‑domain test streams. The experimental evaluation is extensive: it covers a wide range of noisy LibriSpeech and CHiME‑3 test conditions, compares against both non‑continual (SUTA, SGEM) and continual (CSUTA, AWMC) baselines, and includes ablations on reset strategies and transition rates. Results show consistently lower WER than all baselines, often surpassing Oracle boundary resets, demonstrating the practical value of the proposed method. Overall, the paper offers a clear, well‑motivated methodology, solid empirical evidence, and a significant step forward for TTA in end‑to‑end ASR.",
+            "weaknesses": "1. The study focuses exclusively on background noise corruptions as the domain shift; other realistic shifts such as accents, speaker variability, or channel effects are not explored, limiting the generality of the findings.\n2. While the dynamic reset strategy is empirically effective, its hyper‑parameters (e.g., buffer size M, transition threshold Z‑score, patience P, and domain construction length K) are chosen heuristically without a systematic sensitivity analysis.\n3. The paper provides limited ablation on the Fast‑slow framework itself: for instance, the contribution of the meta‑parameter update schedule versus the fast adaptation step is not isolated.\n4. Computational overhead of DSUTA, especially with the buffer updates and dynamic reset calculations, is not quantified; it is unclear how the method scales to larger models or real‑time scenarios.\n5. Theoretical justification for using the loss‑improvement index as a shift detector is minimal; only empirical separability is shown.\n6. Some baselines (e.g., AWMC) are re‑implemented, and discrepancies in hyper‑parameter settings (e.g., noise SNR differences) may affect fairness.\n7. The paper lacks a discussion on potential catastrophic forgetting when the test stream is very long and the model is rarely reset.",
+            "soundness": "4.0",
+            "overall_assessment": "4.0"
+        }
+    },
+    "2": {
+        "paper_id": "c28e525283c0b7390216f732607d0c64b5d17a62543684d743b64981de62d6b85a6c9d360141c216cd3baee7f6f94023a6ab40eba23aaaa6b2606cf9e509442c",
+        "review_id": "3c930622ec1af37dc2f232f3f63f12799b32c8b25c8615316d31ddbc36dbd9f0dc7128e28fa121f62dae65f304ec0c177b80ec356945e1e23b079d06ae5d5632",
+        "human_review": {
+            "strengths": {
+                "0": "The related works section covers prior works clearly.",
+                "1": "The paper addresses an interesting problem which can be valuable to the AI Planning research community",
+                "2": "Authors devised a sampling strategy for LM training data that includes a higher proportion of search nodes near the end, than the beginning, outperforming baselines by 8% fewer iterations and outperforming models that were trained with double the data."
+            },
+            "weaknesses": {
+                "0": "Please justify your choices for loss function by adding more description. It is not clear how these two losses are used together. Is there any coefficient when you put these two loss functions together? Or do you use them separately as your experiment shows. It is a bit confusing.",
+                "1": "Is this always true in all scenarios? \"sampling with a higher proportion of search nodes near the end\" leads to better performance? Please justify better.",
+                "2": "What would be the other alternatives to Eq. (6) for assigning higher value to nodes closer to the goal? It would be interesting to have a comparison."
+            }
+        },
+        "llm_review": {
+            "strengths": "The paper presents a thoughtful, data‑centric investigation into how to train language‑model heuristics for A* search.  Its key contributions are: (1) a clear disentanglement of the requirements of the planner and the LM, showing that accurate predictions near the goal are most valuable; (2) a principled, logarithmic contribution score for individual nodes and the resulting sampling distribution D(n,τ); (3) systematic experiments on two classic planning domains (maze and Sokoban) that demonstrate significant reductions in search length and wall‑clock time compared to uniform sampling, even outperforming full‑data baselines in many settings; (4) a comparison of two loss formulations (L2 and LM loss) and two model sizes (60M and 720M), giving insight into how scaling and loss choice affect performance; (5) a well‑structured exposition with clear figures, tables, and a thorough related‑work discussion that situates the work within heuristic learning and LLM‑based planning research.",
+            "weaknesses": "1. The empirical evaluation is confined to two simple puzzle domains; it is unclear how well the distribution generalizes to more complex or real‑world planning tasks. 2. The paper offers limited ablation on hyper‑parameters such as temperature τ, loss choice, or batch size, making it hard to assess robustness. 3. Statistical significance is not reported for the reported gains; some improvements may be marginal. 4. While the paper discusses computational costs, the analysis is largely anecdotal and lacks a systematic cost‑benefit comparison (e.g., number of forward passes, memory usage). 5. The comparison to state‑of‑the‑art LLM‑based planners (e.g., CoT, MCTS+LLM) is superficial; no direct empirical benchmark is provided. 6. The discussion on bias, fairness, and potential misuse of LMs is brief and not tied to any concrete mitigation strategies.",
+            "soundness": "3.5",
+            "overall_assessment": "3.5"
+        }
+    },
+    "3": {
+        "paper_id": "38f72f46a3c72e131ee8b9bf36a29842c151505fb66c8c29de16ae524881d65eb3173abfc16f94fcde8893fcc797be358fbce659a4f82a8e6e50bca193fd69b0",
+        "review_id": "2eff61e3383d619162b34202481957951c31775ae0cee6b90926ad8558979bbf60f62db6394885ae0fe01729aa6dbdb602dfc4eee008ad72ff586f139361eaaf",
+        "human_review": {
+            "strengths": {
+                "0": "McMarket is one of the most extensive datasets in this domain, covering multiple languages and markets, which could be highly beneficial for future research.",
+                "1": "The integration of LLMs, like GPT-4, showed significant improvements over traditional methods in both tasks under study."
+            },
+            "weaknesses": {
+                "0": "The dataset, primarily derived from user-generated content, may contain inherent biases, which could skew the results or effectiveness of the QA systems developed using it.",
+                "1": "Some parts of the methodology, particularly those involving the use of AI models for generating and ranking answers, lacks the necessary detail to allow reproducibility.",
+                "2": "The paper heavily relies on large language models (LLMs) for dataset annotation and evaluation without thoroughly examining the limitations or biases these models might introduce."
+            }
+        },
+        "llm_review": {
+            "strengths": "The paper introduces a genuinely novel multilingual cross‑market product QA task (MCPQA) and backs it up with a large, well‑documented dataset (McMarket) that spans 13 marketplaces, 8 languages, over 2 M questions and 7.7 M reviews. It provides LLM‑generated labeled subsets (McMarket a and q) and a human evaluation to attest to their quality, enabling future supervised research. The authors conduct a comprehensive experimental study, comparing a wide range of baselines from lexical models to modern LLMs, and systematically evaluate both single‑market and cross‑market settings. Results consistently show cross‑market benefits, especially for low‑resource markets, and the paper includes analyses of retrieval depth, multilingual effects, and hyper‑parameter sweeps. The resource and code are promised to be released, making a valuable contribution to the community.\n\nWeaknesses\n1. Data quality: The dataset is derived from Amazon, which can contain biased or inaccurate reviews/QA pairs; the paper acknowledges this but does not provide robust filtering or de‑biasing techniques.\n2. Limited LLM annotation: Only 1 000 (AG) and 200 (QR) questions per market are GPT‑4 labeled, with human verification on 500 samples; this may not fully validate the automatic labeling scheme or capture long‑term annotation stability.\n3. Translation issues: Non‑English content is largely translated into English for processing, which may introduce noise and limits the exploration of truly cross‑lingual scenarios. The paper notes poorer performance on non‑Latin languages but offers limited analysis or mitigation.\n4. Experimental depth: While a wide baseline set is used, key components such as retrieval methods, token‑level quality of retrieved resources, and ablations on cross‑market vs exact‑match retrieval are not thoroughly explored.\n5. Reporting and reproducibility: The paper sometimes omits split details or hyper‑parameter ranges, and code is not yet released, which could hinder reproducibility.\n6. Ethical considerations: Although the dataset is public and privacy‑preserving, cross‑market usage may raise concerns (e.g., legal, competitive), which are not discussed.\n\nSoundness: 4.0\nOverall Assessment: 3.5"
+        }
+    },
+    "4": {
+        "paper_id": "a9ff676f49a8d12373550407f55b00465f11841801d4822daaab007c3be3f454553269c958ba3f1d79fa16802efb64f449ebf200fdbf5d756d3b7b6ba3a7f694",
+        "review_id": "9507d39c6f5e56c8f528f632bfac194e4f84f32a9c381b2ca9fee02d50884e5b7a1dad40132ee346b7807afa282df1c62fac3867e240d2d0801c80f9853cec05",
+        "human_review": {
+            "strengths": {
+                "0": "The authors proposed a new objective to learn adversarial suffixes for jailbreaking LLMs, which is currently a hot and important topic for their safety.",
+                "1": "The proposed DeGCG has been demonstrated to be effective through the experimental results. It also shows advanced properties, such as efficient learning of adversarial suffixes and transferabilities among different datasets and LLMs.",
+                "2": "The paper is clearly written and well-organized. It is easy to follow the authors' ideas and understand their approaches. The authors use clear figures, i.e., Figure 2, to show the procedure of their method. The notations and experimental results are clear and easy to read.",
+                "3": "The authors have conducted extensive experiments to demonstrate the effectiveness of DeGCG using various LLMs under different settings. They also discuss several important effects of the attack method via ablation studies."
+            },
+            "weaknesses": {
+                "0": "This paper's novelty is limited. The proposed DeGCG is based on GCG, with just a slight change in the objective.",
+                "1": "The authors should have reported the queries' perplexity after adding the adversarial suffixes to evaluate the stealthiness of the proposed method for jailbreaking attacks. Additionally. they should have provided some examples to show what the adversarial suffixes are learned from DeGCG. If they are gibberish words,  they are also easy to detect and filter by some defense methods [1].",
+                "2": "The ablation study on the two terms in the loss function is unclear. The authors should have provided more details of the experiments. \n\n[1] Zihao Xu, Yi Liu, Gelei Deng, Yuekang Li, and Stjepan Picek. 2024. Llm jailbreak attack versus defense techniques–a comprehensive study. arXiv preprint arXiv:2402.1345"
+            }
+        },
+        "llm_review": {
+            "strengths": "The paper proposes a clear and novel two-stage framework (DeGCG) that decouples first-token search from content-aware search, directly addressing the computational inefficiency of GCG. It demonstrates significant ASR gains across multiple open‑source models (Llama2‑chat, Mistral‑Instruct, OpenChat‑3.5, Starling‑LM) and shows that the approach generalizes to cross‑model, cross‑data, and self‑transfer settings. The interleaved variant i‑DeGCG further improves performance, and the authors provide thorough ablations (self‑repetition, initialization comparison) and detailed training dynamics. The use of the HarmBench benchmark, open‑source implementations, and transparent reporting of hyper‑parameters strengthens reproducibility and relevance to the ACL community.",
+            "weaknesses": "1) Evaluation is limited to 7B open‑source models; results may not generalize to larger or closed‑source systems. 2) The study focuses solely on text‑only behaviors, neglecting multimodal or contextual jailbreak scenarios. 3) While empirical gains are shown, the paper offers limited theoretical insight into why first‑token optimization facilitates transferability. 4) The reported ASR improvements, though present, are sometimes modest and lack significance testing or confidence intervals. 5) Defense implications are briefly mentioned but not explored; the work remains purely from an attack perspective.",
+            "soundness": "4.0",
+            "overall_assessment": "4.0"
+        }
+    },
+    "5": {
+        "paper_id": "7909f80a713fbac55c893dfe4e82af6630200b8359a2383f990498b37b9b2dfd99b3f419d20534ed97e3f1358e75cd148628ae12e7e2f5dc2fe7f09b93467fee",
+        "review_id": "4b5c29b2802e415eb03e09ee3dfeae4be437a3b23b017f1586e1f6e9f1809d5d6a396143d51f0ccbee16c8bd1e465f59cc77d705db9935c374713bab18f9bb7c",
+        "human_review": {
+            "strengths": {
+                "0": "The introduction of molecular facts as an intermediate representation between atomic facts and larger text chunks is clearly articulated and well-justified through problem statements.",
+                "1": "The paper thoroughly describes a two-step methodology for generating molecular facts.",
+                "2": "The design of synthetic experiments to test the impact of minimality on error localization is rigorous and insightful. By examining the effects of adding extra context, the study provides concrete evidence demonstrating the benefits and trade-offs of the proposed method.",
+                "3": "The evaluation on real-world ambiguous biographies datasets provides concrete evidence of the effectiveness of molecular facts in practical settings.",
+                "4": "The experimental results are further validated through human annotations, which is commendable. This adds confidence to the proposed methodology and its outcomes."
+            },
+            "weaknesses": {
+                "0": "The paper relies heavily on closed-source models such as GPT-3.5/4 for generating and verifying molecular facts, which limits the accessibility and generalizability of the approach. Additionally, since these closed-source models are continually updated, the reproducibility of this paper is also a concern. It would be advantageous if the authors conducted experiments using open-source models (e.g., Llama3).",
+                "1": "A more in-depth exploration of the specific types of errors made by different baselines would enhance the error analysis. While the paper categorizes errors, a more detailed classification could provide insights for further fine-tuning or improving the methodology.",
+                "2": "Although the authors mention human evaluation, the criteria for annotating minimal versus non-minimal and ambiguous versus unambiguous are somewhat subjective. Clearly detailing these criteria and possibly employing multiple annotators could strengthen the consistency of the evaluation."
+            }
+        },
+        "llm_review": {
+            "strengths": "The paper introduces a clear, theoretically motivated notion of *molecular facts*—claims that satisfy both decontextuality (stand‑alone interpretability) and minimality (minimal added context). It formalises these desiderata, proposes a two‑stage LLM‑based generation pipeline, and evaluates it against several baselines on two distinct experiments: a controlled synthetic study that quantifies the cost of non‑minimal decontextualization for error localisation, and an evaluation on the ambiguous biographies dataset that demonstrates higher verification accuracy while maintaining reasonable sentence length. The authors provide quantitative results (accuracy, minimality statistics, overlap analysis), a human annotation component for minimality, and an analysis of trade‑offs. The work is well situated within the fact‑verification literature and clearly articulates its contribution relative to prior decontextualization strategies.",
+            "weaknesses": "1. Scope is limited to English‑language biographies; broader domains and languages remain unexplored. 2. Experiments rely heavily on strong LLMs (GPT‑4) and automatic checkers (AlignScore/roberta) without presenting an end‑to‑end verification pipeline, making practical impact unclear. 3. The decomposition step that feeds atomic claims is not evaluated; errors here could confound results. 4. The synthetic data generation for minimality relies on GPT‑4’s parametric knowledge, which may introduce bias. 5. Novelty is modest relative to existing anaphora resolution and claim‑revision work; the paper could emphasize more clearly what distinguishes *molecular facts* from prior efforts.",
+            "soundness": "3.5",
+            "overall_assessment": "3.5"
+        }
+    }
+}

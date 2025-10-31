@@ -1,0 +1,45 @@
+{
+    "0": {
+        "paper_id": "ea2fcaadea43b14cd757b899060486935bbc8ae9aa1f5e09d6593e11fbfc7482d9e6b01198b4144b4f4587be071ea4436d377e42b8f20df4c9ad77d190acbea4",
+        "review_id": "f44f0ca236369e5e597d2b8b8d05ec1a98c69e2cf68fd94a6accde8c749771328614c1d07a06141e170ce4c7d2ff6cbba39c2a4184adf16423c2bad2b120aac9",
+        "human_review": {
+            "strengths": {
+                "0": "Introducing such a novel task of analyzing the structure of opposing arguments is beneficial for testing language models' ability to understand implicit information in texts. This, in turn, enhances their comprehension of context and reasoning capabilities.",
+                "1": "The annotation process of the dataset maintains a high level of consistency, ensured through carefully designed templates and expert review. This ensures the quality of the dataset."
+            },
+            "weaknesses": {
+                "0": "This is a newly proposed task, so it might be insufficient to evaluate the capability of CA structure extraction using only F1 (patterns) Precision (slots) evaluation metrics. This is because the same sentence may have different perspectives for understanding. Why not select some samples for manual evaluation?",
+                "1": "Only selecting a few LLMs for experimentation might result in insufficient experimental evidence to fully support the analysis of the dataset in this paper. It would be beneficial to analyze the dataset from different perspectives. For example, how do smaller models perform after fine-tuning on this dataset? Also, what is the impact of the number of examples in the in-context learning prompts selected for LLMs on their performance? These additional analyses could provide a more comprehensive understanding of the dataset's characteristics and the behavior of various models on it."
+            }
+        },
+        "llm_review": {
+            "strengths": "The paper introduces a novel task for analyzing counter-argument (CA) logical structure, defines 10 new logic patterns, and creates a comprehensive dataset with high annotator agreement. The methodology is well-structured, and the dataset is publicly available. The paper provides insightful empirical results and demonstrates the feasibility of using large language models for CA analysis. The paper also contributes to the field by providing a clear framework for CA logical structure analysis.",
+            "weaknesses": "The paper lacks detailed information on the methodology used to create the 10 logic patterns, including how they were selected and validated. The experimental results are limited to a specific dataset, and the paper does not provide sufficient information on the performance of the models across different scenarios. The paper does not address potential limitations in the dataset's generalizability or the impact of the proposed logic patterns on real-world applications. The paper also does not discuss the implications of the findings for future research.",
+            "soundness": 3.5,
+            "overall_assessment": 3
+        }
+    },
+    "1": {
+        "paper_id": "4d56bde71a33d412724e11253d44bcdb6eb88bd86e325faddfd1752caa1e9634a80a214c473f6c9ca05ec3e7c5ace6f7e20f8206ec9de5f859951572e4e1a105",
+        "review_id": "852e98e66333fe7ad9714dcbfa742e47b8e435a08295c9580680a8b1c3f6b98e37f0ea56b1eacfad9ae779c3b680a891e25571a660828354b27650d87c9e0ac5",
+        "human_review": {
+            "strengths": {
+                "0": "The paper is well-written and easy to understand.",
+                "1": "This is the first application of a Fast-Slow approach to bridge the gap between continual and non-continual TTA in ASR.",
+                "2": "The paper enhances the SUTA loss function with a sample buffer to prevent model collapse. Additionally, it introduces a domain shift indicator (LII) and DSUTA with a Dynamic Reset Strategy to handle time-varying domains.",
+                "3": "The proposed methods show significant improvement in both single-domain and time-varying domains, particularly in challenging scenarios."
+            },
+            "weaknesses": {
+                "0": "Synthetic Dataset Limitation: The performance validation relies primarily on the synthetic Librispeech-C dataset, raising concerns about the generalizability of the results to real-world data.",
+                "1": "A more thorough comparison on time-varying domains is needed.",
+                "2": "Ambiguity in Results Presentation: For instance, the meaning of the axes in Figures 5 and 6 is not clearly explained, which could lead to misinterpretation of the results."
+            }
+        },
+        "llm_review": {
+            "strengths": "The paper presents a novel Fast-slow TTA framework for end-to-end speech recognition, which bridges the gap between continual and non-continual TTA. It introduces Dynamic SUTA (DSUTA), an entropy-minimization-based continual TTA method, and a dynamic reset strategy to handle time-varying domains. The method demonstrates superior performance on noisy ASR datasets compared to existing baselines, and it shows robustness to domain changes without requiring domain boundary information. The paper clearly states scientific claims and provides sufficient support for its empirical results, with a clear organization of related literature. The proposed method is valuable for researchers interested in TTA and continual learning in speech recognition.",
+            "weaknesses": "The paper has a limited discussion on the generalizability of the method across different speech domains and does not provide extensive experimental validation on diverse datasets. The dynamic reset strategy is described in detail, but the implementation details and the conditions under which it is applied are not clearly specified. The paper also lacks a comprehensive comparison with existing methods on multi-domain and long-time-varying data, which could limit its relevance to the broader community. The results are presented in a way that may not fully address the impact of the method in real-world scenarios.",
+            "soundness": 4.5,
+            "overall_assessment": 4
+        }
+    }
+}

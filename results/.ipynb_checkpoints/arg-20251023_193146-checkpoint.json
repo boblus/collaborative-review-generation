@@ -1,0 +1,27 @@
+{
+    "0": {
+        "paper_id": "ea2fcaadea43b14cd757b899060486935bbc8ae9aa1f5e09d6593e11fbfc7482d9e6b01198b4144b4f4587be071ea4436d377e42b8f20df4c9ad77d190acbea4",
+        "review_id": "f44f0ca236369e5e597d2b8b8d05ec1a98c69e2cf68fd94a6accde8c749771328614c1d07a06141e170ce4c7d2ff6cbba39c2a4184adf16423c2bad2b120aac9",
+        "human_review": {
+            "strengths": {
+                "0": "Introducing such a novel task of analyzing the structure of opposing arguments is beneficial for testing language models' ability to understand implicit information in texts. This, in turn, enhances their comprehension of context and reasoning capabilities.",
+                "1": "The annotation process of the dataset maintains a high level of consistency, ensured through carefully designed templates and expert review. This ensures the quality of the dataset."
+            },
+            "weaknesses": {
+                "0": "This is a newly proposed task, so it might be insufficient to evaluate the capability of CA structure extraction using only F1 (patterns) Precision (slots) evaluation metrics. This is because the same sentence may have different perspectives for understanding. Why not select some samples for manual evaluation?",
+                "1": "Only selecting a few LLMs for experimentation might result in insufficient experimental evidence to fully support the analysis of the dataset in this paper. It would be beneficial to analyze the dataset from different perspectives. For example, how do smaller models perform after fine-tuning on this dataset? Also, what is the impact of the number of examples in the in-context learning prompts selected for LLMs on their performance? These additional analyses could provide a more comprehensive understanding of the dataset's characteristics and the behavior of various models on it."
+            }
+        },
+        "llm_review": {
+            "strengths": "The paper introduces a novel and well-motivated task: logical structure analysis of counter-arguments (CAs) in relation to initial arguments (IAs). It proposes a comprehensive set of 10 new logic patterns for this task, which is a significant contribution to argumentation mining. The paper also presents a new dataset (778 CAs, 5,172 sentences) and evaluates several LLMs on this task, providing empirical evidence of the challenge. The methodology for creating templates and conducting annotation is clearly described, and the paper includes a detailed analysis of annotation disagreements and model performance.",
+            "weaknesses": [
+                "The paper does not clearly state the main research questions or hypotheses upfront, making it difficult to assess the novelty and significance of the contributions.",
+                "The evaluation of the model experiments is limited: the paper only reports results for a few LLMs (GPT-4, GPT-3.5-turbo, etc.) and does not compare against other state-of-the-art models or baselines for this specific task, which weakens the claim of the work's contribution.",
+                "The annotation process and quality are described, but the paper does not provide a detailed analysis of inter-annotator agreement (e.g., Cohen's Kappa) or the specific disagreements that led to the final annotation set, which could impact the reliability of the results.",
+                "The paper mentions the use of a 'crowdsourcing' approach for annotation but does not provide sufficient detail on the annotation process, the number of annotators, or the quality control measures taken to ensure annotation consistency, which raises concerns about the reliability of the dataset."
+            ],
+            "soundness": 3.5,
+            "overall_assessment": 3.5
+        }
+    }
+}
