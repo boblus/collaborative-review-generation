@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Peer review evaluation</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 1500px; margin: auto; padding: 20px; }
+    .navigation { margin: 20px 0; display: flex; justify-content: center; align-items: flex-end; position: relative; min-height: 72px; }
+    .nav-counter { position: absolute; left: 50%; transform: translateX(-50%); bottom: 10px; font-size: 0.98em; }
+    .nav-actions { margin-left: auto; display: flex; flex-direction: column; gap: 8px; align-items: flex-end; }
+    .nav-row { display: flex; gap: 8px; }
+    .nav-row:first-child { margin-right: 0; }
+    .btn { background: #fff; border: 1px solid #ccc; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.95em; }
+    .btn:hover { background: #f6f6f6; }
+    .file-btn { position: relative; overflow: hidden; display: inline-flex; align-items: center; margin-right: 4px; }
+    .file-btn input[type="file"] { position: absolute; left: 0; top: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+    .review-label-box {
+      margin-top: 12px;
+    }
+    .review-label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 4px;
+      min-width: 64px;
+      color: #111;
+      font-size: 1.08em;
+      letter-spacing: 0.5px;
+    }
+    .review-box {
+      background: #f0f4fa;
+      border: 1px solid #e0e6ef;
+      padding: 10px 14px 14px 14px;
+      border-radius: 5px;
+      flex: 1;
+    }
+    .review-label-box.review-b .review-box {
+      background: #f9f0f0;
+      border: 1px solid #eedede;
+    }
+    .criteria-box { margin-top: 25px; }
+    .criteria { margin-bottom: 20px; }
+    label { margin-right: 20px; }
+    #review-main-box > span {
+      display: block;
+      margin-bottom: 12px;
+    }
+    /* Added for side-by-side layout */
+    .main-layout { display: flex; gap: 20px; align-items: flex-start; }
+    .left-pane { width: 888px; flex-shrink: 0; }
+    .right-pane { flex: 1; min-width: 0; }
+    @media (max-width: 900px) { .main-layout { flex-direction: column; } .left-pane { width: 100%; } }
+    .hint { color: #666; font-size: 0.95em; font-style: italic; display: block; margin-top: 6px; margin-bottom: 6px; }
+    .result-box { margin-top: 16px; padding: 10px 12px; border-radius: 4px; border: 1px solid #e2e2e2; background: #fafafa; }
+    .info-box { margin: 12px 0 16px 0; padding: 10px 12px; border: 1px solid #e6e6e6; background: #fcfcfc; border-radius: 6px; }
+    .info-item { margin: 6px 0; }
+    .muted { color: #111; font-size: 0.95em; }
+    #kp-text { font-weight: normal; }
+    /* Frosted mask for candidate review */
+    .frosted { position: relative; }
+    .frosted::after { content: ""; position: absolute; inset: 0; backdrop-filter: blur(4px); background: rgba(255,255,255,0.35); border-radius: 5px; }
+    /* Frosted mask for criteria-container reviews - only affects review-box */
+    #criteria-container .frosted { position: relative; }
+    #criteria-container .frosted .review-box { position: relative; }
+    #criteria-container .frosted .review-box::after { content: ""; position: absolute; inset: 0; backdrop-filter: blur(4px); background: rgba(255,255,255,0.35); border-radius: 5px; }
+    /* Override the general frosted effect for criteria-container */
+    #criteria-container .frosted::after { display: none; }
+    /* Greyed-out style for outdated blocks */
+    .disabled { color: #aaa; }
+    .disabled .hint { color: #bbb; }
+    /* Collapsible reference review panel */
+    .ref-panel-toggle {
+      margin: 10px 0;
+      padding: 8px 12px;
+      background: #f0f0f0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9em;
+      color: #333;
+    }
+    .ref-panel-toggle:hover {
+      background: #e0e0e0;
+    }
+    .ref-panel {
+      display: none;
+      margin: 10px 0;
+      padding: 15px;
+      background: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    .ref-panel.show {
+      display: block;
+    }
+    .ref-panel .review-label-box {
+      margin-top: 8px;
+    }
+    .ref-panel .review-label-box:first-child {
+      margin-top: 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>Peer review evaluation</h1>
+
+  <div class="main-layout">
+    <div class="left-pane">
+      <div id="main-box" style="border: 1px solid #ddd; background: #f8f8f8; padding: 16px 20px; margin-bottom: 22px; border-radius: 6px;">
+        <h2 style="margin-top: 0; margin-bottom: 10px; font-size: 1.4em;">1. Read the paper</h2>
+        <span style="font-size: 0.98em;">
+          Start by reading the full paper. Try to understand:
+          <ul style="margin-top: 6px; margin-bottom: 0;">
+            <li>The research goals and key contributions.</li>
+            <li>The methods and experiments used.</li>
+            <li>The results, conclusions, and any major claims.</li>
+          </ul>
+        </span>
+        <div id="paper-container" style="resize: both; overflow: auto; min-width: 100%; max-width: 100%; width: 100%; min-height: 600px; max-height: 1220px; margin-top: 8px;">
+          <h2 id="paper-title"></h2>
+          <iframe id="pdf-viewer" style="width: 100%; height: 1200px;" frameborder="0"></iframe>
+        </div>
+      </div>
+    </div>
+    <div class="right-pane">
+      <div id="review-main-box" style="border: 1px solid #ddd; background: #f8f8f8; padding: 16px 20px; margin-bottom: 22px; border-radius: 6px;">
+        <h2 style="margin-top: 0; margin-bottom: 10px; font-size: 1.4em;">2. Evaluate a review</h2>
+        <span style="font-size: 0.98em;">
+          Your task is to assess whether the <strong>candidate review</strong> aligns in intent and quality with the <strong>reference review</strong>.
+          <p>
+            The candidate review was written based on a set of <strong>key points and judgments</strong> that were extracted from the reference review. Each key point represents an <em>aspect</em> (e.g., Novelty), and each judgment indicates the reference reviewer's stance (i.e., Strength or Weakness).
+          </p>
+          <p>
+            Note that <strong>neither the candidate review nor the reference review is a full review</strong>. They are excerpts from a complete review, which discuss the provided key points and judgments.
+          </p>
+          <p>
+            Please read the <strong><a href="https://docs.google.com/document/d/1yWyMDvcL0KjcM8vGUQxvV8iAAQ4NPWq9XU7o9OO3TUk/edit?usp=sharing" target=\"_blank\">evaluation guidelines</a></strong> carefully before starting.
+          </p>
+        </span>
+        <div class="review-label-box">
+          <span class="review-label">Reference review</span>
+          <div class="review-box">
+            <div id="review-a"></div>
+          </div>
+        </div>
+        <div class="review-label-box" id="kpj-wrap" style="display: none;">
+          <span class="review-label">Key point and judgment</span>
+          <div class="review-box">
+            <div id="kp-text"></div>
+          </div>
+        </div>
+        <div class="review-label-box review-b">
+          <span class="review-label">Candidate review</span>
+          <div class="review-box" id="candidate-box">
+            <div id="review-b"></div>
+          </div>
+        </div>
+        <div class="criteria-box" id="criteria-container">
+          <h3>Evaluation</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="navigation">
+    <div class="nav-counter"><span id="counter"></span></div>
+    <div class="nav-actions">
+      <div class="nav-row">
+        <button class="btn file-btn">
+          Import
+          <input id="import-file" type="file" accept="application/json" onchange="importProgress(event)">
+        </button>
+        <button class="btn" onclick="exportProgress()">Export</button>
+      </div>
+      <div class="nav-row">
+        <button class="btn" onclick="prevPaper()">Previous</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+
+    let data = {};
+    let keys = [];
+    let currentIndex = 0;
+    let responses = {};  // { paperId: { criterion: selectedValue } }
+
+    const STORAGE_KEYS = {
+      responses: 'peer_eval_responses',
+      index: 'peer_eval_index'
+    };
+
+    function persistState() {
+      try {
+        localStorage.setItem(STORAGE_KEYS.responses, JSON.stringify(responses));
+        localStorage.setItem(STORAGE_KEYS.index, String(currentIndex));
+      } catch (e) {
+        console.warn('Persist failed', e);
+      }
+    }
+
+    function restoreState() {
+      try {
+        const rawR = localStorage.getItem(STORAGE_KEYS.responses);
+        const rawI = localStorage.getItem(STORAGE_KEYS.index);
+        if (rawR) responses = JSON.parse(rawR) || {};
+        if (rawI && !isNaN(Number(rawI))) currentIndex = Math.max(0, Number(rawI));
+      } catch (e) {
+        responses = {};
+      }
+    }
+
+    async function loadData() {
+      const res = await fetch('data.json');
+      data = await res.json();
+      keys = Object.keys(data);
+      restoreState();
+      if (currentIndex >= keys.length) currentIndex = 0;
+      displayPaper(currentIndex);
+    }
+
+    // 根据用户选择和 checks 值，决定应该显示哪个轮次的 review
+    // 逻辑：从 "0" 开始，根据用户的选择和 checks 值逐步推进到正确的 entry
+    function getCurrentReviewRound(paperId, responses) {
+      const paperData = data[paperId];
+      if (!paperData || !paperData.llm_reviews) return "0";
+      
+      const r = responses[paperId] || {};
+      const llmReviews = paperData.llm_reviews;
+      const reviewKeys = Object.keys(llmReviews).sort((a, b) => Number(a) - Number(b));
+      
+      // 从 "0" 开始
+      let currentRound = "0";
+      let currentIndex = 0;
+      
+      // 如果用户还没选择 Relevance，返回 "0"
+      if (!r['Relevance']) {
+        return currentRound;
+      }
+      
+      // 检查 Relevance
+      if (r['Relevance'] === 'No') {
+        // 如果用户选择 Relevance=No，且当前 entry 的 relevance=false，推进到下一个 entry
+        const currentReview = llmReviews[currentRound];
+        if (currentReview && currentReview.checks.relevance === false) {
+          currentIndex++;
+          if (currentIndex < reviewKeys.length) {
+            currentRound = reviewKeys[currentIndex];
+          }
+        } else {
+          // 如果 relevance=true，不推进，返回 "0"
+          return "0";
+        }
+        // 如果 Relevance=No，不再继续检查
+        return currentRound;
+      }
+      
+      // 如果用户选择 Relevance=Yes
+      if (r['Relevance'] === 'Yes') {
+        const currentReview = llmReviews[currentRound];
+        // 如果当前 entry 的 relevance=false，推进到下一个 entry
+        if (currentReview && currentReview.checks.relevance === false) {
+          currentIndex++;
+          if (currentIndex < reviewKeys.length) {
+            currentRound = reviewKeys[currentIndex];
+          }
+        }
+        
+        // 如果用户还没选择 Specification，返回当前 round
+        if (!r['Specification']) {
+          return currentRound;
+        }
+        
+        // 检查 Specification
+        const specReview = llmReviews[currentRound];
+        if (r['Specification'] === 'No') {
+          // 如果用户选择 Specification=No，且当前 entry 的 specification=false，推进到下一个 entry
+          if (specReview && specReview.checks.specification === false) {
+            currentIndex++;
+            if (currentIndex < reviewKeys.length) {
+              currentRound = reviewKeys[currentIndex];
+            }
+          }
+        }
+        
+        // 如果用户还没选择后续的 checks，返回当前 round
+        // 继续检查后续的 checks（如 evidence, reasoning 等）
+        const finalReview = llmReviews[currentRound];
+        if (finalReview && finalReview.checks.reasoning && 
+            typeof finalReview.checks.reasoning === 'string' && 
+            finalReview.checks.reasoning.startsWith("NO:")) {
+          // 如果用户选择 Reasoning=No，推进到下一个 entry
+          if (r['Reasoning'] === 'No') {
+            currentIndex++;
+            if (currentIndex < reviewKeys.length) {
+              currentRound = reviewKeys[currentIndex];
+            }
+          }
+        }
+      }
+      
+      return currentRound;
+    }
+    
+    // 获取下一个应该显示的 entry（作为 new candidate review）
+    // 基于当前显示的 entry 和用户的选择
+    function getNextReviewRound(paperId, responses, currentRound) {
+      const paperData = data[paperId];
+      if (!paperData || !paperData.llm_reviews) return null;
+      
+      const llmReviews = paperData.llm_reviews;
+      const reviewKeys = Object.keys(llmReviews).sort((a, b) => Number(a) - Number(b));
+      const currentIndex = reviewKeys.indexOf(currentRound);
+      
+      // 如果当前是最后一个 entry，返回 null
+      if (currentIndex < 0 || currentIndex >= reviewKeys.length - 1) {
+        return null;
+      }
+      
+      // 返回下一个 entry
+      return reviewKeys[currentIndex + 1];
+    }
+    
+    // 获取在选择某个 check 之前的当前 entry
+    // 用于在显示 new candidate review 时，确定当前在 candidate review 区域显示的 entry
+    function getCurrentRoundBeforeCheck(paperId, responses, checkName) {
+      const paperData = data[paperId];
+      if (!paperData || !paperData.llm_reviews) return "0";
+      
+      const r = responses[paperId] || {};
+      const llmReviews = paperData.llm_reviews;
+      const reviewKeys = Object.keys(llmReviews).sort((a, b) => Number(a) - Number(b));
+      
+      // 从 "0" 开始
+      let currentRound = "0";
+      let currentIndex = 0;
+      
+      // 如果用户还没选择 Relevance，返回 "0"
+      if (!r['Relevance']) {
+        return currentRound;
+      }
+      
+      // 检查 Relevance
+      if (r['Relevance'] === 'No') {
+        const currentReview = llmReviews[currentRound];
+        if (currentReview && currentReview.checks.relevance === false) {
+          currentIndex++;
+          if (currentIndex < reviewKeys.length) {
+            currentRound = reviewKeys[currentIndex];
+          }
+        } else {
+          return "0";
+        }
+        // 如果 checkName 是 'Relevance'，返回当前 round（在选择之前）
+        if (checkName === 'Relevance') {
+          return "0"; // 在选择之前，显示的是 "0"
+        }
+        return currentRound;
+      }
+      
+      // 如果用户选择 Relevance=Yes
+      if (r['Relevance'] === 'Yes') {
+        const currentReview = llmReviews[currentRound];
+        if (currentReview && currentReview.checks.relevance === false) {
+          currentIndex++;
+          if (currentIndex < reviewKeys.length) {
+            currentRound = reviewKeys[currentIndex];
+          }
+        }
+        
+        // 如果 checkName 是 'Specification'，返回当前 round（在选择之前）
+        if (checkName === 'Specification') {
+          return currentRound;
+        }
+      }
+      
+      return currentRound;
+    }
+
+    // 更新 review 显示（不重新加载 PDF）
+    function updateReviewDisplay(paperId) {
+      const paperData = data[paperId];
+      if (!paperData) return;
+
+      // 根据用户选择和 checks 值，决定应该显示哪个轮次的 review
+      const currentRound = getCurrentReviewRound(paperId, responses);
+      const llmReviews = paperData.llm_reviews || {};
+      const currentReview = llmReviews[currentRound];
+      let candidateReview = currentReview ? currentReview.llm_review : "No LLM-generated review available";
+
+      const formatReview = (txt) => (txt || "").replace(/(Strengths:)/g, '<strong>$1</strong><br>')
+                                               .replace(/(Weaknesses:)/g, '<strong>$1</strong><br>')
+                                               .replace(/\r\n|\n|\r/g, '<br>');
+
+      document.getElementById('review-b').innerHTML = formatReview(candidateReview);
+    }
+
+    function displayPaper(index) {
+      const paperId = keys[index];
+      const paperData = data[paperId];
+
+      document.getElementById('pdf-viewer').src = `pdfs/${paperData.paper_id}.pdf`;
+
+      // Human review
+      let humanReview = paperData.human_review || "No Human-written review available";
+
+      // Key points (array or string)
+      const rawKeyPoints = paperData.key_points !== undefined ? paperData.key_points : (paperData.key_point || paperData.keyPoint || paperData.kp || '');
+      const keyPoints = Array.isArray(rawKeyPoints) ? rawKeyPoints : (rawKeyPoints ? [String(rawKeyPoints)] : []);
+
+      const formatReview = (txt) => (txt || "").replace(/(Strengths:)/g, '<strong>$1</strong><br>')
+                                               .replace(/(Weaknesses:)/g, '<strong>$1</strong><br>')
+                                               .replace(/\r\n|\n|\r/g, '<br>');
+
+      document.getElementById('review-a').innerHTML = formatReview(humanReview);
+      document.getElementById('counter').textContent = `Item ${index + 1} of ${keys.length}`;
+
+      // Reset frosted state when switching items
+      const candidateBox = document.getElementById('candidate-box');
+      candidateBox && candidateBox.classList.remove('frosted');
+
+      // Populate KP info if available
+      const kpjWrap = document.getElementById('kpj-wrap');
+      const kpEl = document.getElementById('kp-text');
+      const kpDisplay = keyPoints.length ? keyPoints.join('; ') : '';
+      if (kpDisplay && String(kpDisplay).trim()) {
+        kpjWrap.style.display = '';
+        kpEl.textContent = kpDisplay || '—';
+      } else {
+        kpjWrap.style.display = 'none';
+        kpEl.textContent = '';
+      }
+
+      // 更新 review 显示
+      updateReviewDisplay(paperId);
+      renderQC(paperId);
+    }
+
+    function saveResponse(paperId, key, value) {
+      if (!responses[paperId]) responses[paperId] = {};
+      
+      // 清除后续选择
+      if (key === 'Relevance' && value === 'No') {
+        // 清除所有后续选择
+        responses[paperId] = { 'Relevance': 'No' };
+        // 移除毛玻璃特效
+        const candidateBox = document.getElementById('candidate-box');
+        candidateBox && candidateBox.classList.remove('frosted');
+      } else if (key === 'Relevance' && value === 'Yes') {
+        // 清除Specification及后续选择
+        delete responses[paperId]['Specification'];
+        delete responses[paperId]['Specification2'];
+        delete responses[paperId]['NeedsEvidence'];
+        delete responses[paperId]['Hallucination'];
+        delete responses[paperId]['Match'];
+        delete responses[paperId]['Sufficiency'];
+        delete responses[paperId]['Reasoning'];
+        responses[paperId][key] = value;
+        // 移除毛玻璃特效
+        const candidateBox = document.getElementById('candidate-box');
+        candidateBox && candidateBox.classList.remove('frosted');
+      } else if (key === 'Specification' && value === 'Yes') {
+        // 清除Specification2及后续选择
+        delete responses[paperId]['Specification2'];
+        delete responses[paperId]['NeedsEvidence'];
+        delete responses[paperId]['Hallucination'];
+        delete responses[paperId]['Match'];
+        delete responses[paperId]['Sufficiency'];
+        delete responses[paperId]['Reasoning'];
+        responses[paperId][key] = value;
+      } else if (key === 'Specification' && value === 'No') {
+        // 清除Specification2及后续选择
+        delete responses[paperId]['Specification2'];
+        delete responses[paperId]['NeedsEvidence'];
+        delete responses[paperId]['Hallucination'];
+        delete responses[paperId]['Match'];
+        delete responses[paperId]['Sufficiency'];
+        delete responses[paperId]['Reasoning'];
+        responses[paperId][key] = value;
+      } else if (key === 'Specification2' && value === 'No') {
+        // 清除后续选择
+        delete responses[paperId]['NeedsEvidence'];
+        delete responses[paperId]['Hallucination'];
+        delete responses[paperId]['Match'];
+        delete responses[paperId]['Sufficiency'];
+        delete responses[paperId]['Reasoning'];
+        responses[paperId][key] = value;
+      } else if (key === 'NeedsEvidence' && value === 'No') {
+        // 清除Evidence相关选择
+        delete responses[paperId]['Hallucination'];
+        delete responses[paperId]['Match'];
+        delete responses[paperId]['Sufficiency'];
+        delete responses[paperId]['Sufficiency2'];
+        delete responses[paperId]['Reasoning'];
+        responses[paperId][key] = value;
+      } else if (key === 'Hallucination' && value === 'Yes') {
+        // 清除后续选择
+        delete responses[paperId]['Match'];
+        delete responses[paperId]['Sufficiency'];
+        delete responses[paperId]['Sufficiency2'];
+        delete responses[paperId]['Hallucination2'];
+        delete responses[paperId]['Match2'];
+        delete responses[paperId]['Reasoning'];
+        responses[paperId][key] = value;
+      } else if (key === 'Hallucination' && value === 'No') {
+        // 清除后续选择
+        delete responses[paperId]['Match'];
+        delete responses[paperId]['Sufficiency'];
+        delete responses[paperId]['Sufficiency2'];
+        delete responses[paperId]['Hallucination2'];
+        delete responses[paperId]['Match2'];
+        delete responses[paperId]['Reasoning'];
+        responses[paperId][key] = value;
+      } else if (key === 'Hallucination2' && value === 'Yes') {
+        // 清除后续选择
+        delete responses[paperId]['Match2'];
+        delete responses[paperId]['Sufficiency2'];
+        delete responses[paperId]['Reasoning'];
+        responses[paperId][key] = value;
+      } else if (key === 'Hallucination2' && value === 'No') {
+        // 清除后续选择
+        delete responses[paperId]['Match2'];
+        delete responses[paperId]['Sufficiency2'];
+        delete responses[paperId]['Reasoning'];
+        responses[paperId][key] = value;
+      } else if (key === 'Match2' && value === 'Yes') {
+        // 清除Sufficiency2选择
+        delete responses[paperId]['Sufficiency2'];
+        responses[paperId][key] = value;
+      } else if (key === 'Sufficiency' && value === 'Yes') {
+        // 清除后续选择（当从No改回Yes时）
+        delete responses[paperId]['Hallucination2'];
+        delete responses[paperId]['Match2'];
+        delete responses[paperId]['Sufficiency2'];
+        delete responses[paperId]['Reasoning'];
+        responses[paperId][key] = value;
+      } else if (key === 'Match' && value === 'Yes') {
+        // 清除Sufficiency选择
+        delete responses[paperId]['Sufficiency'];
+        delete responses[paperId]['Sufficiency2'];
+        responses[paperId][key] = value;
+      } else if (key === 'Match' && value === 'No') {
+        // 清除后续选择
+        delete responses[paperId]['Sufficiency'];
+        delete responses[paperId]['Sufficiency2'];
+        delete responses[paperId]['Reasoning'];
+        responses[paperId][key] = value;
+      } else if (key === 'Match' && value === 'NA') {
+        // 清除后续选择
+        delete responses[paperId]['Sufficiency'];
+        delete responses[paperId]['Sufficiency2'];
+        delete responses[paperId]['Reasoning'];
+        responses[paperId][key] = value;
+      } else if (key === 'Match2' && value === 'No') {
+        // 清除后续选择
+        delete responses[paperId]['Sufficiency2'];
+        delete responses[paperId]['Reasoning'];
+        responses[paperId][key] = value;
+      } else if (key === 'Match2' && value === 'NA') {
+        // 清除后续选择
+        delete responses[paperId]['Sufficiency2'];
+        delete responses[paperId]['Reasoning'];
+        responses[paperId][key] = value;
+      } else if (key === 'Sufficiency' && value === 'No') {
+        // 清除后续选择
+        delete responses[paperId]['Hallucination2'];
+        delete responses[paperId]['Match2'];
+        delete responses[paperId]['Sufficiency2'];
+        delete responses[paperId]['Reasoning'];
+        responses[paperId][key] = value;
+      } else if (key === 'Sufficiency2' && value === 'No') {
+        // 清除后续选择
+        delete responses[paperId]['Reasoning'];
+        responses[paperId][key] = value;
+      } else {
+        // 其他情况直接保存
+        responses[paperId][key] = value;
+      }
+      
+      // 更新显示的 review（根据新的选择），但不重新加载 PDF
+      updateReviewDisplay(paperId);
+      renderQC(paperId);
+      console.log('Saved:', responses);
+      persistState();
+    }
+
+    async function renderQC(paperId) {
+      const container = document.getElementById('criteria-container');
+      
+      // 保存当前面板状态
+      const specPanel = document.getElementById('ref-panel-spec');
+      const evidencePanel = document.getElementById('ref-panel-evidence');
+      const specPanelVisible = specPanel && (specPanel.style.display === 'block');
+      const evidencePanelVisible = evidencePanel && (evidencePanel.style.display === 'block');
+      
+      container.innerHTML = '<h3 style="margin-bottom: 10px;">Evaluation</h3>';
+
+      if (!responses[paperId]) responses[paperId] = {};
+      const r = responses[paperId];
+
+      // If Specification was toggled back to Yes, remove frosted effect
+      const candidateBoxEl = document.getElementById('candidate-box');
+      if (r['Specification'] === 'Yes') {
+        candidateBoxEl && candidateBoxEl.classList.remove('frosted');
+      }
+
+      // If Sufficiency was toggled back to Yes, remove frosted effect from specification new candidate review
+      if (r['Sufficiency'] === 'Yes') {
+        const specAltWrap = document.querySelector('#criteria-container .review-label-box.review-b');
+        if (specAltWrap) {
+          specAltWrap.classList.remove('frosted');
+        }
+      }
+
+      // Relevance
+      const relevanceDiv = document.createElement('div');
+      relevanceDiv.className = 'criteria';
+      relevanceDiv.innerHTML = `
+        <strong>Relevance</strong>
+        <span class="hint">Does the candidate review address the provided key points and judgment?</span>
+        <label><input type="radio" name="Relevance" value="Yes" ${(r['Relevance']||'')==='Yes'?'checked':''} onchange="saveResponse('${paperId}', 'Relevance', 'Yes')"> Yes</label>
+        <label><input type="radio" name="Relevance" value="No" ${(r['Relevance']||'')==='No'?'checked':''} onchange="saveResponse('${paperId}', 'Relevance', 'No')"> No</label>
+      `;
+      container.appendChild(relevanceDiv);
+
+      // Stop rendering further questions until Relevance is answered
+      if (r['Relevance'] !== 'Yes' && r['Relevance'] !== 'No') {
+        return;
+      }
+
+      if (r['Relevance'] === 'No') {
+        appendResult(container, 'Please proceed to the next item.');
+        return;
+      }
+
+      // Specification (original)
+      const specDiv = document.createElement('div');
+      specDiv.className = 'criteria';
+      specDiv.id = 'spec-original';
+      specDiv.innerHTML = `
+        <strong>Specification</strong>
+        <span class="hint">Does the candidate review capture the intended specificity of the provided key point and judgment (reflected in the reference review)?</span>
+        <label><input type="radio" name="Specification" value="Yes" ${(r['Specification']||'')==='Yes'?'checked':''} onchange="saveResponse('${paperId}', 'Specification', 'Yes')"> Yes</label>
+        <label><input type="radio" name="Specification" value="No" ${(r['Specification']||'')==='No'?'checked':''} onchange="saveResponse('${paperId}', 'Specification', 'No')"> No</label>
+      `;
+      container.appendChild(specDiv);
+
+      // Stop rendering until first Specification is answered
+      if (r['Specification'] !== 'Yes' && r['Specification'] !== 'No') {
+        return;
+      }
+
+      if (r['Specification'] === 'No') {
+        // Frost original candidate and grey out original spec
+        const candidateBox = document.getElementById('candidate-box');
+        candidateBox && candidateBox.classList.add('frosted');
+        specDiv.classList.add('disabled');
+
+        // 获取当前在 candidate review 区域显示的 entry（在用户选择 Specification=No 之前）
+        const currentRoundBeforeSpec = getCurrentRoundBeforeCheck(paperId, responses, 'Specification');
+        const paperData = data[paperId];
+        const llmReviews = paperData.llm_reviews || {};
+        const currentReview = llmReviews[currentRoundBeforeSpec];
+        
+        // 如果当前 entry 的 specification=false，显示下一个 entry 作为 new candidate review
+        let altReview = '';
+        if (currentReview && currentReview.checks && currentReview.checks.specification === false) {
+          const nextRound = getNextReviewRound(paperId, responses, currentRoundBeforeSpec);
+          if (nextRound && llmReviews[nextRound] && llmReviews[nextRound].llm_review) {
+            altReview = llmReviews[nextRound].llm_review;
+          }
+        }
+
+        // Alternate review styled same as review-b (pink)
+        const altWrap = document.createElement('div');
+        altWrap.className = 'review-label-box review-b';
+        const altContent = altReview ? altReview.replace(/(Strengths:)/g, '<strong>$1</strong><br>')
+                                              .replace(/(Weaknesses:)/g, '<strong>$1</strong><br>')
+                                              .replace(/\r\n|\n|\r/g, '<br>')
+                                     : '<em>No specified review available.</em>';
+        altWrap.innerHTML = `
+          <span class="review-label">New candidate review</span>
+          <div class="review-box">${altContent}</div>
+        `;
+        container.appendChild(altWrap);
+
+        // Add toggle button for reference review and key points
+        const toggleButton = document.createElement('div');
+        toggleButton.className = 'ref-panel-toggle';
+        toggleButton.innerHTML = '📋 <strong>Show Reference review & Key point and judgment</strong>';
+        toggleButton.onclick = function() {
+          const panel = document.getElementById('ref-panel-spec');
+          const button = this;
+          if (panel.style.display === 'none' || panel.style.display === '') {
+            panel.style.display = 'block';
+            button.innerHTML = '📋 <strong>Hide Reference review & Key point and judgment</strong>';
+          } else {
+            panel.style.display = 'none';
+            button.innerHTML = '📋 <strong>Show Reference review & Key point and judgment</strong>';
+          }
+        };
+        container.appendChild(toggleButton);
+
+        // Create collapsible reference panel
+        const refPanel = document.createElement('div');
+        refPanel.id = 'ref-panel-spec';
+        refPanel.className = 'ref-panel';
+        refPanel.style.display = 'none';
+        
+        // Get reference review content
+        const refReviewEl = document.getElementById('review-a');
+        const kpjWrap = document.getElementById('kpj-wrap');
+        const kpText = document.getElementById('kp-text');
+        
+        let panelContent = '';
+        
+        // Add key points if available
+        if (kpjWrap && kpjWrap.style.display !== 'none' && kpText && kpText.textContent.trim()) {
+          panelContent += `
+            <div class="review-label-box">
+              <span class="review-label">Key point and judgment</span>
+              <div class="review-box">${kpText.textContent}</div>
+            </div>
+          `;
+        }
+        
+        // Add reference review
+        if (refReviewEl) {
+          panelContent += `
+            <div class="review-label-box">
+              <span class="review-label">Reference review</span>
+              <div class="review-box">${refReviewEl.innerHTML}</div>
+            </div>
+          `;
+        }
+        
+        refPanel.innerHTML = panelContent;
+        container.appendChild(refPanel);
+        
+        // 恢复面板状态
+        if (specPanelVisible) {
+          refPanel.style.display = 'block';
+          // 找到specification部分的toggle按钮（在ref-panel-spec之前）
+          const specToggleButton = container.querySelector('#ref-panel-spec').previousElementSibling;
+          if (specToggleButton && specToggleButton.classList.contains('ref-panel-toggle')) {
+            specToggleButton.innerHTML = '📋 <strong>Hide Reference review & Key point and judgment</strong>';
+          }
+        }
+
+        // Second Specification for new review
+        const spec2Div = document.createElement('div');
+        spec2Div.className = 'criteria';
+        spec2Div.style.marginTop = '20px';
+        spec2Div.innerHTML = `
+          <strong>Specification (new candidate review)</strong>
+          <span class="hint">Does the new candidate review now capture the intended specificity of the provided key point and judgment (reflected in the reference review)?</span>
+          <label><input type="radio" name="Specification2" value="Yes" ${(r['Specification2']||'')==='Yes'?'checked':''} onchange="saveResponse('${paperId}', 'Specification2', 'Yes')"> Yes</label>
+          <label><input type="radio" name="Specification2" value="No" ${(r['Specification2']||'')==='No'?'checked':''} onchange="saveResponse('${paperId}', 'Specification2', 'No')"> No</label>
+        `;
+        container.appendChild(spec2Div);
+
+        // Require answer to new spec before continuing
+        if (r['Specification2'] !== 'Yes' && r['Specification2'] !== 'No') {
+          return;
+        }
+        if (r['Specification2'] === 'No') {
+          appendResult(container, 'Please proceed to the next item.');
+          return;
+        }
+      }
+
+      // Use second spec pass-through if present, else first spec
+      const specPassed = r['Specification2'] ? (r['Specification2'] === 'Yes') : (r['Specification'] === 'Yes');
+      if (!specPassed) {
+        return;
+      }
+
+      // Evidence need
+      const needEvidenceDiv = document.createElement('div');
+      needEvidenceDiv.className = 'criteria';
+      needEvidenceDiv.innerHTML = `
+        <strong>Evidence needed?</strong>
+        <span class="hint">Does the provided key point and judgment require evidence to be supported?</span>
+        <label><input type="radio" name="NeedsEvidence" value="Yes" ${(r['NeedsEvidence']||'')==='Yes'?'checked':''} onchange="saveResponse('${paperId}', 'NeedsEvidence', 'Yes')"> Yes</label>
+        <label><input type="radio" name="NeedsEvidence" value="No" ${(r['NeedsEvidence']||'')==='No'?'checked':''} onchange="saveResponse('${paperId}', 'NeedsEvidence', 'No')"> No</label>
+      `;
+      container.appendChild(needEvidenceDiv);
+
+      // Stop rendering Evidence sub-steps until NeedsEvidence is answered
+      if (r['NeedsEvidence'] !== 'Yes' && r['NeedsEvidence'] !== 'No') {
+        return;
+      }
+
+      if (r['NeedsEvidence'] === 'Yes') {
+        // Hallucination
+        const hallucinationDiv = document.createElement('div');
+        hallucinationDiv.className = 'criteria';
+        hallucinationDiv.innerHTML = `
+          <strong>Evidence — Hallucination</strong>
+          <span class="hint">Is any evidence in the new candidate review hallucinated?</span>
+          <label><input type="radio" name="Hallucination" value="Yes" ${(r['Hallucination']||'')==='Yes'?'checked':''} onchange="saveResponse('${paperId}', 'Hallucination', 'Yes')"> Yes</label>
+          <label><input type="radio" name="Hallucination" value="No" ${(r['Hallucination']||'')==='No'?'checked':''} onchange="saveResponse('${paperId}', 'Hallucination', 'No')"> No</label>
+        `;
+        container.appendChild(hallucinationDiv);
+
+        // Stop rendering until Hallucination is answered
+        if (r['Hallucination'] !== 'Yes' && r['Hallucination'] !== 'No') {
+          return;
+        }
+
+        if (r['Hallucination'] === 'Yes') {
+          appendResult(container, 'Please proceed to the next item.');
+          return;
+        }
+
+        // Match
+        const matchDiv = document.createElement('div');
+        matchDiv.className = 'criteria';
+        matchDiv.innerHTML = `
+          <strong>Evidence — Match</strong>
+          <span class="hint">Does the evidence in the new candidate review match that in the reference review?</span>
+          <label><input type="radio" name="Match" value="Yes" ${(r['Match']||'')==='Yes'?'checked':''} onchange="saveResponse('${paperId}', 'Match', 'Yes')"> Yes</label>
+          <label><input type="radio" name="Match" value="No" ${(r['Match']||'')==='No'?'checked':''} onchange="saveResponse('${paperId}', 'Match', 'No')"> No</label>
+          <label><input type="radio" name="Match" value="NA" ${(r['Match']||'')==='NA'?'checked':''} onchange="saveResponse('${paperId}', 'Match', 'NA')"> NA</label>
+        `;
+        container.appendChild(matchDiv);
+
+        // Stop rendering until Match is answered
+        if (r['Match'] !== 'Yes' && r['Match'] !== 'No' && r['Match'] !== 'NA') {
+          return;
+        }
+
+        // If Match is No or NA, we need to check sufficiency; if Yes, skip to Reasoning
+        if (r['Match'] !== 'Yes') {
+          // Sufficiency
+          const suffDiv = document.createElement('div');
+          suffDiv.className = 'criteria';
+          suffDiv.innerHTML = `
+            <strong>Evidence — Sufficiency</strong>
+            <span class="hint">Is the evidence in the new candidate review sufficient to support the provided key point and judgment?</span>
+            <label><input type="radio" name="Sufficiency" value="Yes" ${(r['Sufficiency']||'')==='Yes'?'checked':''} onchange="saveResponse('${paperId}', 'Sufficiency', 'Yes')"> Yes</label>
+            <label><input type="radio" name="Sufficiency" value="No" ${(r['Sufficiency']||'')==='No'?'checked':''} onchange="saveResponse('${paperId}', 'Sufficiency', 'No')"> No</label>
+          `;
+          container.appendChild(suffDiv);
+
+          // Stop rendering until Sufficiency is answered
+          if (r['Sufficiency'] !== 'Yes' && r['Sufficiency'] !== 'No') {
+            return;
+          }
+
+          if (r['Sufficiency'] === 'No') {
+            // 获取当前显示的 entry
+            const currentRound = getCurrentReviewRound(paperId, responses);
+            const paperData = data[paperId];
+            const llmReviews = paperData.llm_reviews || {};
+            const currentReview = llmReviews[currentRound];
+            
+            // 如果当前 entry 的 sufficiency 失败，显示下一个 entry 作为 new candidate review
+            let evidenceReview = '';
+            // 检查当前 entry 的 evidence 是否不足
+            if (currentReview && currentReview.checks.evidence && 
+                (currentReview.checks.evidence === "-" || currentReview.checks.evidence.startsWith("INSUFFICIENT"))) {
+              const nextRound = getNextReviewRound(paperId, responses, currentRound);
+              if (nextRound && llmReviews[nextRound]) {
+                evidenceReview = llmReviews[nextRound].llm_review || '';
+              }
+            } else {
+              // 如果当前 entry 的 evidence 不是不足，尝试查找下一个 entry
+              const nextRound = getNextReviewRound(paperId, responses, currentRound);
+              if (nextRound && llmReviews[nextRound]) {
+                evidenceReview = llmReviews[nextRound].llm_review || '';
+              }
+            }
+            
+            // 如果没有找到替代 review，直接结束
+            if (!evidenceReview) {
+              appendResult(container, 'Please proceed to the next item.');
+              return;
+            }
+
+            // Frost the new candidate review and grey out sufficiency
+            const altWrap = document.querySelector('.review-label-box.review-b:last-of-type');
+            if (altWrap) {
+              altWrap.classList.add('frosted');
+            }
+            // Also frost the specification new candidate review (the one in criteria-container)
+            const specAltWrap = document.querySelector('#criteria-container .review-label-box.review-b');
+            if (specAltWrap) {
+              specAltWrap.classList.add('frosted');
+            }
+            suffDiv.classList.add('disabled');
+
+            // Alternate evidence review styled same as review-b (pink)
+            const evidenceWrap = document.createElement('div');
+            evidenceWrap.className = 'review-label-box review-b';
+            const evidenceContent = evidenceReview ? evidenceReview.replace(/(Strengths:)/g, '<strong>$1</strong><br>')
+                                                          .replace(/(Weaknesses:)/g, '<strong>$1</strong><br>')
+                                                          .replace(/\r\n|\n|\r/g, '<br>')
+                                                 : '<em>No evidence review available.</em>';
+            evidenceWrap.innerHTML = `
+              <span class="review-label">New candidate review</span>
+              <div class="review-box">${evidenceContent}</div>
+            `;
+            container.appendChild(evidenceWrap);
+
+            // Add toggle button for reference review and key points
+            const toggleButton = document.createElement('div');
+            toggleButton.className = 'ref-panel-toggle';
+            toggleButton.innerHTML = '📋 <strong>Show Reference review & Key point and judgment</strong>';
+            toggleButton.onclick = function() {
+              const panel = document.getElementById('ref-panel-evidence');
+              const button = this;
+              if (panel.style.display === 'none' || panel.style.display === '') {
+                panel.style.display = 'block';
+                button.innerHTML = '📋 <strong>Hide Reference review & Key point and judgment</strong>';
+              } else {
+                panel.style.display = 'none';
+                button.innerHTML = '📋 <strong>Show Reference review & Key point and judgment</strong>';
+              }
+            };
+            container.appendChild(toggleButton);
+
+            // Create collapsible reference panel
+            const refPanel = document.createElement('div');
+            refPanel.id = 'ref-panel-evidence';
+            refPanel.className = 'ref-panel';
+            refPanel.style.display = 'none';
+            
+            // Get reference review content
+            const refReviewEl = document.getElementById('review-a');
+            const kpjWrap = document.getElementById('kpj-wrap');
+            const kpText = document.getElementById('kp-text');
+            
+            let panelContent = '';
+            
+            // Add key points if available
+            if (kpjWrap && kpjWrap.style.display !== 'none' && kpText && kpText.textContent.trim()) {
+              panelContent += `
+                <div class="review-label-box">
+                  <span class="review-label">Key point and judgment</span>
+                  <div class="review-box">${kpText.textContent}</div>
+                </div>
+              `;
+            }
+            
+            // Add reference review
+            if (refReviewEl) {
+              panelContent += `
+                <div class="review-label-box">
+                  <span class="review-label">Reference review</span>
+                  <div class="review-box">${refReviewEl.innerHTML}</div>
+                </div>
+              `;
+            }
+            
+            refPanel.innerHTML = panelContent;
+            container.appendChild(refPanel);
+            
+            // 恢复面板状态
+            if (evidencePanelVisible) {
+              refPanel.style.display = 'block';
+              // 找到evidence部分的toggle按钮（在ref-panel-evidence之前）
+              const evidenceToggleButton = container.querySelector('#ref-panel-evidence').previousElementSibling;
+              if (evidenceToggleButton && evidenceToggleButton.classList.contains('ref-panel-toggle')) {
+                evidenceToggleButton.innerHTML = '📋 <strong>Hide Reference review & Key point and judgment</strong>';
+              }
+            }
+
+            // Hallucination for new evidence review
+            const hallucination2Div = document.createElement('div');
+            hallucination2Div.className = 'criteria';
+            hallucination2Div.style.marginTop = '20px';
+            hallucination2Div.innerHTML = `
+              <strong>Evidence — Hallucination (new candidate review)</strong>
+              <span class="hint">Is any evidence in the new candidate review hallucinated?</span>
+              <label><input type="radio" name="Hallucination2" value="Yes" ${(r['Hallucination2']||'')==='Yes'?'checked':''} onchange="saveResponse('${paperId}', 'Hallucination2', 'Yes')"> Yes</label>
+              <label><input type="radio" name="Hallucination2" value="No" ${(r['Hallucination2']||'')==='No'?'checked':''} onchange="saveResponse('${paperId}', 'Hallucination2', 'No')"> No</label>
+            `;
+            container.appendChild(hallucination2Div);
+
+            // Require answer to new hallucination before continuing
+            if (r['Hallucination2'] !== 'Yes' && r['Hallucination2'] !== 'No') {
+              return;
+            }
+            if (r['Hallucination2'] === 'Yes') {
+              appendResult(container, 'Please proceed to the next item.');
+              return;
+            }
+
+            // Match for new evidence review
+            const match2Div = document.createElement('div');
+            match2Div.className = 'criteria';
+            match2Div.style.marginTop = '20px';
+            match2Div.innerHTML = `
+              <strong>Evidence — Match (new candidate review)</strong>
+              <span class="hint">Does the evidence in the new candidate review match that in the reference review?</span>
+              <label><input type="radio" name="Match2" value="Yes" ${(r['Match2']||'')==='Yes'?'checked':''} onchange="saveResponse('${paperId}', 'Match2', 'Yes')"> Yes</label>
+              <label><input type="radio" name="Match2" value="No" ${(r['Match2']||'')==='No'?'checked':''} onchange="saveResponse('${paperId}', 'Match2', 'No')"> No</label>
+              <label><input type="radio" name="Match2" value="NA" ${(r['Match2']||'')==='NA'?'checked':''} onchange="saveResponse('${paperId}', 'Match2', 'NA')"> NA</label>
+            `;
+            container.appendChild(match2Div);
+
+            // Require answer to new match before continuing
+            if (r['Match2'] !== 'Yes' && r['Match2'] !== 'No' && r['Match2'] !== 'NA') {
+              return;
+            }
+
+            // If Match2 is Yes, skip to Reasoning; if No or NA, check Sufficiency2
+            if (r['Match2'] === 'Yes') {
+              // Skip to Reasoning - no need to check Sufficiency2
+            } else {
+              // Second Sufficiency for new evidence review
+              const suff2Div = document.createElement('div');
+              suff2Div.className = 'criteria';
+              suff2Div.style.marginTop = '20px';
+              suff2Div.innerHTML = `
+                <strong>Evidence — Sufficiency (new candidate review)</strong>
+                <span class="hint">Is the evidence in the new candidate review now sufficient to support the provided key point and judgment?</span>
+                <label><input type="radio" name="Sufficiency2" value="Yes" ${(r['Sufficiency2']||'')==='Yes'?'checked':''} onchange="saveResponse('${paperId}', 'Sufficiency2', 'Yes')"> Yes</label>
+                <label><input type="radio" name="Sufficiency2" value="No" ${(r['Sufficiency2']||'')==='No'?'checked':''} onchange="saveResponse('${paperId}', 'Sufficiency2', 'No')"> No</label>
+              `;
+              container.appendChild(suff2Div);
+
+              // Require answer to new sufficiency before continuing
+              if (r['Sufficiency2'] !== 'Yes' && r['Sufficiency2'] !== 'No') {
+                return;
+              }
+              if (r['Sufficiency2'] === 'No') {
+                appendResult(container, 'Please proceed to the next item.');
+                return;
+              }
+            }
+          }
+        }
+      }
+
+      // Reasoning is shown after Evidence branch is fully resolved (or not needed)
+      if (r['NeedsEvidence'] === 'No' || r['NeedsEvidence'] === 'Yes') {
+        // 获取当前显示的轮次
+        const currentRound = getCurrentReviewRound(paperId, responses);
+        const paperData = data[paperId];
+        const llmReviews = paperData.llm_reviews || {};
+        const currentReview = llmReviews[currentRound];
+        
+        // 检查当前轮次的 reasoning 是否为 "NO:"
+        const hasReasoningIssue = currentReview && currentReview.checks.reasoning && 
+                                  typeof currentReview.checks.reasoning === 'string' && 
+                                  currentReview.checks.reasoning.startsWith("NO:");
+        
+        const reasoningDiv = document.createElement('div');
+        reasoningDiv.className = 'criteria';
+        reasoningDiv.innerHTML = `
+          <strong>Reasoning</strong>
+          <span class="hint">Is the reasoning in the candidate review sufficiently developed and logically connected to the provided key point and judgment?</span>
+          <label><input type="radio" name="Reasoning" value="Yes" ${(r['Reasoning']||'')==='Yes'?'checked':''} onchange="saveResponse('${paperId}', 'Reasoning', 'Yes')"> Yes</label>
+          <label><input type="radio" name="Reasoning" value="No" ${(r['Reasoning']||'')==='No'?'checked':''} onchange="saveResponse('${paperId}', 'Reasoning', 'No')"> No</label>
+        `;
+        container.appendChild(reasoningDiv);
+
+        if (r['Reasoning'] === 'No') {
+          // 如果当前轮次的 reasoning="NO:"，应该显示 reasoning 失败时的替代
+          // 这个逻辑已经在 getCurrentReviewRound 中处理了，所以这里直接结束
+          // 如果 getCurrentReviewRound 返回了替代轮次，displayPaper 会自动更新显示的 review
+          if (hasReasoningIssue) {
+            // 有替代 review，让 displayPaper 更新显示
+            // 这里不需要额外操作，因为 saveResponse 会调用 displayPaper
+          } else {
+            // 没有替代 review，直接结束
+            appendResult(container, 'Please proceed to the next item.');
+            return;
+          }
+        }
+      }
+
+      // If all checks passed where applicable
+      if (r['Relevance'] === 'Yes' && (r['Specification'] === 'Yes' || r['Specification2'] === 'Yes') &&
+          (
+            r['NeedsEvidence'] === 'No' ||
+            (
+              r['NeedsEvidence'] === 'Yes' &&
+              (r['Hallucination'] === 'No' || r['Hallucination2'] === 'No') &&
+              (r['Match'] === 'Yes' || r['Match2'] === 'Yes' || ((r['Match'] === 'No' || r['Match'] === 'NA' || r['Match2'] === 'No' || r['Match2'] === 'NA') && (r['Sufficiency'] === 'Yes' || r['Sufficiency2'] === 'Yes')))
+            )
+          ) &&
+          r['Reasoning'] === 'Yes') {
+        const ok = document.createElement('div');
+        ok.className = 'result-box';
+        ok.style.borderColor = '#c7e7c7';
+        ok.style.background = '#f0fff0';
+        ok.innerHTML = 'Please proceed to the next item. <button class="btn" onclick="nextPaper()" style="margin-left: 10px;">Go</button>';
+        container.appendChild(ok);
+      }
+    }
+
+    function appendResult(container, text) {
+      const res = document.createElement('div');
+      res.className = 'result-box';
+      res.style.borderColor = '#c7e7c7';
+      res.style.background = '#f0fff0';
+      
+      if (text === 'Please proceed to the next item.') {
+        res.innerHTML = text + ' <button class="btn" onclick="nextPaper()" style="margin-left: 10px;">Go</button>';
+      } else {
+        res.textContent = text;
+      }
+      
+      container.appendChild(res);
+    }
+
+    function nextPaper() {
+      if (currentIndex < keys.length - 1) {
+        currentIndex++;
+        displayPaper(currentIndex);
+        window.scrollTo(0, 0);
+        persistState();
+      }
+    }
+
+    function prevPaper() {
+      if (currentIndex > 0) {
+        currentIndex--;
+        displayPaper(currentIndex);
+        window.scrollTo(0, document.body.scrollHeight);
+        persistState();
+      }
+    }
+
+    function exportProgress() {
+      const payload = { responses, currentIndex };
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      const itemNum = (currentIndex + 1);
+      const ts = new Date().toISOString().replace(/[:.]/g,'-');
+      a.download = `peer_review_evaluation-item_${itemNum}-${ts}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    function importProgress(ev) {
+      const file = ev.target.files && ev.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          const obj = JSON.parse(String(reader.result||'{}'));
+          if (obj && typeof obj === 'object') {
+            if (obj.responses && typeof obj.responses === 'object') {
+              responses = obj.responses;
+            }
+            if (typeof obj.currentIndex === 'number') {
+              currentIndex = Math.max(0, Math.min(obj.currentIndex, keys.length - 1));
+            }
+            persistState();
+            displayPaper(currentIndex);
+            window.scrollTo(0, 0);
+          }
+        } catch (e) {
+          alert('Import failed: invalid JSON');
+        }
+      };
+      reader.readAsText(file);
+      // reset input value to allow re-importing same file
+      ev.target.value = '';
+    }
+
+    loadData();
+  </script>
+</body>
+</html>
