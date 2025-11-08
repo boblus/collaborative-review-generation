@@ -1281,12 +1281,26 @@
     }
 
     function exportProgress() {
-      const payload = { responses, currentIndex };
+      // 只导出responses，不包含currentIndex
+      // currentIndex可以从responses中获取最后一个key对应的索引
+      const payload = { responses };
       const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      const itemNum = (currentIndex + 1);
+      // 从responses中获取最后一个key对应的索引
+      const responseKeys = Object.keys(responses);
+      let lastKey = null;
+      if (responseKeys.length > 0) {
+        // 找到responses中最后一个key在keys数组中的索引
+        const sortedResponseKeys = responseKeys.sort((a, b) => {
+          const indexA = keys.indexOf(a);
+          const indexB = keys.indexOf(b);
+          return indexB - indexA; // 降序排列
+        });
+        lastKey = sortedResponseKeys[0];
+      }
+      const itemNum = lastKey ? (keys.indexOf(lastKey) + 1) : (currentIndex + 1);
       const ts = new Date().toISOString().replace(/[:.]/g,'-');
       a.download = `peer_review_evaluation-item_${itemNum}-${ts}.json`;
       document.body.appendChild(a);
@@ -1306,6 +1320,19 @@
             if (obj.responses && typeof obj.responses === 'object') {
               responses = obj.responses;
             }
+            // 从responses中获取最后一个key对应的索引
+            const responseKeys = Object.keys(responses);
+            if (responseKeys.length > 0) {
+              // 找到responses中最后一个key在keys数组中的索引
+              const sortedResponseKeys = responseKeys.sort((a, b) => {
+                const indexA = keys.indexOf(a);
+                const indexB = keys.indexOf(b);
+                return indexB - indexA; // 降序排列
+              });
+              const lastKey = sortedResponseKeys[0];
+              currentIndex = Math.max(0, Math.min(keys.indexOf(lastKey), keys.length - 1));
+            }
+            // 兼容旧格式，如果有currentIndex字段
             if (typeof obj.currentIndex === 'number') {
               currentIndex = Math.max(0, Math.min(obj.currentIndex, keys.length - 1));
             }
