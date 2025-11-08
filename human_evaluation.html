@@ -213,6 +213,17 @@
       const res = await fetch('data.json');
       data = await res.json();
       keys = Object.keys(data);
+      // 对keys进行排序，确保顺序正确
+      keys.sort((a, b) => {
+        // 提取数字部分进行比较
+        const numA = parseInt(a.split('_')[0]) || 0;
+        const numB = parseInt(b.split('_')[0]) || 0;
+        if (numA !== numB) return numA - numB;
+        // 如果数字相同，aggregate排在后面
+        if (a.includes('_aggregate') && !b.includes('_aggregate')) return 1;
+        if (!a.includes('_aggregate') && b.includes('_aggregate')) return -1;
+        return a.localeCompare(b);
+      });
       restoreState();
       if (currentIndex >= keys.length) currentIndex = 0;
       displayPaper(currentIndex);
@@ -271,16 +282,9 @@
         }
         
         // 检查 Specification
-        const specReview = llmReviews[currentRound];
-        if (r['Specification'] === 'No') {
-          // 如果用户选择 Specification=No，且当前 entry 的 specification=false，推进到下一个 entry
-          if (specReview && specReview.checks.specification === false) {
-            currentIndex++;
-            if (currentIndex < reviewKeys.length) {
-              currentRound = reviewKeys[currentIndex];
-            }
-          }
-        }
+        // 注意：当 Specification=No 时，原来的 candidate review 区域应该仍然显示当前 entry
+        // 所以这里不推进到下一个 entry
+        // new candidate review 的显示由 getNextReviewRound 和 getCurrentRoundBeforeCheck 处理
         
         // 如果用户还没选择后续的 checks，返回当前 round
         // 继续检查后续的 checks（如 evidence, reasoning 等）
@@ -398,41 +402,148 @@
       const paperId = keys[index];
       const paperData = data[paperId];
 
+      if (!paperData) {
+        console.error('No data for paperId:', paperId);
+        return;
+      }
+
       document.getElementById('pdf-viewer').src = `pdfs/${paperData.paper_id}.pdf`;
 
-      // Human review
-      let humanReview = paperData.human_review || "No Human-written review available";
+      // 检查是否是aggregate类型
+      const isAggregate = paperId && paperId.includes('_aggregate');
 
-      // Key points (array or string)
-      const rawKeyPoints = paperData.key_points !== undefined ? paperData.key_points : (paperData.key_point || paperData.keyPoint || paperData.kp || '');
-      const keyPoints = Array.isArray(rawKeyPoints) ? rawKeyPoints : (rawKeyPoints ? [String(rawKeyPoints)] : []);
-
-      const formatReview = (txt) => (txt || "").replace(/(Strengths:)/g, '<strong>$1</strong><br>')
-                                               .replace(/(Weaknesses:)/g, '<strong>$1</strong><br>')
-                                               .replace(/\r\n|\n|\r/g, '<br>');
-
-      document.getElementById('review-a').innerHTML = formatReview(humanReview);
-      document.getElementById('counter').textContent = `Item ${index + 1} of ${keys.length}`;
-
-      // Reset frosted state when switching items
-      const candidateBox = document.getElementById('candidate-box');
-      candidateBox && candidateBox.classList.remove('frosted');
-
-      // Populate KP info if available
-      const kpjWrap = document.getElementById('kpj-wrap');
-      const kpEl = document.getElementById('kp-text');
-      const kpDisplay = keyPoints.length ? keyPoints.join('; ') : '';
-      if (kpDisplay && String(kpDisplay).trim()) {
-        kpjWrap.style.display = '';
-        kpEl.textContent = kpDisplay || '—';
+      if (isAggregate) {
+        // Aggregate类型的处理
+        displayAggregatePaper(paperId, paperData, index);
       } else {
-        kpjWrap.style.display = 'none';
-        kpEl.textContent = '';
-      }
+        // 普通类型的处理
+        // Human review
+        let humanReview = paperData.human_review || "No Human-written review available";
+
+        // Key points (array or string)
+        const rawKeyPoints = paperData.key_points !== undefined ? paperData.key_points : (paperData.key_point || paperData.keyPoint || paperData.kp || '');
+        const keyPoints = Array.isArray(rawKeyPoints) ? rawKeyPoints : (rawKeyPoints ? [String(rawKeyPoints)] : []);
+
+        const formatReview = (txt) => (txt || "").replace(/(Strengths:)/g, '<strong>$1</strong><br>')
+                                                 .replace(/(Weaknesses:)/g, '<strong>$1</strong><br>')
+                                                 .replace(/\r\n|\n|\r/g, '<br>');
+
+        document.getElementById('review-a').innerHTML = formatReview(humanReview);
+        document.getElementById('counter').textContent = `Item ${index + 1} of ${keys.length}`;
+
+        // Reset frosted state when switching items
+        const candidateBox = document.getElementById('candidate-box');
+        candidateBox && candidateBox.classList.remove('frosted');
+
+        // Populate KP info if available
+        const kpjWrap = document.getElementById('kpj-wrap');
+        const kpEl = document.getElementById('kp-text');
+        const kpDisplay = keyPoints.length ? keyPoints.join('; ') : '';
+        if (kpDisplay && String(kpDisplay).trim()) {
+          kpjWrap.style.display = '';
+          kpEl.textContent = kpDisplay || '—';
+        } else {
+          kpjWrap.style.display = 'none';
+          kpEl.textContent = '';
+        }
 
       // 更新 review 显示
       updateReviewDisplay(paperId);
       renderQC(paperId);
+      
+      // 恢复普通类型的界面标题和说明
+      const reviewMainBox = document.getElementById('review-main-box');
+      reviewMainBox.querySelector('h2').textContent = '2. Evaluate a review';
+      const description = reviewMainBox.querySelector('span');
+      description.innerHTML = `
+        <span style="font-size: 0.98em;">
+          Your task is to assess whether the <strong>candidate review</strong> aligns in intent and quality with the <strong>reference review</strong>.
+          <p>
+            The candidate review was written based on a set of <strong>key points and judgments</strong> that were extracted from the reference review. Each key point represents an <em>aspect</em> (e.g., Novelty), and each judgment indicates the reference reviewer's stance (i.e., Strength or Weakness).
+          </p>
+          <p>
+            Note that <strong>neither the candidate review nor the reference review is a full review</strong>. They are excerpts from a complete review, which discuss the provided key points and judgments.
+          </p>
+          <p>
+            Please read the <strong><a href="https://docs.google.com/document/d/1yWyMDvcL0KjcM8vGUQxvV8iAAQ4NPWq9XU7o9OO3TUk/edit?usp=sharing" target=\"_blank\">evaluation guidelines</a></strong> carefully before starting.
+          </p>
+        </span>
+      `;
+      
+      // 恢复review标签
+      document.getElementById('review-a').parentElement.querySelector('.review-label').textContent = 'Reference review';
+      document.getElementById('review-b').parentElement.parentElement.querySelector('.review-label').textContent = 'Candidate review';
+      }
+    }
+
+    function displayAggregatePaper(paperId, paperData, index) {
+      console.log('Displaying aggregate paper:', paperId);
+      
+      const formatReview = (txt) => (txt || "").replace(/(Strengths:)/g, '<strong>$1</strong><br>')
+                                               .replace(/(Weaknesses:)/g, '<strong>$1</strong><br>')
+                                               .replace(/\r\n|\n|\r/g, '<br>');
+
+      // 显示e2e review和collab review
+      const e2eReview = paperData.e2e_review || "No end-to-end review available";
+      const collabReview = paperData.collab_review || "No collaborative generation review available";
+
+      // 更新界面标题和说明
+      const reviewMainBox = document.getElementById('review-main-box');
+      if (!reviewMainBox) {
+        console.error('review-main-box not found');
+        return;
+      }
+      
+      const h2 = reviewMainBox.querySelector('h2');
+      if (h2) {
+        h2.textContent = '2. Compare reviews';
+      }
+      
+      const description = reviewMainBox.querySelector('span');
+      if (description) {
+        description.innerHTML = `
+          <span style="font-size: 0.98em;">
+            Your task is to compare the <strong>end-to-end review</strong> with the <strong>collaborative generation review</strong>.
+            <p>
+              Please evaluate which review is better in terms of quality, completeness, and alignment with the paper.
+            </p>
+          </span>
+        `;
+      }
+
+      // 隐藏key points区域
+      const kpjWrap = document.getElementById('kpj-wrap');
+      if (kpjWrap) {
+        kpjWrap.style.display = 'none';
+      }
+
+      // 显示e2e review作为reference review
+      const reviewA = document.getElementById('review-a');
+      if (reviewA) {
+        reviewA.innerHTML = formatReview(e2eReview);
+        const reviewALabel = reviewA.parentElement.querySelector('.review-label');
+        if (reviewALabel) {
+          reviewALabel.textContent = 'End-to-end review';
+        }
+      }
+
+      // 显示collab review作为candidate review
+      const reviewB = document.getElementById('review-b');
+      if (reviewB) {
+        reviewB.innerHTML = formatReview(collabReview);
+        const reviewBLabel = reviewB.parentElement.parentElement.querySelector('.review-label');
+        if (reviewBLabel) {
+          reviewBLabel.textContent = 'Collaborative generation review';
+        }
+      }
+
+      const counter = document.getElementById('counter');
+      if (counter) {
+        counter.textContent = `Item ${index + 1} of ${keys.length}`;
+      }
+
+      // 渲染aggregate类型的evaluation问题
+      renderAggregateQC(paperId);
     }
 
     function saveResponse(paperId, key, value) {
@@ -576,9 +687,17 @@
         responses[paperId][key] = value;
       }
       
-      // 更新显示的 review（根据新的选择），但不重新加载 PDF
-      updateReviewDisplay(paperId);
-      renderQC(paperId);
+      // 检查是否是aggregate类型
+      const isAggregate = paperId.includes('_aggregate');
+      
+      if (isAggregate) {
+        // 更新aggregate类型的evaluation界面
+        renderAggregateQC(paperId);
+      } else {
+        // 更新显示的 review（根据新的选择），但不重新加载 PDF
+        updateReviewDisplay(paperId);
+        renderQC(paperId);
+      }
       console.log('Saved:', responses);
       persistState();
     }
@@ -670,13 +789,18 @@
           }
         }
 
+        // 如果没有 new candidate review，直接跳到下一个 item
+        if (!altReview) {
+          appendResult(container, 'Please proceed to the next item.');
+          return;
+        }
+
         // Alternate review styled same as review-b (pink)
         const altWrap = document.createElement('div');
         altWrap.className = 'review-label-box review-b';
-        const altContent = altReview ? altReview.replace(/(Strengths:)/g, '<strong>$1</strong><br>')
+        const altContent = altReview.replace(/(Strengths:)/g, '<strong>$1</strong><br>')
                                               .replace(/(Weaknesses:)/g, '<strong>$1</strong><br>')
-                                              .replace(/\r\n|\n|\r/g, '<br>')
-                                     : '<em>No specified review available.</em>';
+                                              .replace(/\r\n|\n|\r/g, '<br>');
         altWrap.innerHTML = `
           <span class="review-label">New candidate review</span>
           <div class="review-box">${altContent}</div>
@@ -686,16 +810,14 @@
         // Add toggle button for reference review and key points
         const toggleButton = document.createElement('div');
         toggleButton.className = 'ref-panel-toggle';
-        toggleButton.innerHTML = '📋 <strong>Show Reference review & Key point and judgment</strong>';
+        toggleButton.innerHTML = '📋 <strong>Reference review & Key point and judgment</strong>';
         toggleButton.onclick = function() {
           const panel = document.getElementById('ref-panel-spec');
           const button = this;
           if (panel.style.display === 'none' || panel.style.display === '') {
             panel.style.display = 'block';
-            button.innerHTML = '📋 <strong>Hide Reference review & Key point and judgment</strong>';
           } else {
             panel.style.display = 'none';
-            button.innerHTML = '📋 <strong>Show Reference review & Key point and judgment</strong>';
           }
         };
         container.appendChild(toggleButton);
@@ -713,22 +835,22 @@
         
         let panelContent = '';
         
+        // Add reference review first
+        if (refReviewEl) {
+          panelContent += `
+            <div class="review-label-box">
+              <span class="review-label">Reference review</span>
+              <div class="review-box">${refReviewEl.innerHTML}</div>
+            </div>
+          `;
+        }
+        
         // Add key points if available
         if (kpjWrap && kpjWrap.style.display !== 'none' && kpText && kpText.textContent.trim()) {
           panelContent += `
             <div class="review-label-box">
               <span class="review-label">Key point and judgment</span>
               <div class="review-box">${kpText.textContent}</div>
-            </div>
-          `;
-        }
-        
-        // Add reference review
-        if (refReviewEl) {
-          panelContent += `
-            <div class="review-label-box">
-              <span class="review-label">Reference review</span>
-              <div class="review-box">${refReviewEl.innerHTML}</div>
             </div>
           `;
         }
@@ -742,7 +864,7 @@
           // 找到specification部分的toggle按钮（在ref-panel-spec之前）
           const specToggleButton = container.querySelector('#ref-panel-spec').previousElementSibling;
           if (specToggleButton && specToggleButton.classList.contains('ref-panel-toggle')) {
-            specToggleButton.innerHTML = '📋 <strong>Hide Reference review & Key point and judgment</strong>';
+            // 面板状态已恢复，按钮文本保持不变
           }
         }
 
@@ -854,35 +976,29 @@
             const llmReviews = paperData.llm_reviews || {};
             const currentReview = llmReviews[currentRound];
             
-            // 如果当前 entry 的 sufficiency 失败，显示下一个 entry 作为 new candidate review
+            // evidence 的 new review 只有在当前 review 的 evidence check 的标签是 INSUFFICIENT 或 HALLUCINATION 时，才会使用到下一轮的 llm review
+            // evidence check 的格式是 "标签: 描述"，例如 "INSUFFICIENT: ..." 或 "HALLUCINATION: ..."
             let evidenceReview = '';
-            // 检查当前 entry 的 evidence 是否不足
-            if (currentReview && currentReview.checks.evidence && 
-                (currentReview.checks.evidence === "-" || currentReview.checks.evidence.startsWith("INSUFFICIENT"))) {
-              const nextRound = getNextReviewRound(paperId, responses, currentRound);
-              if (nextRound && llmReviews[nextRound]) {
-                evidenceReview = llmReviews[nextRound].llm_review || '';
-              }
-            } else {
-              // 如果当前 entry 的 evidence 不是不足，尝试查找下一个 entry
-              const nextRound = getNextReviewRound(paperId, responses, currentRound);
-              if (nextRound && llmReviews[nextRound]) {
-                evidenceReview = llmReviews[nextRound].llm_review || '';
+            if (currentReview && currentReview.checks && currentReview.checks.evidence && 
+                typeof currentReview.checks.evidence === 'string' &&
+                currentReview.checks.evidence !== "-") {
+              // 检查冒号前的标签是否为 INSUFFICIENT 或 HALLUCINATION
+              const evidenceLabel = currentReview.checks.evidence.split(':')[0].trim();
+              if (evidenceLabel === "INSUFFICIENT" || evidenceLabel === "HALLUCINATION") {
+                const nextRound = getNextReviewRound(paperId, responses, currentRound);
+                if (nextRound && llmReviews[nextRound] && llmReviews[nextRound].llm_review) {
+                  evidenceReview = llmReviews[nextRound].llm_review;
+                }
               }
             }
             
-            // 如果没有找到替代 review，直接结束
+            // 如果没有找到基于 evidence 的 new review，直接跳到下一个 item
             if (!evidenceReview) {
               appendResult(container, 'Please proceed to the next item.');
               return;
             }
 
-            // Frost the new candidate review and grey out sufficiency
-            const altWrap = document.querySelector('.review-label-box.review-b:last-of-type');
-            if (altWrap) {
-              altWrap.classList.add('frosted');
-            }
-            // Also frost the specification new candidate review (the one in criteria-container)
+            // Frost the specification new candidate review (the one in criteria-container)
             const specAltWrap = document.querySelector('#criteria-container .review-label-box.review-b');
             if (specAltWrap) {
               specAltWrap.classList.add('frosted');
@@ -892,10 +1008,9 @@
             // Alternate evidence review styled same as review-b (pink)
             const evidenceWrap = document.createElement('div');
             evidenceWrap.className = 'review-label-box review-b';
-            const evidenceContent = evidenceReview ? evidenceReview.replace(/(Strengths:)/g, '<strong>$1</strong><br>')
+            const evidenceContent = evidenceReview.replace(/(Strengths:)/g, '<strong>$1</strong><br>')
                                                           .replace(/(Weaknesses:)/g, '<strong>$1</strong><br>')
-                                                          .replace(/\r\n|\n|\r/g, '<br>')
-                                                 : '<em>No evidence review available.</em>';
+                                                          .replace(/\r\n|\n|\r/g, '<br>');
             evidenceWrap.innerHTML = `
               <span class="review-label">New candidate review</span>
               <div class="review-box">${evidenceContent}</div>
@@ -905,16 +1020,14 @@
             // Add toggle button for reference review and key points
             const toggleButton = document.createElement('div');
             toggleButton.className = 'ref-panel-toggle';
-            toggleButton.innerHTML = '📋 <strong>Show Reference review & Key point and judgment</strong>';
+            toggleButton.innerHTML = '📋 <strong>Reference review & Key point and judgment</strong>';
             toggleButton.onclick = function() {
               const panel = document.getElementById('ref-panel-evidence');
               const button = this;
               if (panel.style.display === 'none' || panel.style.display === '') {
                 panel.style.display = 'block';
-                button.innerHTML = '📋 <strong>Hide Reference review & Key point and judgment</strong>';
               } else {
                 panel.style.display = 'none';
-                button.innerHTML = '📋 <strong>Show Reference review & Key point and judgment</strong>';
               }
             };
             container.appendChild(toggleButton);
@@ -932,22 +1045,22 @@
             
             let panelContent = '';
             
+            // Add reference review first
+            if (refReviewEl) {
+              panelContent += `
+                <div class="review-label-box">
+                  <span class="review-label">Reference review</span>
+                  <div class="review-box">${refReviewEl.innerHTML}</div>
+                </div>
+              `;
+            }
+            
             // Add key points if available
             if (kpjWrap && kpjWrap.style.display !== 'none' && kpText && kpText.textContent.trim()) {
               panelContent += `
                 <div class="review-label-box">
                   <span class="review-label">Key point and judgment</span>
                   <div class="review-box">${kpText.textContent}</div>
-                </div>
-              `;
-            }
-            
-            // Add reference review
-            if (refReviewEl) {
-              panelContent += `
-                <div class="review-label-box">
-                  <span class="review-label">Reference review</span>
-                  <div class="review-box">${refReviewEl.innerHTML}</div>
                 </div>
               `;
             }
@@ -961,7 +1074,7 @@
               // 找到evidence部分的toggle按钮（在ref-panel-evidence之前）
               const evidenceToggleButton = container.querySelector('#ref-panel-evidence').previousElementSibling;
               if (evidenceToggleButton && evidenceToggleButton.classList.contains('ref-panel-toggle')) {
-                evidenceToggleButton.innerHTML = '📋 <strong>Hide Reference review & Key point and judgment</strong>';
+                // 面板状态已恢复，按钮文本保持不变
               }
             }
 
@@ -1086,6 +1199,37 @@
         ok.className = 'result-box';
         ok.style.borderColor = '#c7e7c7';
         ok.style.background = '#f0fff0';
+        ok.innerHTML = 'Please proceed to the next item. <button class="btn" onclick="nextPaper()" style="margin-left: 10px;">Go</button>';
+        container.appendChild(ok);
+      }
+    }
+
+    function renderAggregateQC(paperId) {
+      const container = document.getElementById('criteria-container');
+      container.innerHTML = '<h3 style="margin-bottom: 10px;">Evaluation</h3>';
+
+      if (!responses[paperId]) responses[paperId] = {};
+      const r = responses[paperId];
+
+      // 比较问题：哪个review更好
+      const comparisonDiv = document.createElement('div');
+      comparisonDiv.className = 'criteria';
+      comparisonDiv.innerHTML = `
+        <strong>Which review is better?</strong>
+        <span class="hint">Compare the end-to-end review with the collaborative generation review. Which one is better in terms of quality, completeness, and alignment with the paper?</span>
+        <label><input type="radio" name="BetterReview" value="e2e" ${(r['BetterReview']||'')==='e2e'?'checked':''} onchange="saveResponse('${paperId}', 'BetterReview', 'e2e')"> End-to-end review</label>
+        <label><input type="radio" name="BetterReview" value="collab" ${(r['BetterReview']||'')==='collab'?'checked':''} onchange="saveResponse('${paperId}', 'BetterReview', 'collab')"> Collaborative generation review</label>
+        <label><input type="radio" name="BetterReview" value="equal" ${(r['BetterReview']||'')==='equal'?'checked':''} onchange="saveResponse('${paperId}', 'BetterReview', 'equal')"> They are equally good</label>
+      `;
+      container.appendChild(comparisonDiv);
+
+      // 如果已经选择了，显示完成提示
+      if (r['BetterReview']) {
+        const ok = document.createElement('div');
+        ok.className = 'result-box';
+        ok.style.borderColor = '#c7e7c7';
+        ok.style.background = '#f0fff0';
+        ok.style.marginTop = '20px';
         ok.innerHTML = 'Please proceed to the next item. <button class="btn" onclick="nextPaper()" style="margin-left: 10px;">Go</button>';
         container.appendChild(ok);
       }
