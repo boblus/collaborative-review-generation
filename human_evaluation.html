@@ -202,7 +202,23 @@
       try {
         const rawR = localStorage.getItem(STORAGE_KEYS.responses);
         const rawI = localStorage.getItem(STORAGE_KEYS.index);
-        if (rawR) responses = JSON.parse(rawR) || {};
+        if (rawR) {
+          const parsedResponses = JSON.parse(rawR) || {};
+          // 将旧格式的索引key转换为data.json的原始key
+          responses = {};
+          for (const oldKey in parsedResponses) {
+            // 如果oldKey是数字字符串（索引），转换为data.json的key
+            if (/^\d+$/.test(oldKey)) {
+              const index = parseInt(oldKey);
+              if (index >= 0 && index < keys.length) {
+                responses[keys[index]] = parsedResponses[oldKey];
+              }
+            } else {
+              // 如果不是索引，直接使用原始key（可能是aggregate类型等）
+              responses[oldKey] = parsedResponses[oldKey];
+            }
+          }
+        }
         if (rawI && !isNaN(Number(rawI))) currentIndex = Math.max(0, Number(rawI));
       } catch (e) {
         responses = {};
@@ -560,6 +576,13 @@
     function saveResponse(paperId, key, value) {
       if (!responses[paperId]) responses[paperId] = {};
       
+      // 如果是aggregate类型，只允许保存BetterReview字段
+      const isAggregate = paperId && paperId.includes('_aggregate');
+      if (isAggregate && key !== 'BetterReview') {
+        // aggregate类型不允许保存其他字段
+        return;
+      }
+      
       // 清除后续选择
       if (key === 'Relevance' && value === 'No') {
         // 清除所有后续选择
@@ -699,9 +722,18 @@
       }
       
       // 检查是否是aggregate类型
-      const isAggregate = paperId.includes('_aggregate');
+      const isAggregateType = paperId.includes('_aggregate');
       
-      if (isAggregate) {
+      if (isAggregateType) {
+        // aggregate类型只允许保存BetterReview字段，清除其他字段
+        const allowedKeys = ['BetterReview'];
+        const cleanedResponse = {};
+        for (const k of allowedKeys) {
+          if (responses[paperId][k]) {
+            cleanedResponse[k] = responses[paperId][k];
+          }
+        }
+        responses[paperId] = cleanedResponse;
         // 更新aggregate类型的evaluation界面
         renderAggregateQC(paperId);
       } else {
@@ -1283,7 +1315,16 @@
     function exportProgress() {
       // 只导出responses，不包含currentIndex
       // currentIndex可以从responses中获取最后一个key对应的索引
-      const payload = { responses };
+      // 按照keys的顺序排序responses，使用数组来保持顺序
+      const sortedResponses = {};
+      // 按照keys数组的顺序遍历，确保aggregate数据按照正确顺序保存
+      for (let i = 0; i < keys.length; i++) {
+        const key = keys[i];
+        if (responses[key] && Object.keys(responses[key]).length > 0) {
+          sortedResponses[key] = responses[key];
+        }
+      }
+      const payload = { responses: sortedResponses };
       const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
@@ -1318,7 +1359,21 @@
           const obj = JSON.parse(String(reader.result||'{}'));
           if (obj && typeof obj === 'object') {
             if (obj.responses && typeof obj.responses === 'object') {
-              responses = obj.responses;
+              // 将旧格式的索引key转换为data.json的原始key
+              const newResponses = {};
+              for (const oldKey in obj.responses) {
+                // 如果oldKey是数字字符串（索引），转换为data.json的key
+                if (/^\d+$/.test(oldKey)) {
+                  const index = parseInt(oldKey);
+                  if (index >= 0 && index < keys.length) {
+                    newResponses[keys[index]] = obj.responses[oldKey];
+                  }
+                } else {
+                  // 如果不是索引，直接使用原始key（可能是aggregate类型等）
+                  newResponses[oldKey] = obj.responses[oldKey];
+                }
+              }
+              responses = newResponses;
             }
             // 从responses中获取最后一个key对应的索引
             const responseKeys = Object.keys(responses);
