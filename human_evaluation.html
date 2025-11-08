@@ -1320,12 +1320,15 @@
 
     function exportProgress() {
       // 只导出responses，不包含currentIndex
-      // 只保存到当前item为止的数据
-      // 按照keys的顺序排序responses，使用数组来保持顺序
+      // 只保存到当前页面（currentIndex）为止的数据，不包含后面的数据
+      // 只保存keys数组中到currentIndex为止的数据，不保存responses中其他未访问的item
       const sortedResponses = {};
       // 按照keys数组的顺序遍历，只保存到currentIndex为止
+      // 只保存用户已经访问过的item，不保存后面的item
       for (let i = 0; i <= currentIndex && i < keys.length; i++) {
         const key = keys[i];
+        // 只保存keys数组中到currentIndex为止的数据，不保存responses中其他未访问的item
+        // 即使responses中有后面的数据，也不保存
         if (responses[key] && Object.keys(responses[key]).length > 0) {
           // 如果是aggregate类型，只保留BetterReview字段
           if (key.includes('_aggregate')) {
