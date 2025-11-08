@@ -542,6 +542,12 @@
         kpjWrap.style.display = 'none';
       }
 
+      // 移除毛玻璃效果（aggregate类型不应该有毛玻璃效果）
+      const candidateBox = document.getElementById('candidate-box');
+      if (candidateBox) {
+        candidateBox.classList.remove('frosted');
+      }
+
       // 显示e2e review作为Review A
       const reviewA = document.getElementById('review-a');
       if (reviewA) {
@@ -1321,7 +1327,18 @@
       for (let i = 0; i < keys.length; i++) {
         const key = keys[i];
         if (responses[key] && Object.keys(responses[key]).length > 0) {
-          sortedResponses[key] = responses[key];
+          // 如果是aggregate类型，只保留BetterReview字段
+          if (key.includes('_aggregate')) {
+            const cleanedResponse = {};
+            if (responses[key]['BetterReview']) {
+              cleanedResponse['BetterReview'] = responses[key]['BetterReview'];
+            }
+            if (Object.keys(cleanedResponse).length > 0) {
+              sortedResponses[key] = cleanedResponse;
+            }
+          } else {
+            sortedResponses[key] = responses[key];
+          }
         }
       }
       const payload = { responses: sortedResponses };
