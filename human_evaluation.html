@@ -471,8 +471,20 @@
       `;
       
       // 恢复review标签
-      document.getElementById('review-a').parentElement.querySelector('.review-label').textContent = 'Reference review';
-      document.getElementById('review-b').parentElement.parentElement.querySelector('.review-label').textContent = 'Candidate review';
+      const reviewAEl = document.getElementById('review-a');
+      if (reviewAEl) {
+        const reviewALabel = reviewAEl.parentElement.parentElement.querySelector('.review-label');
+        if (reviewALabel) {
+          reviewALabel.textContent = 'Reference review';
+        }
+      }
+      const reviewBEl = document.getElementById('review-b');
+      if (reviewBEl) {
+        const reviewBLabel = reviewBEl.parentElement.parentElement.querySelector('.review-label');
+        if (reviewBLabel) {
+          reviewBLabel.textContent = 'Candidate review';
+        }
+      }
       }
     }
 
@@ -503,10 +515,7 @@
       if (description) {
         description.innerHTML = `
           <span style="font-size: 0.98em;">
-            Your task is to compare the <strong>end-to-end review</strong> with the <strong>collaborative generation review</strong>.
-            <p>
-              Please evaluate which review is better in terms of quality, completeness, and alignment with the paper.
-            </p>
+            Your task is to <strong>compare two reviews</strong> and <strong>indicate which one is better</strong>. Please make <strong>an overall judgment</strong> that considers factors including technical accuracy, constructive value, analytical depth, and communication clarity.
           </span>
         `;
       }
@@ -517,23 +526,25 @@
         kpjWrap.style.display = 'none';
       }
 
-      // 显示e2e review作为reference review
+      // 显示e2e review作为Review A
       const reviewA = document.getElementById('review-a');
       if (reviewA) {
         reviewA.innerHTML = formatReview(e2eReview);
-        const reviewALabel = reviewA.parentElement.querySelector('.review-label');
+        // review-a的父元素是review-box，再上一级是review-label-box，然后找.review-label
+        const reviewALabel = reviewA.parentElement.parentElement.querySelector('.review-label');
         if (reviewALabel) {
-          reviewALabel.textContent = 'End-to-end review';
+          reviewALabel.textContent = 'Review A';
         }
       }
 
-      // 显示collab review作为candidate review
+      // 显示collab review作为Review B
       const reviewB = document.getElementById('review-b');
       if (reviewB) {
         reviewB.innerHTML = formatReview(collabReview);
+        // review-b的父元素是review-box，再上一级是review-label-box，然后找.review-label
         const reviewBLabel = reviewB.parentElement.parentElement.querySelector('.review-label');
         if (reviewBLabel) {
-          reviewBLabel.textContent = 'Collaborative generation review';
+          reviewBLabel.textContent = 'Review B';
         }
       }
 
@@ -769,11 +780,6 @@
       }
 
       if (r['Specification'] === 'No') {
-        // Frost original candidate and grey out original spec
-        const candidateBox = document.getElementById('candidate-box');
-        candidateBox && candidateBox.classList.add('frosted');
-        specDiv.classList.add('disabled');
-
         // 获取当前在 candidate review 区域显示的 entry（在用户选择 Specification=No 之前）
         const currentRoundBeforeSpec = getCurrentRoundBeforeCheck(paperId, responses, 'Specification');
         const paperData = data[paperId];
@@ -794,6 +800,12 @@
           appendResult(container, 'Please proceed to the next item.');
           return;
         }
+
+        // 只有在有新的specification数据时，才添加frosted和disabled效果
+        // Frost original candidate and grey out original spec
+        const candidateBox = document.getElementById('candidate-box');
+        candidateBox && candidateBox.classList.add('frosted');
+        specDiv.classList.add('disabled');
 
         // Alternate review styled same as review-b (pink)
         const altWrap = document.createElement('div');
@@ -1216,10 +1228,10 @@
       comparisonDiv.className = 'criteria';
       comparisonDiv.innerHTML = `
         <strong>Which review is better?</strong>
-        <span class="hint">Compare the end-to-end review with the collaborative generation review. Which one is better in terms of quality, completeness, and alignment with the paper?</span>
-        <label><input type="radio" name="BetterReview" value="e2e" ${(r['BetterReview']||'')==='e2e'?'checked':''} onchange="saveResponse('${paperId}', 'BetterReview', 'e2e')"> End-to-end review</label>
-        <label><input type="radio" name="BetterReview" value="collab" ${(r['BetterReview']||'')==='collab'?'checked':''} onchange="saveResponse('${paperId}', 'BetterReview', 'collab')"> Collaborative generation review</label>
-        <label><input type="radio" name="BetterReview" value="equal" ${(r['BetterReview']||'')==='equal'?'checked':''} onchange="saveResponse('${paperId}', 'BetterReview', 'equal')"> They are equally good</label>
+        <span class="hint">Please make an overall judgment.</span>
+        <label><input type="radio" name="BetterReview" value="e2e" ${(r['BetterReview']||'')==='e2e'?'checked':''} onchange="saveResponse('${paperId}', 'BetterReview', 'e2e')"> Review A</label>
+        <label><input type="radio" name="BetterReview" value="collab" ${(r['BetterReview']||'')==='collab'?'checked':''} onchange="saveResponse('${paperId}', 'BetterReview', 'collab')"> Review B</label>
+        <label><input type="radio" name="BetterReview" value="equal" ${(r['BetterReview']||'')==='equal'?'checked':''} onchange="saveResponse('${paperId}', 'BetterReview', 'equal')"> Tie</label>
       `;
       container.appendChild(comparisonDiv);
 
