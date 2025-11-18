@@ -1,0 +1,119 @@
+{
+    "0": {
+        "paper_id": "ea2fcaadea43b14cd757b899060486935bbc8ae9aa1f5e09d6593e11fbfc7482d9e6b01198b4144b4f4587be071ea4436d377e42b8f20df4c9ad77d190acbea4",
+        "review_id": "f44f0ca236369e5e597d2b8b8d05ec1a98c69e2cf68fd94a6accde8c749771328614c1d07a06141e170ce4c7d2ff6cbba39c2a4184adf16423c2bad2b120aac9",
+        "judge": {
+            "aspects": {
+                "technical_accuracy": {
+                    "assistant_A": "Review A notes the introduction of a novel task and the design of 10 interpretable templates based on Argument from Consequences, but criticizes the narrow scope, modest inter-annotator agreement, and inconsistencies in annotation and modeling. For instance, 'templates restricted to Argument from Consequences and only three topics; unclear generalization to other schemes or domains.' and 'IAA and validation are modest: Krippendorff α=0.50 is moderate; reliance on MACE aggregation and small expert samples; slot-filler validation set is very small (43 slots).'",
+                    "assistant_B": "Review B praises the methodology, novelty, and data, stating 'The paper introduces a novel task—counter-argument logical structure analysis—and a well-motivated template framework of 10 logic patterns grounded in Argument from Consequences.' However, it criticizes the evaluation protocol, arguing 'Metrics and protocol under-represent model capability. RougeL-based, extractive-only slot evaluation with a hard threshold yields near-zero precision, likely penalizing semantically correct paraphrases and length variation; sentence-level F1 for templates does not accommodate segmentation variance; only one I/O format and no significance tests or alternative evaluation schemes are explored.'",
+                    "comparative_assessment": "Both Review A and Review B identify limitations in the technical aspects of the paper, including the narrow scope of the templates and the evaluation protocol. However, Review B provides a more detailed analysis of the evaluation protocol and its limitations, while Review A focuses on the inconsistencies in annotation and modeling.",
+                    "judgment": {
+                        "better": "B",
+                        "evidence_based_reason": "Review B provides a more nuanced and detailed analysis of the technical aspects of the paper, including the evaluation protocol and its limitations. For example, it notes that 'RougeL-based, extractive-only slot evaluation with a hard threshold yields near-zero precision, likely penalizing semantically correct paraphrases and length variation.' This suggests that Review B has a deeper understanding of the technical issues in the paper and provides more constructive feedback."
+                    }
+                },
+                "constructive_value": {
+                    "assistant_A": "Review A provides actionable feedback, stating 'Claims of “high” agreement/coverage are somewhat overstated given the above.' and suggesting that the authors should revisit their claims. Review A also notes that 'only simple text-to-text baselines; slot-filler precision reported as 0 across models suggests a metric/specification issue not diagnosed; no stronger architectures or extraction methods, no cross-topic transfer tests.' This provides specific suggestions for future work.",
+                    "assistant_B": "Review B provides specific and feasible suggestions for improvement, such as exploring alternative evaluation schemes, using significance tests, and comparing to structured or non-LLM baselines. For example, it states 'no comparisons to structured or non-LLM baselines (e.g., sequence tagging, CRF/span extractors, constrained decoding, rule-based matchers), and no ablations (prompting, thresholds, segmentation strategies).'",
+                    "comparative_assessment": "Both reviews provide constructive feedback, but Review B provides more specific and detailed suggestions for improvement. Review B's suggestions are also more focused on the methodological and evaluative aspects of the paper, which is a key area for improvement.",
+                    "judgment": {
+                        "better": "B",
+                        "evidence_based_reason": "Review B provides more specific and actionable feedback, with a focus on methodological and evaluative improvements. For example, it suggests using 'sequence tagging, CRF/span extractors, constrained decoding, rule-based matchers' as alternative baselines, which provides a clear direction for future work."
+                    }
+                },
+                "analytical_depth": {
+                    "assistant_A": "Review A provides a thorough analysis of the paper's strengths and weaknesses, including its introduction of a novel task, template design, and dataset. However, the analysis is somewhat superficial and does not delve deeply into the methodological or evaluative aspects of the paper.",
+                    "assistant_B": "Review B provides a more in-depth analysis of the paper, including its methodology, data, and evaluation protocol. Review B notes the paper's limitations, such as the narrow scope of the templates and the evaluation protocol, and provides specific suggestions for improvement. For example, it states 'the empirical study is under-analyzed and narrowly scoped. Data: the corpus spans only three topics and a single argumentation scheme, with unclear class balance and no cross-topic or out-of-domain evaluation;'",
+                    "comparative_assessment": "Review B provides a more detailed and thorough analysis of the paper, including its methodology, data, and evaluation protocol. Review B's analysis is more comprehensive and identifies more specific limitations and areas for improvement.",
+                    "judgment": {
+                        "better": "B",
+                        "evidence_based_reason": "Review B provides a more comprehensive and detailed analysis of the paper, including its methodology, data, and evaluation protocol. Review B's analysis is more thorough and identifies more specific limitations and areas for improvement, such as the need for alternative evaluation schemes and the importance of cross-topic transfer tests."
+                    }
+                }
+            },
+            "overall_judgment": {
+                "better": "B",
+                "evidence_based_reason": "Review B provides a more comprehensive and detailed analysis of the paper, including its methodology, data, and evaluation protocol. Review B's analysis is more thorough and identifies more specific limitations and areas for improvement, providing constructive feedback and suggestions for future work. Overall, Review B demonstrates a deeper understanding of the paper and its limitations, and provides more actionable feedback for improvement."
+            }
+        }
+    },
+    "1": {
+        "paper_id": "4d56bde71a33d412724e11253d44bcdb6eb88bd86e325faddfd1752caa1e9634a80a214c473f6c9ca05ec3e7c5ace6f7e20f8206ec9de5f859951572e4e1a105",
+        "review_id": "852e98e66333fe7ad9714dcbfa742e47b8e435a08295c9580680a8b1c3f6b98e37f0ea56b1eacfad9ae779c3b680a891e25571a660828354b27650d87c9e0ac5",
+        "judge": {
+            "aspects": {
+                "technical_accuracy": {
+                    "assistant_A": "Review A correctly identifies the technical contributions of the paper, including the proposal of a fast-slow TTA framework and the introduction of DSUTA with a dynamic reset strategy. The review also accurately points out limitations, such as the narrow evaluation scope and the lack of theoretical grounding.",
+                    "assistant_B": "Review B provides a detailed and technical analysis of the paper, accurately describing the Fast-slow TTA framework, the DSUTA method, and the dynamic reset strategy. The review also correctly identifies the strengths and weaknesses of the paper, including the novelty of the approach and the limitations of the evaluation scope.",
+                    "comparative_assessment": "Both reviews demonstrate a strong understanding of the paper's technical content, but Review B provides a more detailed and nuanced analysis. Review A's criticism of the paper's novelty and theoretical grounding is valid, but Review B's appreciation for the paper's technical contributions and potential impact is also well-founded.",
+                    "judgment": {
+                        "better": "B",
+                        "evidence_based_reason": "Review B provides a more detailed and technical analysis of the paper, accurately describing the Fast-slow TTA framework, the DSUTA method, and the dynamic reset strategy. Review B also correctly identifies the strengths and weaknesses of the paper, including the novelty of the approach and the limitations of the evaluation scope."
+                    }
+                },
+                "constructive_value": {
+                    "assistant_A": "Review A provides constructive feedback on the paper's limitations, including the narrow evaluation scope and the lack of theoretical grounding. The review also suggests potential avenues for future research, such as exploring other types of domain shifts and end-to-end ASR models.",
+                    "assistant_B": "Review B provides detailed and actionable feedback on the paper's strengths and weaknesses, including suggestions for improving the evaluation scope, exploring other architectures, and analyzing sensitivity and robustness. The review also appreciates the paper's technical contributions and potential impact.",
+                    "comparative_assessment": "Both reviews provide constructive feedback, but Review B's feedback is more detailed and actionable. Review A's suggestions for future research are valid, but Review B's appreciation for the paper's technical contributions and potential impact is also well-founded.",
+                    "judgment": {
+                        "better": "B",
+                        "evidence_based_reason": "Review B provides more detailed and actionable feedback on the paper's strengths and weaknesses, including suggestions for improving the evaluation scope, exploring other architectures, and analyzing sensitivity and robustness."
+                    }
+                },
+                "analytical_depth": {
+                    "assistant_A": "Review A provides a good overview of the paper's technical content, but the analysis is not particularly deep or nuanced. The review identifies some limitations, but does not provide a detailed analysis of the paper's strengths and weaknesses.",
+                    "assistant_B": "Review B provides a detailed and nuanced analysis of the paper's technical content, including the Fast-slow TTA framework, the DSUTA method, and the dynamic reset strategy. The review also provides a thoughtful analysis of the paper's strengths and weaknesses, including the novelty of the approach and the limitations of the evaluation scope.",
+                    "comparative_assessment": "Review B provides a more detailed and nuanced analysis of the paper's technical content, including the Fast-slow TTA framework, the DSUTA method, and the dynamic reset strategy. Review A's analysis is more superficial and does not provide the same level of insight.",
+                    "judgment": {
+                        "better": "B",
+                        "evidence_based_reason": "Review B provides a more detailed and nuanced analysis of the paper's technical content, including the Fast-slow TTA framework, the DSUTA method, and the dynamic reset strategy."
+                    }
+                }
+            },
+            "overall_judgment": {
+                "better": "B",
+                "evidence_based_reason": "Review B provides a more detailed and nuanced analysis of the paper's technical content, including the Fast-slow TTA framework, the DSUTA method, and the dynamic reset strategy. Review B also provides more detailed and actionable feedback on the paper's strengths and weaknesses, including suggestions for improving the evaluation scope, exploring other architectures, and analyzing sensitivity and robustness."
+            }
+        }
+    },
+    "2": {
+        "paper_id": "c28e525283c0b7390216f732607d0c64b5d17a62543684d743b64981de62d6b85a6c9d360141c216cd3baee7f6f94023a6ab40eba23aaaa6b2606cf9e509442c",
+        "review_id": "3c930622ec1af37dc2f232f3f63f12799b32c8b25c8615316d31ddbc36dbd9f0dc7128e28fa121f62dae65f304ec0c177b80ec356945e1e23b079d06ae5d5632",
+        "judge": {
+            "aspects": {
+                "technical_accuracy": {
+                    "assistant_A": "Review A provides a detailed analysis of the paper's technical aspects, identifying both strengths and weaknesses. The reviewer notes the paper's clear, data-centric insight, simple contribution measure, and thorough empirical analysis. However, they also point out limitations, such as the restricted scope to two classical puzzle domains, limited baseline coverage, and potential bias in training labels.",
+                    "assistant_B": "Review B also evaluates the paper's technical aspects, highlighting its comprehensive related work, clear positioning of the contribution, and solid experimental setup. The reviewer praises the paper's ability to disentangle planner and model requirements, align them in a simple distribution, and deliver consistent search-length and wall-clock gains.",
+                    "comparative_assessment": "Both reviews demonstrate a strong understanding of the paper's technical content, but Review A provides a more detailed and balanced evaluation, highlighting both strengths and weaknesses. Review B focuses more on the paper's strengths and impact, with less attention to its limitations.",
+                    "judgment": {
+                        "better": "A",
+                        "evidence_based_reason": "Review A provides a more comprehensive and balanced evaluation of the paper's technical aspects, including both strengths and weaknesses, demonstrating a deeper understanding of the paper's technical accuracy."
+                    }
+                },
+                "constructive_value": {
+                    "assistant_A": "Review A provides actionable feedback, suggesting that the authors should consider comparing their approach to strong heuristic-learning alternatives, studying the inclusion of off-path/failure states, and analyzing the sensitivity of their contribution model to problem characteristics.",
+                    "assistant_B": "Review B suggests that the authors could improve by providing more detail and discussion for key experimental components, such as prompt/tokenization specifics and dataset sizes per split. The reviewer also recommends comparing the approach to differentiable-planning or RL-trained heuristics.",
+                    "comparative_assessment": "Both reviews offer constructive feedback, but Review A provides more specific and actionable suggestions for improving the paper, demonstrating a stronger understanding of the paper's weaknesses and areas for improvement.",
+                    "judgment": {
+                        "better": "A",
+                        "evidence_based_reason": "Review A provides more specific and actionable feedback, demonstrating a stronger understanding of the paper's weaknesses and areas for improvement, which is essential for the constructive value of a review."
+                    }
+                },
+                "analytical_depth": {
+                    "assistant_A": "Review A demonstrates a deep understanding of the paper's technical aspects, including its methodology, experiments, and results. The reviewer provides a thorough analysis of the paper's strengths and weaknesses, showcasing their ability to critically evaluate the paper's content.",
+                    "assistant_B": "Review B also demonstrates a strong understanding of the paper's technical aspects, but focuses more on the paper's strengths and impact, with less attention to its limitations and potential weaknesses.",
+                    "comparative_assessment": "Both reviews demonstrate a strong understanding of the paper's technical content, but Review A provides a more comprehensive and balanced evaluation, showcasing a deeper analytical depth.",
+                    "judgment": {
+                        "better": "A",
+                        "evidence_based_reason": "Review A provides a more comprehensive and balanced evaluation of the paper's technical aspects, demonstrating a deeper analytical depth and ability to critically evaluate the paper's content."
+                    }
+                }
+            },
+            "overall_judgment": {
+                "better": "A",
+                "evidence_based_reason": "Review A provides a more comprehensive and balanced evaluation of the paper, demonstrating a deeper understanding of its technical aspects, strengths, and weaknesses. The reviewer offers more specific and actionable feedback, showcasing a stronger analytical depth and ability to critically evaluate the paper's content."
+            }
+        }
+    }
+}

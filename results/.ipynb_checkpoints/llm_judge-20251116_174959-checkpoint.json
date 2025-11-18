@@ -1,0 +1,275 @@
+{
+    "0": {
+        "paper_id": "ea2fcaadea43b14cd757b899060486935bbc8ae9aa1f5e09d6593e11fbfc7482d9e6b01198b4144b4f4587be071ea4436d377e42b8f20df4c9ad77d190acbea4",
+        "review_id": "f44f0ca236369e5e597d2b8b8d05ec1a98c69e2cf68fd94a6accde8c749771328614c1d07a06141e170ce4c7d2ff6cbba39c2a4184adf16423c2bad2b120aac9",
+        "judge": {
+            "aspects": {
+                "technical_accuracy": {
+                    "assistant_A": "Review A critiques the evaluation methodology, suggesting that the metrics and protocol under-represent model capability. Specifically, the RougeL-based, extractive-only slot evaluation with a hard threshold yields near-zero precision, likely penalizing semantically correct paraphrases and length variation. Review A also points out that sentence-level F1 for templates does not accommodate segmentation variance.",
+                    "assistant_B": "Review B notes that the annotation and modeling approaches have inconsistencies, such as guidelines suggesting multiple templates per sentence, but the modeling assumes one. Review B also mentions that the slot-filler validation set is very small (43 slots) and that the reliance on MACE aggregation and small expert samples may not be sufficient.",
+                    "comparative_assessment": "Both reviews highlight technical accuracy issues, but Review A provides more detailed analysis of the evaluation methodology, while Review B focuses on inconsistencies between annotation guidelines and modeling assumptions. Review A's critique of the evaluation methodology is more specific and technical, suggesting a deeper understanding of the task's requirements.",
+                    "judgment": {
+                        "better": "A",
+                        "evidence_based_reason": "Review A provides more detailed and technically sound critique of the evaluation methodology, which is a critical aspect of technical accuracy. Review A's analysis of the RougeL-based evaluation and sentence-level F1 metric is more comprehensive, making it a stronger assessment of technical accuracy."
+                    }
+                },
+                "constructive_value": {
+                    "assistant_A": "Review A suggests that the empirical study is under-analyzed and narrowly scoped, and that the evaluation relies on one I/O format and one strict extractive metric without semantic/span alternatives, significance tests, or human upper bounds. Review A also recommends exploring alternative evaluation schemes and comparing to structured or non-LLM baselines.",
+                    "assistant_B": "Review B notes that the introduction of the novel task and the design of the 10 interpretable templates are strengths, but suggests that the scope is narrow and that there are limitations in the modeling and evaluation approaches. Review B recommends exploring stronger architectures or extraction methods and cross-topic transfer tests.",
+                    "comparative_assessment": "Both reviews provide constructive feedback, but Review A offers more specific and actionable suggestions for improving the evaluation methodology and experimental design. Review B's feedback is more general, focusing on the need for stronger architectures and cross-topic tests.",
+                    "judgment": {
+                        "better": "A",
+                        "evidence_based_reason": "Review A provides more specific and actionable suggestions for improvement, which is a key aspect of constructive value. Review A's recommendations for alternative evaluation schemes and comparisons to baselines demonstrate a deeper understanding of the task's requirements and a willingness to provide detailed feedback."
+                    }
+                },
+                "analytical_depth": {
+                    "assistant_A": "Review A provides a detailed analysis of the evaluation methodology, experimental design, and modeling approaches, highlighting specific limitations and suggesting alternative approaches. Review A's critique is comprehensive, covering multiple aspects of the paper, including the annotation process, data quality, and model performance.",
+                    "assistant_B": "Review B provides a more general analysis of the paper's strengths and weaknesses, highlighting the introduction of the novel task and the design of the templates, but also noting the narrow scope and limitations in the modeling and evaluation approaches. Review B's analysis is less detailed than Review A's, but still provides a good overview of the paper's contributions and limitations.",
+                    "comparative_assessment": "Review A provides a more in-depth analysis of the paper, covering multiple aspects and providing specific examples and suggestions for improvement. Review B's analysis is more general, but still provides a good overview of the paper's strengths and weaknesses.",
+                    "judgment": {
+                        "better": "A",
+                        "evidence_based_reason": "Review A provides a more comprehensive and detailed analysis of the paper, covering multiple aspects and providing specific examples and suggestions for improvement. Review A's analysis demonstrates a deeper understanding of the paper's contributions and limitations, making it a stronger assessment of analytical depth."
+                    }
+                }
+            },
+            "overall_judgment": {
+                "better": "A",
+                "evidence_based_reason": "Review A provides more detailed and technically sound critiques, as well as more specific and actionable suggestions for improvement, demonstrating a deeper understanding of the paper's contributions and limitations. Review A's analysis is comprehensive, covering multiple aspects of the paper, and provides a stronger assessment of technical accuracy, constructive value, and analytical depth."
+            }
+        }
+    },
+    "1": {
+        "paper_id": "4d56bde71a33d412724e11253d44bcdb6eb88bd86e325faddfd1752caa1e9634a80a214c473f6c9ca05ec3e7c5ace6f7e20f8206ec9de5f859951572e4e1a105",
+        "review_id": "852e98e66333fe7ad9714dcbfa742e47b8e435a08295c9580680a8b1c3f6b98e37f0ea56b1eacfad9ae779c3b680a891e25571a660828354b27650d87c9e0ac5",
+        "judge": {
+            "aspects": {
+                "technical_accuracy": {
+                    "assistant_A": "Review A accurately identifies the technical strengths of the paper, including the clear presentation of the Fast-slow TTA framework, the novelty of the approach, and the strong empirical gains. However, Review A also notes some technical weaknesses, such as the limited evaluation scope and the lack of sensitivity/robustness analysis.",
+                    "assistant_B": "Review B also provides a technically accurate assessment, highlighting the paper's strengths in proposing a clear fast-slow TTA framework and introducing DSUTA. Review B also notes some technical weaknesses, including the narrow evaluation scope, moderate novelty, and limited baseline strength.",
+                    "comparative_assessment": "Both reviews provide accurate technical assessments, but Review A provides more detailed comments on the paper's methodology and results, while Review B provides more concise comments on the paper's strengths and weaknesses.",
+                    "judgment": {
+                        "better": "A",
+                        "evidence_based_reason": "Review A provides more detailed and specific comments on the paper's technical aspects, including the methodology, results, and limitations, demonstrating a deeper understanding of the paper's technical content."
+                    }
+                },
+                "constructive_value": {
+                    "assistant_A": "Review A provides constructive feedback on the paper's limitations, suggesting that the authors could improve the evaluation scope, provide more sensitivity/robustness analysis, and address catastrophic forgetting. Review A also highlights the paper's strengths and suggests that the method could be applied to real-world online ASR.",
+                    "assistant_B": "Review B also provides constructive feedback, suggesting that the authors could improve the evaluation scope, provide more baseline comparisons, and address the statistical assumptions in LII. Review B also notes the paper's strengths and suggests that the method could be useful for ASR applications.",
+                    "comparative_assessment": "Both reviews provide constructive feedback, but Review A provides more specific and detailed suggestions for improvement, while Review B provides more concise comments on the paper's strengths and weaknesses.",
+                    "judgment": {
+                        "better": "A",
+                        "evidence_based_reason": "Review A provides more detailed and specific constructive feedback, demonstrating a clearer understanding of the paper's limitations and potential improvements."
+                    }
+                },
+                "analytical_depth": {
+                    "assistant_A": "Review A demonstrates a deep understanding of the paper's technical content, including the Fast-slow TTA framework, DSUTA, and the dynamic reset strategy. Review A also provides a detailed analysis of the paper's strengths and weaknesses.",
+                    "assistant_B": "Review B also demonstrates a good understanding of the paper's technical content, but provides more concise comments on the paper's strengths and weaknesses. Review B notes the paper's limitations, but does not provide as detailed an analysis as Review A.",
+                    "comparative_assessment": "Review A demonstrates a deeper understanding of the paper's technical content and provides a more detailed analysis of the paper's strengths and weaknesses.",
+                    "judgment": {
+                        "better": "A",
+                        "evidence_based_reason": "Review A provides a more detailed and specific analysis of the paper's technical content, demonstrating a deeper understanding of the paper's methodology, results, and limitations."
+                    }
+                }
+            },
+            "overall_judgment": {
+                "better": "A",
+                "evidence_based_reason": "Review A provides a more detailed and specific analysis of the paper's technical content, demonstrates a deeper understanding of the paper's methodology, results, and limitations, and provides more constructive feedback for improvement."
+            }
+        }
+    },
+    "2": {
+        "paper_id": "38f72f46a3c72e131ee8b9bf36a29842c151505fb66c8c29de16ae524881d65eb3173abfc16f94fcde8893fcc797be358fbce659a4f82a8e6e50bca193fd69b0",
+        "review_id": "2eff61e3383d619162b34202481957951c31775ae0cee6b90926ad8558979bbf60f62db6394885ae0fe01729aa6dbdb602dfc4eee008ad72ff586f139361eaaf",
+        "judge": {
+            "aspects": {
+                "technical_accuracy": {
+                    "assistant_A": "Review A points out several technical inaccuracies, including the potential for label bias due to GPT-4-generated labels, uneven gains across markets, and the lack of validation for cross-market product alignment. Review A also criticizes the retrieval design and the use of a fixed top-K setting.",
+                    "assistant_B": "Review B notes the heavy reliance on GPT-4 for labeling and evaluation, which may introduce bias, and the lack of detail on cross-market item linkage and similar product retrieval. Review B also questions the use of BLEU/ROUGE as metrics for factual correctness.",
+                    "comparative_assessment": "Both reviews raise concerns about technical accuracy, but Review A provides more specific examples and detailed analysis. Review A's criticism of the retrieval design and the use of a fixed top-K setting is particularly noteworthy.",
+                    "judgment": {
+                        "better": "A",
+                        "evidence_based_reason": "Review A provides a more detailed and specific critique of the technical aspects of the paper, including the potential for label bias, uneven gains across markets, and the lack of validation for cross-market product alignment."
+                    }
+                },
+                "constructive_value": {
+                    "assistant_A": "Review A provides actionable feedback on the dataset, suggesting that it is confined to Amazon electronics and that several non-English markets are left untranslated. Review A also notes that the reported cross-market gains rely partly on GPT-4-generated labels, which can inflate performance.",
+                    "assistant_B": "Review B suggests that the paper could benefit from more detail on cross-market item linkage and similar product retrieval, as well as more robust multilingual baselines. Review B also notes the importance of reproducibility and deployment concerns, such as the dataset not being released at review time.",
+                    "comparative_assessment": "Both reviews provide constructive feedback, but Review A's suggestions are more specific and targeted towards the dataset and experimental design. Review B's feedback is more focused on the broader implications and applications of the research.",
+                    "judgment": {
+                        "better": "A",
+                        "evidence_based_reason": "Review A provides more specific and actionable feedback on the dataset and experimental design, which is directly relevant to the research question and methodology."
+                    }
+                },
+                "analytical_depth": {
+                    "assistant_A": "Review A provides a thorough analysis of the paper, including the task formulation, data pipeline, and benchmarking results. Review A also raises important questions about the potential for label bias and the lack of validation for cross-market product alignment.",
+                    "assistant_B": "Review B provides a good overview of the paper, including the introduction of the MCPQA task and the McMarket benchmark. Review B also notes the importance of human assessment and the potential for bias in LLM-generated labels.",
+                    "comparative_assessment": "Review A provides a more in-depth analysis of the paper, including specific examples and detailed critique of the technical aspects. Review B's analysis is more general and does not delve as deeply into the specifics of the research.",
+                    "judgment": {
+                        "better": "A",
+                        "evidence_based_reason": "Review A provides a more thorough and detailed analysis of the paper, including specific examples and critique of the technical aspects, demonstrating a deeper understanding of the research and its implications."
+                    }
+                }
+            },
+            "overall_judgment": {
+                "better": "A",
+                "evidence_based_reason": "Review A provides a more detailed and specific critique of the technical aspects of the paper, including the potential for label bias, uneven gains across markets, and the lack of validation for cross-market product alignment. Review A also provides more actionable feedback on the dataset and experimental design, and demonstrates a deeper understanding of the research and its implications."
+            }
+        }
+    },
+    "3": {
+        "paper_id": "a9ff676f49a8d12373550407f55b00465f11841801d4822daaab007c3be3f454553269c958ba3f1d79fa16802efb64f449ebf200fdbf5d756d3b7b6ba3a7f694",
+        "review_id": "9507d39c6f5e56c8f528f632bfac194e4f84f32a9c381b2ca9fee02d50884e5b7a1dad40132ee346b7807afa282df1c62fac3867e240d2d0801c80f9853cec05",
+        "judge": {
+            "aspects": {
+                "technical_accuracy": {
+                    "assistant_A": "Review A provides a detailed analysis of the paper's methodology, strengths, and weaknesses, with specific examples and quotes from the paper to support their claims. They correctly identify the decoupling of first-token and full-sequence objectives as a key contribution and note the method's effectiveness in achieving higher ASR under fixed budgets.",
+                    "assistant_B": "Review B also evaluates the paper's methodology and results, but focuses more on the limitations and potential biases of the approach. They correctly point out the lack of quantification of efficiency claims, limited baselines, and assumptions of white-box gradient access.",
+                    "comparative_assessment": "Both reviews demonstrate a good understanding of the paper's technical content, but Review A provides a more detailed and nuanced analysis of the methodology and results. Review B's comments on limitations and biases are also relevant, but their criticism of the baselines and evaluation settings is more prominent.",
+                    "judgment": {
+                        "better": "A",
+                        "evidence_based_reason": "Review A provides a more comprehensive and detailed analysis of the paper's technical content, including specific examples and quotes from the paper, demonstrating a deeper understanding of the methodology and results."
+                    }
+                },
+                "constructive_value": {
+                    "assistant_A": "Review A provides actionable suggestions for future work, such as exploring different CAS targets and behavior sets, and analyzing failure cases. They also highlight the importance of evaluating the method's robustness to different decoding temperatures, content filters, and rate limits.",
+                    "assistant_B": "Review B suggests that the authors should quantify efficiency claims, use multiple baselines, and evaluate the method in more realistic settings, such as closed-source or black-box models. They also recommend providing more details on cross-tokenizer transfer and statistical rigor.",
+                    "comparative_assessment": "Both reviews provide constructive feedback, but Review A's suggestions are more targeted and specific to the paper's methodology and results. Review B's comments are more focused on the broader implications and limitations of the approach.",
+                    "judgment": {
+                        "better": "A",
+                        "evidence_based_reason": "Review A's suggestions are more directly relevant to the paper's content and provide a clearer direction for future work, demonstrating a better understanding of the paper's strengths and weaknesses."
+                    }
+                },
+                "analytical_depth": {
+                    "assistant_A": "Review A demonstrates a thorough analysis of the paper's methodology, results, and implications, with a clear and well-structured presentation. They provide specific examples and quotes from the paper to support their claims and engage with the paper's technical content in a detailed and nuanced way.",
+                    "assistant_B": "Review B also analyzes the paper's methodology and results, but their comments are more focused on the limitations and potential biases of the approach. They provide some suggestions for future work, but their analysis is less detailed and comprehensive than Review A's.",
+                    "comparative_assessment": "Review A's analysis is more comprehensive and detailed, demonstrating a deeper understanding of the paper's technical content and implications. Review B's comments are more focused on the broader implications and limitations of the approach, but lack the same level of detail and nuance.",
+                    "judgment": {
+                        "better": "A",
+                        "evidence_based_reason": "Review A's analysis is more thorough and detailed, demonstrating a deeper understanding of the paper's technical content and implications, and providing a more comprehensive evaluation of the paper's strengths and weaknesses."
+                    }
+                }
+            },
+            "overall_judgment": {
+                "better": "A",
+                "evidence_based_reason": "Review A provides a more comprehensive and detailed analysis of the paper's technical content, including specific examples and quotes from the paper, demonstrating a deeper understanding of the methodology and results. Their suggestions for future work are also more targeted and relevant to the paper's content, providing a clearer direction for improvement."
+            }
+        }
+    },
+    "4": {
+        "paper_id": "7909f80a713fbac55c893dfe4e82af6630200b8359a2383f990498b37b9b2dfd99b3f419d20534ed97e3f1358e75cd148628ae12e7e2f5dc2fe7f09b93467fee",
+        "review_id": "4b5c29b2802e415eb03e09ee3dfeae4be437a3b23b017f1586e1f6e9f1809d5d6a396143d51f0ccbee16c8bd1e465f59cc77d705db9935c374713bab18f9bb7c",
+        "judge": {
+            "aspects": {
+                "technical_accuracy": {
+                    "assistant_A": "Review A provides a thorough analysis of the paper's technical aspects, including its justification, methodology, and results. The review highlights the paper's strengths in introducing 'molecular facts' and validating them through a controlled synthetic-evidence experiment and an ambiguous-biographies benchmark. The review also notes the paper's effective use of complementary datasets to stress the problem and test the solution.",
+                    "assistant_B": "Review B also assesses the paper's technical aspects, praising its clear problem framing, well-motivated desiderata, and simple two-stage LLM-based approach. However, Review B raises concerns about the paper's reliance on automatic verification models, limited human evaluation, and modest effect sizes in the minimality/localization study.",
+                    "comparative_assessment": "Both reviews demonstrate a strong understanding of the paper's technical aspects. However, Review A provides a more detailed analysis of the paper's methodology and results, while Review B raises more concerns about the paper's limitations and potential biases.",
+                    "judgment": {
+                        "better": "A",
+                        "evidence_based_reason": "Review A provides a more comprehensive and detailed analysis of the paper's technical aspects, including its justification, methodology, and results, demonstrating a deeper understanding of the paper's technical accuracy."
+                    }
+                },
+                "constructive_value": {
+                    "assistant_A": "Review A provides constructive feedback on the paper's strengths and weaknesses, highlighting areas where the paper excels, such as its introduction of 'molecular facts' and its effective use of complementary datasets. The review also notes areas for improvement, including the paper's generalization to other domains and languages.",
+                    "assistant_B": "Review B also provides constructive feedback, praising the paper's clear problem framing and simple approach, while raising concerns about the paper's limitations, such as its reliance on automatic verification models and limited human evaluation.",
+                    "comparative_assessment": "Both reviews provide constructive feedback, but Review A offers more specific and detailed suggestions for improvement, while Review B raises more concerns about the paper's potential biases and limitations.",
+                    "judgment": {
+                        "better": "A",
+                        "evidence_based_reason": "Review A provides more specific and detailed feedback on the paper's strengths and weaknesses, offering more constructive suggestions for improvement."
+                    }
+                },
+                "analytical_depth": {
+                    "assistant_A": "Review A demonstrates a high level of analytical depth, providing a thorough analysis of the paper's technical aspects, including its justification, methodology, and results. The review also notes the paper's effective use of complementary datasets to stress the problem and test the solution.",
+                    "assistant_B": "Review B also demonstrates analytical depth, praising the paper's clear problem framing and simple approach, while raising concerns about the paper's limitations, such as its reliance on automatic verification models and limited human evaluation.",
+                    "comparative_assessment": "Both reviews demonstrate analytical depth, but Review A provides a more comprehensive and detailed analysis of the paper's technical aspects, while Review B raises more concerns about the paper's potential biases and limitations.",
+                    "judgment": {
+                        "better": "A",
+                        "evidence_based_reason": "Review A provides a more comprehensive and detailed analysis of the paper's technical aspects, demonstrating a deeper understanding of the paper's analytical depth."
+                    }
+                }
+            },
+            "overall_judgment": {
+                "better": "A",
+                "evidence_based_reason": "Review A provides a more comprehensive and detailed analysis of the paper's technical aspects, including its justification, methodology, and results, and offers more constructive suggestions for improvement, demonstrating a deeper understanding of the paper's technical accuracy, constructive value, and analytical depth."
+            }
+        }
+    },
+    "5": {
+        "paper_id": "077b2bb0c8b7784d9769d4a4bbe2406f6d387bb9f303681e44efb9c8e4e81e519da08117632eb08e723bb3ef59fb68c1d01b45e9378d39095a5ffe6c9663f5d9",
+        "review_id": "1edbaf44ebc264f3e2200b0ea93b4d4ea362dbe283139684bb374225229ddae12114a8052c246c8e3ab710031f2da994b0d22e5546dde35fd1e9b91a9fcd7a18",
+        "judge": {
+            "aspects": {
+                "technical_accuracy": {
+                    "assistant_A": "Review A notes that the study's evaluation protocol is clear and model-agnostic, and that the use of LLM-as-judge verification and SelfCheckGPT-based hallucination scoring strengthens the modeling and assessment pipeline. However, Review A also criticizes the heavy reliance on LLM-as-judge and SelfCheckGPT, which yields inconclusive or optimistic verifier outcomes and risks circularity.",
+                    "assistant_B": "Review B points out that the dataset construction relies on GPT-4, risking artifacts and circularity, and that the heavy dependence on LLM-as-judge and SelfCheckGPT for factuality and hallucination detection is a limitation. Review B also notes that the open/abstention labeling and evaluation may conflate knowledge cutoff issues and evolving research status.",
+                    "comparative_assessment": "Both reviews highlight the limitations of the study's technical approach, including the reliance on LLM-as-judge and SelfCheckGPT. However, Review A focuses more on the methodological issues, while Review B emphasizes the potential biases and limitations of the dataset construction and evaluation metrics.",
+                    "judgment": {
+                        "better": "Tie",
+                        "evidence_based_reason": "Both reviews provide valid criticisms of the study's technical approach, but they focus on different aspects. Review A provides more detailed methodological critiques, while Review B highlights the potential biases and limitations of the dataset construction and evaluation metrics. Therefore, both reviews are equally strong in terms of technical accuracy."
+                    }
+                },
+                "constructive_value": {
+                    "assistant_A": "Review A suggests that the study's analysis does not adequately substantiate performance claims or diagnose error modes, and that the VSR metric uses an ad hoc mapping of categorical outputs. Review A also recommends adding bootstrap CIs, paired tests, and per-subject/topic breakdowns to show where and by how much one model is better.",
+                    "assistant_B": "Review B notes that the study introduces a challenging boolean science QA benchmark and provides a broad, systematic benchmarking across 16 LLMs. However, Review B also points out that the human study is small and demographically narrow, and that the comparisons to MMLU/SciQ involve GPT-3.5 paraphrasing into yes/no, which can distort difficulty.",
+                    "comparative_assessment": "Review A provides more specific and actionable suggestions for improvement, such as adding bootstrap CIs and paired tests, while Review B provides a more general critique of the study's limitations and suggests that the human study and comparisons to other datasets need to be improved.",
+                    "judgment": {
+                        "better": "A",
+                        "evidence_based_reason": "Review A provides more specific and actionable suggestions for improvement, which demonstrates a higher level of constructive value. Review A's suggestions are also more targeted at the methodological limitations of the study, which is a key aspect of constructive feedback."
+                    }
+                },
+                "analytical_depth": {
+                    "assistant_A": "Review A provides a detailed analysis of the study's methodological limitations, including the reliance on LLM-as-judge and SelfCheckGPT, and the use of ad hoc mapping for the VSR metric. Review A also suggests that the study's analysis does not adequately substantiate performance claims or diagnose error modes.",
+                    "assistant_B": "Review B provides a broader analysis of the study's limitations, including the potential biases and limitations of the dataset construction and evaluation metrics. Review B also notes that the study introduces a challenging boolean science QA benchmark and provides a broad, systematic benchmarking across 16 LLMs.",
+                    "comparative_assessment": "Both reviews demonstrate a good level of analytical depth, but Review A provides a more detailed and targeted analysis of the study's methodological limitations. Review B provides a broader analysis of the study's limitations, but may not be as detailed or specific in its critiques.",
+                    "judgment": {
+                        "better": "A",
+                        "evidence_based_reason": "Review A provides a more detailed and targeted analysis of the study's methodological limitations, which demonstrates a higher level of analytical depth. Review A's analysis is also more specific and actionable, which suggests a higher level of understanding of the study's strengths and weaknesses."
+                    }
+                }
+            },
+            "overall_judgment": {
+                "better": "A",
+                "evidence_based_reason": "Review A provides more specific and actionable suggestions for improvement, demonstrates a higher level of analytical depth, and provides a more detailed and targeted analysis of the study's methodological limitations. While Review B provides a broader analysis of the study's limitations, Review A's critiques are more detailed and specific, and demonstrate a higher level of understanding of the study's strengths and weaknesses."
+            }
+        }
+    },
+    "6": {
+        "paper_id": "bb7e81f0cd0ef81dd005934f5e9e415c682e5d528f78b2386fcd7f55adebce65688704bed7ff01a4cd3aa7cde70e86353424deb656ddc079f61a660f7afe43f6",
+        "review_id": "e29bbdf75112afd4bf09632373e1723e8239dcaf22a1cd6e2c7a90762345e6b78a7202b7807b3f8aa29b479ecc6ce18f92698f0a2964ab9ac98399e2941e138b",
+        "judge": {
+            "aspects": {
+                "technical_accuracy": {
+                    "assistant_A": "Review A correctly identifies the methodological strengths of the paper, including the use of a well-scoped task, appropriate dataset, and robust prompt variants. However, it also points out weaknesses such as the treatment of ordinal data as interval data and the potential distortion of value semantics through PCA. For example, 'Ordinal Likert responses are averaged and treated as interval data; subsequent min-max/standardization, PCA, and Euclidean distances may not be appropriate for ordinal scales.'",
+                    "assistant_B": "Review B also highlights the paper's systematic use of the World Values Survey and its effort to ensure prompt robustness. However, it criticizes the measurement validity, statistical rigor, and construct validity of the study. As stated, 'Distances are computed in 3D PCA space after normalization; sensitivity to preprocessing, number of components, and PCA distortion is not thoroughly analyzed.'",
+                    "comparative_assessment": "Both reviews identify similar technical weaknesses, including issues with data treatment and statistical analysis. However, Review A provides more detailed feedback on the methodological strengths and weaknesses, while Review B emphasizes the need for more rigorous statistical testing and validation of the study's findings.",
+                    "judgment": {
+                        "better": "A",
+                        "evidence_based_reason": "Review A provides a more nuanced and detailed evaluation of the paper's technical aspects, highlighting both strengths and weaknesses, and offering specific examples to support its claims. For instance, 'The pipeline (standardization + PCA to 3D, followed by Euclidean distance, alignment ranks, and trend coefficients) offers a consistent, reproducible way to compare model and human value profiles.'"
+                    }
+                },
+                "constructive_value": {
+                    "assistant_A": "Review A suggests that the paper advances age-bias evaluation by introducing robust cross-prompt aggregation and trend/rank metrics, and testing a practical mitigation (age-identity prompting). It also provides actionable feedback, such as the need to address the limitations of the current approach and to explore more sophisticated prompts for age alignment.",
+                    "assistant_B": "Review B highlights the paper's contribution to the field by exploring age bias in LLM value alignment and providing a systematic analysis of the World Values Survey. However, it also emphasizes the need for more rigorous testing and validation of the study's findings, and suggests exploring stronger persona conditioning or chain-of-thought rationales.",
+                    "comparative_assessment": "Both reviews recognize the paper's contribution to the field, but Review A provides more specific and actionable feedback on how to improve the study, while Review B emphasizes the need for more rigorous testing and validation.",
+                    "judgment": {
+                        "better": "A",
+                        "evidence_based_reason": "Review A offers more concrete suggestions for improvement, such as addressing the limitations of the current approach and exploring more sophisticated prompts, which demonstrates a higher constructive value. For example, 'The paper advances age-bias evaluation by shifting from explicit discrimination checks to implicit value alignment, introducing robust cross-prompt aggregation and trend/rank metrics, and testing a practical mitigation (age-identity prompting).'"
+                    }
+                },
+                "analytical_depth": {
+                    "assistant_A": "Review A provides an in-depth analysis of the paper's methodology, highlighting both its strengths and weaknesses. It also evaluates the paper's contribution to the field and provides feedback on how to improve the study.",
+                    "assistant_B": "Review B also provides a thorough analysis of the paper, but focuses more on the limitations and weaknesses of the study. It emphasizes the need for more rigorous statistical testing and validation of the findings.",
+                    "comparative_assessment": "Both reviews demonstrate a high level of analytical depth, but Review A provides a more balanced evaluation, discussing both the strengths and weaknesses of the paper, while Review B focuses more on the limitations.",
+                    "judgment": {
+                        "better": "A",
+                        "evidence_based_reason": "Review A provides a more comprehensive analysis, discussing both the methodological strengths and weaknesses, as well as the paper's contribution to the field, which demonstrates a higher analytical depth. For instance, 'The study is well-scoped around a clear task—measuring LLM value alignment to human cohorts—using an appropriate, externally validated dataset (WVS wave 7; ~94k respondents, 13 value categories, six age bins, 62 countries).'"
+                    }
+                }
+            },
+            "overall_judgment": {
+                "better": "A",
+                "evidence_based_reason": "Review A provides a more comprehensive and nuanced evaluation of the paper, discussing both its strengths and weaknesses, and offering actionable feedback for improvement. It demonstrates a higher level of technical accuracy, constructive value, and analytical depth, making it a more informative and helpful review."
+            }
+        }
+    }
+}
