@@ -7,7 +7,7 @@ import pandas as pd
 from collections import defaultdict
 
 prompts_arg = {
-    'emnlp24-general': """Given a research paper and the review guidelines below, write a summary of its strengths and weaknesses. Then assign a soundness and an overall assessment score based on the summaries. Output a json dictionary.
+    'emnlp24-general': """Given a research paper and the review guidelines below, write a summary of its strengths and weaknesses. Output a json dictionary.
 
 ## Review guidelines
 
@@ -17,39 +17,12 @@ What are the major reasons to publish this paper at a selective *ACL venue? Thes
 **Summary of Weaknesses**
 What are the concerns that you have about the paper that would cause you to favor prioritizing other high-quality papers that are also under consideration for publication? These could include concerns about correctness of the results or argumentation, limited perceived impact of the methods or findings (note that impact can be significant both in broad or in narrow sub-fields), lack of clarity in exposition, or any other reason why interested readers of *ACL papers may gain less from this paper than they would from other papers under consideration. Where possible, please number your concerns so authors may respond to them individually.
 
-**Soundness**
-How sound and thorough is this study? Does the paper clearly state scientific claims and provide adequate support for them? For experimental papers: consider the depth and/or breadth of the research questions investigated, technical soundness of experiments, methodological validity of evaluation. For position papers, surveys: consider the current state of the field is adequately represented, and main counter-arguments acknowledged. For resource papers: consider the data collection methodology, resulting data & the difference from existing resources are described in sufficient detail. Please adjust your baseline to account for the length of the paper.
-
-5 = Excellent: This study is one of the most thorough I have seen, given its type.
-4.5
-4 = Strong: This study provides sufficient support for all of its claims/arguments. Some extra experiments could be nice, but not essential.
-3.5
-3 = Acceptable: This study provides sufficient support for its major claims/arguments. Some minor points may need extra support or details.
-2.5
-2 = Poor: Some of the main claims/arguments are not sufficiently supported. There are major technical/methodological problems.
-1.5
-1 = Major Issues: This study is not yet sufficiently thorough to warrant publication or is not relevant to ACL.
-
-**Overall Assessment**
-Would you personally like to see this paper presented at an *ACL event that invites submissions on this topic? For example, you may feel that a paper should be presented if its contributions would be useful to its target audience, deepen the understanding of a given topic, or help establish cross-disciplinary connections. Note: Even high-scoring papers can be in need of minor changes (e.g. typos, non-core missing refs, etc.).
-
-5 = Top-Notch: This is one of the best papers I read recently, of great interest for the (broad or narrow) sub-communities that might build on it
-4.5
-4 = This paper represents solid work, and is of significant interest for the (broad or narrow) sub-communities that might build on it
-3.5
-3 = Good: This paper makes a reasonable contribution, and might be of interest for some (broad or narrow) sub-communities, possibly with minor revisions
-2.5
-2 = Revisions Needed: This paper has some merit, but also significant flaws, and needs work before it would be of interest to the community
-1.5
-1 = Major Revisions Needed: This paper has significant flaws, and needs substantial work before it would be of interest to the community
-0 = This paper is not relevant to the *ACL community (for example, is in no way related to natural language processing)
-
 ## Output format
 Output only the json dictionary and follow the json schema exactly, with no extra keys, notes, comments, or explanations:
-{"strengths": "...", "weaknesses": "...", "soundness": "...", "overall_assessment": "..."}""",
+{"strengths": "...", "weaknesses": "..."}""",
 
     
-    'emnlp24-aspect': """Given a research paper and the review guidelines below, write a summary of its strengths and weaknesses. Then assign a soundness and an overall assessment score based on the summaries. Output a json dictionary.
+    'emnlp24-aspect': """Given a research paper and the review guidelines below, write a summary of its strengths and weaknesses. Output a json dictionary.
 
 You will also be give a dictionary of bullet points (each corresponding to a single strength or weakness), and each bullet point is associated with one or more aspects (e.g., Methodology). Your task is to generate a comment for the paper that reflects the given aspects. Each comment should be self-contained and focused only on the specified aspects. The number of output bullet points must match the input dictionary exactly, and each generated comment should go into the corresponding position in the output dictionary.
 
@@ -64,9 +37,7 @@ For example, you will receive an input dictionary like this: {"strengths": {"0":
         "0": "...", # Comment about Presentation
         "1": "...", # Comment about Methodology
         "2": "..." # Comment about Data/Task and Result
-        },
-    "soundness": "...",
-    "overall_assessment": "..."
+        }
     }
 
 ## Review guidelines
@@ -77,36 +48,87 @@ What are the major reasons to publish this paper at a selective *ACL venue? Thes
 **Summary of Weaknesses**
 What are the concerns that you have about the paper that would cause you to favor prioritizing other high-quality papers that are also under consideration for publication? These could include concerns about correctness of the results or argumentation, limited perceived impact of the methods or findings (note that impact can be significant both in broad or in narrow sub-fields), lack of clarity in exposition, or any other reason why interested readers of *ACL papers may gain less from this paper than they would from other papers under consideration. Where possible, please number your concerns so authors may respond to them individually.
 
-**Soundness**
-How sound and thorough is this study? Does the paper clearly state scientific claims and provide adequate support for them? For experimental papers: consider the depth and/or breadth of the research questions investigated, technical soundness of experiments, methodological validity of evaluation. For position papers, surveys: consider the current state of the field is adequately represented, and main counter-arguments acknowledged. For resource papers: consider the data collection methodology, resulting data & the difference from existing resources are described in sufficient detail. Please adjust your baseline to account for the length of the paper.
+## Output format
+Output only the json dictionary and follow the json schema exactly, with no extra keys, notes, comments, or explanations:
+{"strengths": {"0": "...", "1": "...", ...}, "weaknesses": {"0": "...", "1": "...", ...}}""",
 
-5 = Excellent: This study is one of the most thorough I have seen, given its type.
-4.5
-4 = Strong: This study provides sufficient support for all of its claims/arguments. Some extra experiments could be nice, but not essential.
-3.5
-3 = Acceptable: This study provides sufficient support for its major claims/arguments. Some minor points may need extra support or details.
-2.5
-2 = Poor: Some of the main claims/arguments are not sufficiently supported. There are major technical/methodological problems.
-1.5
-1 = Major Issues: This study is not yet sufficiently thorough to warrant publication or is not relevant to ACL.
 
-**Overall Assessment**
-Would you personally like to see this paper presented at an *ACL event that invites submissions on this topic? For example, you may feel that a paper should be presented if its contributions would be useful to its target audience, deepen the understanding of a given topic, or help establish cross-disciplinary connections. Note: Even high-scoring papers can be in need of minor changes (e.g. typos, non-core missing refs, etc.).
+    'iclr25-general': """Given a research paper and the review guidelines below, write a summary of its strengths and weaknesses. Output a json dictionary.
 
-5 = Top-Notch: This is one of the best papers I read recently, of great interest for the (broad or narrow) sub-communities that might build on it
-4.5
-4 = This paper represents solid work, and is of significant interest for the (broad or narrow) sub-communities that might build on it
-3.5
-3 = Good: This paper makes a reasonable contribution, and might be of interest for some (broad or narrow) sub-communities, possibly with minor revisions
-2.5
-2 = Revisions Needed: This paper has some merit, but also significant flaws, and needs work before it would be of interest to the community
-1.5
-1 = Major Revisions Needed: This paper has significant flaws, and needs substantial work before it would be of interest to the community
-0 = This paper is not relevant to the *ACL community (for example, is in no way related to natural language processing)
+## Review guidelines
+
+1. **Read the paper:** It’s important to carefully read through the entire paper, and to look up any related work and citations that will help you comprehensively evaluate it. Be sure to give yourself sufficient time for this step.
+
+2. **While reading, consider the following:**
+    1. Objective of the work: What is the goal of the paper? Is it to better address a known application or problem, draw attention to a new application or problem, or to introduce and/or explain a new theoretical finding? A combination of these? Different objectives will require different considerations as to potential value and impact.
+    2. Strong points: is the submission clear, technically correct, experimentally rigorous, reproducible, does it present novel findings (e.g. theoretically, algorithmically, etc.)?
+    3. Weak points: is it weak in any of the aspects listed in b.?
+    4. Be mindful of potential biases and try to be open-minded about the value and interest a paper can hold for the entire ICLR community, even if it may not be very interesting for you.
+
+3. **Answer four key questions for yourself to make a recommendation to Accept or Reject:**
+    1. What is the specific question and/or problem tackled by the paper?
+    2. Is the approach well motivated, including being well-placed in the literature?
+    3. Does the paper support the claims? This includes determining if results, whether theoretical or empirical, are correct and if they are scientifically rigorous.
+    4. What is the significance of the work? Does it contribute new knowledge and sufficient value to the community? Note, this does not necessarily require state-of-the-art results. Submissions bring value to the ICLR community when they convincingly demonstrate new, relevant, impactful knowledge (incl., empirical, theoretical, for practitioners, etc).
+
+4. **Write and submit your initial review, organizing it as follows:** 
+    1. Summarize what the paper claims to contribute. Be positive and constructive.
+    2. List strong and weak points of the paper. Be as comprehensive as possible.
+    3. Clearly state your initial recommendation (accept or reject) with one or two key reasons for this choice.
+    4. Provide supporting arguments for your recommendation.
+    5. Ask questions you would like answered by the authors to help you clarify your understanding of the paper and provide the additional evidence you need to be confident in your assessment. 
+    6. Provide additional feedback with the aim to improve the paper. Make it clear that these points are here to help, and not necessarily part of your decision assessment.
 
 ## Output format
 Output only the json dictionary and follow the json schema exactly, with no extra keys, notes, comments, or explanations:
-{"strengths": {"0": "...", "1": "...", ...}, "weaknesses": {"0": "...", "1": "...", ...}, "soundness": "...", "overall_assessment": "..."}"""
+{"strengths": "...", "weaknesses": "..."}""",
+
+
+    'iclr25-aspect': """Given a research paper and the review guidelines below, write a summary of its strengths and weaknesses. Output a json dictionary.
+
+You will also be give a dictionary of bullet points (each corresponding to a single strength or weakness), and each bullet point is associated with one or more aspects (e.g., Methodology). Your task is to generate a comment for the paper that reflects the given aspects. Each comment should be self-contained and focused only on the specified aspects. The number of output bullet points must match the input dictionary exactly, and each generated comment should go into the corresponding position in the output dictionary.
+
+For example, you will receive an input dictionary like this: {"strengths": {"0": ["Data/Task"], "1": ["Result", "Experiment"]}, "weaknesses": {"0": ["Presentation"], "1": ["Methodology"], "2": ["Data/Task", "Result"]}}. This means, you must generate 2 comments for strength: the first based on Data/Task, and the second on Result and Experiment. Then, generate 3 comments for weakness: the first based on Presentation, the second on Methodology, and the third on Data/Task and Result. The final output should be:
+
+{
+    "strengths": {
+        "0": "...", # Comment about Data/Task
+        "1": "..." # Comment about Result and Experiment"
+        }, 
+    "weaknesses": {
+        "0": "...", # Comment about Presentation
+        "1": "...", # Comment about Methodology
+        "2": "..." # Comment about Data/Task and Result
+        }
+    }
+
+## Review guidelines
+
+1. **Read the paper:** It’s important to carefully read through the entire paper, and to look up any related work and citations that will help you comprehensively evaluate it. Be sure to give yourself sufficient time for this step.
+
+2. **While reading, consider the following:**
+    1. Objective of the work: What is the goal of the paper? Is it to better address a known application or problem, draw attention to a new application or problem, or to introduce and/or explain a new theoretical finding? A combination of these? Different objectives will require different considerations as to potential value and impact.
+    2. Strong points: is the submission clear, technically correct, experimentally rigorous, reproducible, does it present novel findings (e.g. theoretically, algorithmically, etc.)?
+    3. Weak points: is it weak in any of the aspects listed in b.?
+    4. Be mindful of potential biases and try to be open-minded about the value and interest a paper can hold for the entire ICLR community, even if it may not be very interesting for you.
+
+3. **Answer four key questions for yourself to make a recommendation to Accept or Reject:**
+    1. What is the specific question and/or problem tackled by the paper?
+    2. Is the approach well motivated, including being well-placed in the literature?
+    3. Does the paper support the claims? This includes determining if results, whether theoretical or empirical, are correct and if they are scientifically rigorous.
+    4. What is the significance of the work? Does it contribute new knowledge and sufficient value to the community? Note, this does not necessarily require state-of-the-art results. Submissions bring value to the ICLR community when they convincingly demonstrate new, relevant, impactful knowledge (incl., empirical, theoretical, for practitioners, etc).
+
+4. **Write and submit your initial review, organizing it as follows:** 
+    1. Summarize what the paper claims to contribute. Be positive and constructive.
+    2. List strong and weak points of the paper. Be as comprehensive as possible.
+    3. Clearly state your initial recommendation (accept or reject) with one or two key reasons for this choice.
+    4. Provide supporting arguments for your recommendation.
+    5. Ask questions you would like answered by the authors to help you clarify your understanding of the paper and provide the additional evidence you need to be confident in your assessment. 
+    6. Provide additional feedback with the aim to improve the paper. Make it clear that these points are here to help, and not necessarily part of your decision assessment.
+
+## Output format
+Output only the json dictionary and follow the json schema exactly, with no extra keys, notes, comments, or explanations:
+{"strengths": {"0": "...", "1": "...", ...}, "weaknesses": {"0": "...", "1": "...", ...}}"""
 }
 
 prompts_quality_check = {
@@ -204,7 +226,8 @@ Output only the revised review comment as a json dictionary and follow the json 
 {"review": "..." # the revised review comment}"""
 }
 
-prompt_score_prediction = """Given a research paper review and the review guidelines below, assign a soundness and an overall assessment score that best reflect the review content according to the detailed rating criteria. Output a json dictionary.
+prompt_score_prediction = {
+    'emnlp24': """Given a research paper review and the review guidelines below, assign a soundness and an overall assessment score that best reflect the review content according to the detailed rating criteria. Output a json dictionary.
 
 ## Review guidelines
 
@@ -243,7 +266,69 @@ Would you personally like to see this paper presented at an *ACL event that invi
 
 ## Output format
 Output only the json dictionary and follow the json schema exactly, with no extra keys, notes, comments, or explanations:
-{"soundness": "...", "overall_assessment": "..."}"""
+{"soundness": "...", "overall_assessment": "..."}""",
+
+
+    'iclr25': """Given a research paper review and the review guidelines below, assign a soundness, presentation, contribution, and overall score that best reflect the review content according to the detailed rating criteria. Output a json dictionary.
+    
+## Review guidelines
+
+1. **Read the paper:** It’s important to carefully read through the entire paper, and to look up any related work and citations that will help you comprehensively evaluate it. Be sure to give yourself sufficient time for this step.
+
+2. **While reading, consider the following:**
+    1. Objective of the work: What is the goal of the paper? Is it to better address a known application or problem, draw attention to a new application or problem, or to introduce and/or explain a new theoretical finding? A combination of these? Different objectives will require different considerations as to potential value and impact.
+    2. Strong points: is the submission clear, technically correct, experimentally rigorous, reproducible, does it present novel findings (e.g. theoretically, algorithmically, etc.)?
+    3. Weak points: is it weak in any of the aspects listed in b.?
+    4. Be mindful of potential biases and try to be open-minded about the value and interest a paper can hold for the entire ICLR community, even if it may not be very interesting for you.
+
+3. **Answer four key questions for yourself to make a recommendation to Accept or Reject:**
+    1. What is the specific question and/or problem tackled by the paper?
+    2. Is the approach well motivated, including being well-placed in the literature?
+    3. Does the paper support the claims? This includes determining if results, whether theoretical or empirical, are correct and if they are scientifically rigorous.
+    4. What is the significance of the work? Does it contribute new knowledge and sufficient value to the community? Note, this does not necessarily require state-of-the-art results. Submissions bring value to the ICLR community when they convincingly demonstrate new, relevant, impactful knowledge (incl., empirical, theoretical, for practitioners, etc).
+
+4. **Write and submit your initial review, organizing it as follows:** 
+    1. Summarize what the paper claims to contribute. Be positive and constructive.
+    2. List strong and weak points of the paper. Be as comprehensive as possible.
+    3. Clearly state your initial recommendation (accept or reject) with one or two key reasons for this choice.
+    4. Provide supporting arguments for your recommendation.
+    5. Ask questions you would like answered by the authors to help you clarify your understanding of the paper and provide the additional evidence you need to be confident in your assessment. 
+    6. Provide additional feedback with the aim to improve the paper. Make it clear that these points are here to help, and not necessarily part of your decision assessment.
+
+**Soundness**
+Please assign the paper a numerical rating on the following scale to indicate the soundness of the technical claims, experimental and research methodology and on whether the central claims of the paper are adequately supported with evidence.
+- 4 excellent
+- 3 good
+- 2 fair
+- 1 poor
+
+**Presentation**
+Please assign the paper a numerical rating on the following scale to indicate the quality of the presentation. This should take into account the writing style and clarity, as well as contextualization relative to prior work.
+- 4 excellent
+- 3 good
+- 2 fair
+- 1 poor
+
+**Contribution**
+Please assign the paper a numerical rating on the following scale to indicate the quality of the overall contribution this paper makes to the research area being studied. Are the questions being asked important? Does the paper bring a significant originality of ideas and/or execution? Are the results valuable to share with the broader NeurIPS community.
+- 4 excellent
+- 3 good
+- 2 fair
+- 1 poor
+
+**Overall**
+Please provide an "overall score" for this submission. Choices:
+- 10: strong accept, should be highlighted at the conference
+- 8: accept, good paper
+- 6: marginally above the acceptance threshold
+- 5: marginally below the acceptance threshold
+- 3: reject, not good enough
+- 1: strong reject
+
+## Output format
+Output only the json dictionary and follow the json schema exactly, with no extra keys, notes, comments, or explanations:
+{"soundness": "...", "presentation": "...", "contribution": "...", "overall": "..."}"""
+}
 
 prompt_llm_judge = """You are a neutral arbitrator evaluating peer review comments foracademic papers. Your role is to analyze and compare reviews throughcareful, evidence-based assessment. Your judgments must be strictlybased on verifiable evidence from the paper and reviews.
 
@@ -359,6 +444,106 @@ When judging Tie:
 
 Begin analysis after receiving complete materials. Take time to examineevidence thoroughly and provide detailed, justified assessments."""
 
+# prompt_llm_judge_prometheus = """### Task Description:
+# You are a neutral arbitrator evaluating two peer reviews of an academic paper. Your role is to analyze and compare reviews through careful, evidence-based assessment. Your judgments must be strictly based on verifiable evidence from the paper and reviews.
+
+# ### Instruction:
+# For each evaluation, you must:
+# 1. Thoroughly understand the paper by analyzing:
+#     - Research objectives and contributions
+#     - Methodology and experiments
+#     - Claims and evidence
+#     - Results and conclusions
+# 2. For each review, methodically examine:
+#     - Claims made about the paper
+#     - Evidence cited to support claims
+#     - Technical assessments and critiques
+#     - Suggested improvements
+# 3. Compare reviews systematically using:
+#     - Direct quotes from paper and reviews
+#     - Specific examples and counterexamples
+#     - Clear reasoning chains
+#     - Objective quality metrics
+
+# ### Input:
+# - Paper: full text of the academic paper being reviewed
+# - Review A: peer review comment from Assistant A
+# - Review B: peer review comment from Assistant B
+
+# ### Evaluation Criteria:
+# You will evaluate reviews based on these key aspects:
+
+# 1. **Technical Accuracy**
+# - Are claims consistent with paper content?
+# - Is evidence properly interpreted?
+# - Are technical assessments valid?
+# - Are critiques well-supported?
+
+# 2. **Constructive Value**
+# - How actionable is the feedback?
+# - Are suggestions specific and feasible?
+# - Is criticism balanced with strengths?
+# - Would authors understand how to improve?
+
+# 3. **Analytical Depth**
+# - How thoroughly are key aspects examined?
+# - Is analysis appropriately detailed?
+# - Are important elements addressed?
+# - Is assessment comprehensive?
+
+# 4. **Communication Clarity**
+# - Are points clearly articulated?
+# - Is feedback specific and concrete?
+# - Is reasoning well-explained?
+# - Are examples effectively used?
+
+# ### Output Format:
+# Output only a json dictionary and follow the json schema exactly, with no extra keys, notes, comments, or explanations:
+# {
+#     "aspects": {
+#         "technical_accuracy": {
+#             "assistant_A": ..., # Direct quotes, specific examples, and detailed analysis of evidence from Assistant A
+#             "assistant_B": ..., # Direct quotes, specific examples, and detailed analysis of evidence from Assistant B
+#             "comparative_assessment": ..., # Evidence-based comparison with clear reasoning chain
+#             "judgment": {
+#                 "better": ..., # A, B, or Tie
+#                 "evidence_based_reason": ... # Detailed justification citing specific evidence; if Tie, explain why both reviews are equally strong on this aspect
+#             }
+#         },
+#         "constructive_value": {
+#             "assistant_A": ...,
+#             "assistant_B": ...,
+#             "comparative_assessment": ...,
+#             "judgment": {
+#                 "better": ...,
+#                 "evidence_based_reason": ...
+#             }
+#         },
+#         "analytical_depth": {
+#             "assistant_A": ...,
+#             "assistant_B": ...,
+#             "comparative_assessment": ...,
+#             "judgment": {
+#                 "better": ...,
+#                 "evidence_based_reason": ...
+#             }
+#         },
+#         "communication_clarity": {
+#             "assistant_A": ...,
+#             "assistant_B": ...,
+#             "comparative_assessment": ...,
+#             "judgment": {
+#                 "better": ...,
+#                 "evidence_based_reason": ...
+#             }
+#         }
+#     },
+#     "overall_judgment": {
+#         "better": ..., # A, B, or Tie
+#         "evidence_based_reason": ... # Detailed justification synthesizing key evidence; if Tie, explain why both reviews are comparable in overall quality"
+#     }
+# }"""
+
 prompt_llm_judge_prometheus = """### Task Description:
 You are a neutral arbitrator evaluating two peer reviews of an academic paper. Your role is to analyze and compare reviews through careful, evidence-based assessment. Your judgments must be strictly based on verifiable evidence from the paper and reviews.
 
@@ -406,12 +591,6 @@ You will evaluate reviews based on these key aspects:
 - Are important elements addressed?
 - Is assessment comprehensive?
 
-4. **Communication Clarity**
-- Are points clearly articulated?
-- Is feedback specific and concrete?
-- Is reasoning well-explained?
-- Are examples effectively used?
-
 ### Output Format:
 Output only a json dictionary and follow the json schema exactly, with no extra keys, notes, comments, or explanations:
 {
@@ -435,15 +614,6 @@ Output only a json dictionary and follow the json schema exactly, with no extra 
             }
         },
         "analytical_depth": {
-            "assistant_A": ...,
-            "assistant_B": ...,
-            "comparative_assessment": ...,
-            "judgment": {
-                "better": ...,
-                "evidence_based_reason": ...
-            }
-        },
-        "communication_clarity": {
             "assistant_A": ...,
             "assistant_B": ...,
             "comparative_assessment": ...,
