@@ -1,0 +1,32 @@
+{
+    "0": {
+        "paper_id": "VHpCu0jCr6",
+        "review_id": "Voo6srMa1d",
+        "judge": {
+            "soundness": "3",
+            "presentation": "3",
+            "contribution": "3",
+            "overall": "6"
+        }
+    },
+    "1": {
+        "paper_id": "F0Zd3knG9j",
+        "review_id": "ePQ20ywz3G",
+        "judge": {
+            "soundness": "3",
+            "presentation": "3",
+            "contribution": "3",
+            "overall": "6"
+        }
+    },
+    "2": {
+        "paper_id": "689MfSyeNz",
+        "review_id": "UGOgxBchvm",
+        "judge": {
+            "soundness": "3",
+            "presentation": "3",
+            "contribution": "3",
+            "overall": "8"
+        }
+    }
+}

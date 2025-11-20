@@ -1,0 +1,972 @@
+{
+    "0": {
+        "paper_id": "VHpCu0jCr6",
+        "review_id": "Voo6srMa1d",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 8
+        }
+    },
+    "1": {
+        "paper_id": "2jEiFTLRwX",
+        "review_id": "YJD8AQDMgH",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 6
+        }
+    },
+    "2": {
+        "paper_id": "F0Zd3knG9j",
+        "review_id": "ePQ20ywz3G",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 6
+        }
+    },
+    "3": {
+        "paper_id": "689MfSyeNz",
+        "review_id": "UGOgxBchvm",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 8
+        }
+    },
+    "4": {
+        "paper_id": "j7oTk2nEoN",
+        "review_id": "bjI7rCKV5N",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 8
+        }
+    },
+    "5": {
+        "paper_id": "EP6n8LCEK6",
+        "review_id": "yY27PPqzg4",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 6
+        }
+    },
+    "6": {
+        "paper_id": "ViRDmDAfjg",
+        "review_id": "i8VYYNmB22",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 4,
+            "overall": 6
+        }
+    },
+    "7": {
+        "paper_id": "o2Gg2tSKBn",
+        "review_id": "Ah68GzK0HW",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 6
+        }
+    },
+    "8": {
+        "paper_id": "RLhEGWt94S",
+        "review_id": "rvPBcmNqc0",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 4,
+            "overall": 8
+        }
+    },
+    "9": {
+        "paper_id": "hrGOMrfc2z",
+        "review_id": "74LWwuMMz2",
+        "judge": {
+            "soundness": 3,
+            "presentation": 2,
+            "contribution": 2,
+            "overall": 6
+        }
+    },
+    "10": {
+        "paper_id": "NbgODSFW3q",
+        "review_id": "eyaBYiexV5",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 6
+        }
+    },
+    "11": {
+        "paper_id": "30SmPrfBMA",
+        "review_id": "LiC3cESTYb",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 8
+        }
+    },
+    "12": {
+        "paper_id": "R8APzK2Vsf",
+        "review_id": "f3tORqMu3h",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 8
+        }
+    },
+    "13": {
+        "paper_id": "MbtA7no8Ys",
+        "review_id": "wWMiF3MZpk",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 8
+        }
+    },
+    "14": {
+        "paper_id": "hgcxwrrGZf",
+        "review_id": "mGrdv3nJCz",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 6
+        }
+    },
+    "15": {
+        "paper_id": "ZClm0YbcXP",
+        "review_id": "bIXAVG6n0g",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 8
+        }
+    },
+    "16": {
+        "paper_id": "ywKlmMor0f",
+        "review_id": "GRQD9LsnPA",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 4,
+            "overall": 8
+        }
+    },
+    "17": {
+        "paper_id": "ZxZabvtLwV",
+        "review_id": "HV7A06bo7I",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 6
+        }
+    },
+    "18": {
+        "paper_id": "hUD9ugK2OH",
+        "review_id": "KUmRC0fjFp",
+        "judge": {
+            "soundness": "3",
+            "presentation": "3",
+            "contribution": "3",
+            "overall": "8"
+        }
+    },
+    "19": {
+        "paper_id": "etToTig9Fp",
+        "review_id": "MkOmGF3TVf",
+        "judge": {
+            "soundness": 4,
+            "presentation": 4,
+            "contribution": 4,
+            "overall": 10
+        }
+    },
+    "20": {
+        "paper_id": "Mvn48u0ehO",
+        "review_id": "7jbwYtjIGc",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 6
+        }
+    },
+    "21": {
+        "paper_id": "QN97ubU1HH",
+        "review_id": "hClaYCvnOM",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 6
+        }
+    },
+    "22": {
+        "paper_id": "x4W8P7ybTE",
+        "review_id": "7KcfbHEshn",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 8
+        }
+    },
+    "23": {
+        "paper_id": "DfTWrTwLzD",
+        "review_id": "n5ifuAKTBL",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 8
+        }
+    },
+    "24": {
+        "paper_id": "iNvxHAN1J8",
+        "review_id": "gcKTMo5I8C",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 8
+        }
+    },
+    "25": {
+        "paper_id": "jkCvAAcSDa",
+        "review_id": "jqZwgUAwnm",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 8
+        }
+    },
+    "26": {
+        "paper_id": "tXnAmayaio",
+        "review_id": "Fqk6ICx8m5",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 6
+        }
+    },
+    "27": {
+        "paper_id": "WjPK2gj0xu",
+        "review_id": "FHeSCpwUxn",
+        "judge": {
+            "soundness": 3,
+            "presentation": 2,
+            "contribution": 3,
+            "overall": 6
+        }
+    },
+    "28": {
+        "paper_id": "3wrMRYuLlQ",
+        "review_id": "bamCi7ZY1g",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 8
+        }
+    },
+    "29": {
+        "paper_id": "RLzeoy4FzP",
+        "review_id": "gQk8jvTx25",
+        "judge": {
+            "soundness": 3,
+            "presentation": 4,
+            "contribution": 4,
+            "overall": 8
+        }
+    },
+    "30": {
+        "paper_id": "NAbqM2cMjD",
+        "review_id": "31j454L6ot",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 8
+        }
+    },
+    "31": {
+        "paper_id": "o4TyewNBIB",
+        "review_id": "EWunTixOSm",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 8
+        }
+    },
+    "32": {
+        "paper_id": "ReKWjKvkJE",
+        "review_id": "Ob4F8TNWRA",
+        "judge": {
+            "soundness": 4,
+            "presentation": 4,
+            "contribution": 4,
+            "overall": 6
+        }
+    },
+    "33": {
+        "paper_id": "CKYsXi0dOV",
+        "review_id": "yvNcVtFkNZ",
+        "judge": {
+            "soundness": 3,
+            "presentation": 2,
+            "contribution": 3,
+            "overall": 8
+        }
+    },
+    "34": {
+        "paper_id": "lJGEyRSXDJ",
+        "review_id": "CfA682kqqQ",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 6
+        }
+    },
+    "35": {
+        "paper_id": "q7aROKohBZ",
+        "review_id": "4WuoqVj4Yq",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 6
+        }
+    },
+    "36": {
+        "paper_id": "fFtmpqLFvw",
+        "review_id": "SAQLdlks3G",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 4,
+            "overall": 8
+        }
+    },
+    "37": {
+        "paper_id": "5iUUorHeM3",
+        "review_id": "LyI79uTlB1",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 8
+        }
+    },
+    "38": {
+        "paper_id": "QByW8EYEtt",
+        "review_id": "r9jcmxV7Mk",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 8
+        }
+    },
+    "39": {
+        "paper_id": "lE9s40eZgJ",
+        "review_id": "0EAa42Nj7G",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 8
+        }
+    },
+    "40": {
+        "paper_id": "iM7MfzbF1B",
+        "review_id": "BnDVtEa4l2",
+        "judge": {
+            "soundness": 2,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 8
+        }
+    },
+    "41": {
+        "paper_id": "plflYGf23L",
+        "review_id": "jiApSoNUYe",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 8
+        }
+    },
+    "42": {
+        "paper_id": "FP77VtEuaT",
+        "review_id": "MtRWgoirv7",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 6
+        }
+    },
+    "43": {
+        "paper_id": "D9GoWJJxS5",
+        "review_id": "7cjliZXTYr",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 8
+        }
+    },
+    "44": {
+        "paper_id": "l80AgHoRaN",
+        "review_id": "1XITjv3PWR",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 4,
+            "overall": 8
+        }
+    },
+    "45": {
+        "paper_id": "s5TNZPKWy5",
+        "review_id": "bOnAIYBdv7",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 6
+        }
+    },
+    "46": {
+        "paper_id": "konDsSUSqg",
+        "review_id": "sAymOd8gwV",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 8
+        }
+    },
+    "47": {
+        "paper_id": "ak7r4He1qH",
+        "review_id": "xACAZq9WO6",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 6
+        }
+    },
+    "48": {
+        "paper_id": "ic153qXFfx",
+        "review_id": "SlWm0bQNix",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 6
+        }
+    },
+    "49": {
+        "paper_id": "ydH8nU5csJ",
+        "review_id": "WUdF8H9P5k",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 8
+        }
+    },
+    "50": {
+        "paper_id": "HkB4bW5eJj",
+        "review_id": "jgbDqilsaC",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 6
+        }
+    },
+    "51": {
+        "paper_id": "kE1TVeolWv",
+        "review_id": "ThcAZRNAmn",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 6
+        }
+    },
+    "52": {
+        "paper_id": "63KdWsaYhb",
+        "review_id": "4rqw8L2Ty1",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 8
+        }
+    },
+    "53": {
+        "paper_id": "h5UdvNFHee",
+        "review_id": "NRDaIhZDH9",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 8
+        }
+    },
+    "54": {
+        "paper_id": "Q3oAX9HoH2",
+        "review_id": "2Qyoq93Lvx",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 8
+        }
+    },
+    "55": {
+        "paper_id": "j7ZWfqCYCY",
+        "review_id": "fveOsb3EbL",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 6
+        }
+    },
+    "56": {
+        "paper_id": "iplOFSOzS2",
+        "review_id": "VfbHVcKHVb",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 8
+        }
+    },
+    "57": {
+        "paper_id": "CRQ8JuQDEd",
+        "review_id": "1xWoZJzSDd",
+        "judge": {
+            "soundness": 3,
+            "presentation": 2,
+            "contribution": 4,
+            "overall": 8
+        }
+    },
+    "58": {
+        "paper_id": "mEACsjW10N",
+        "review_id": "phhkdgBNxt",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 8
+        }
+    },
+    "59": {
+        "paper_id": "ejEIlXRShF",
+        "review_id": "sNcX6py73Y",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 6
+        }
+    },
+    "60": {
+        "paper_id": "g3nxy8N3bQ",
+        "review_id": "fQg4zuH4tY",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 8
+        }
+    },
+    "61": {
+        "paper_id": "2x1U8a3s7G",
+        "review_id": "2gONGFMyiu",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 8
+        }
+    },
+    "62": {
+        "paper_id": "BGnm7Lo8oW",
+        "review_id": "A8TfjgQMPe",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 4,
+            "overall": 8
+        }
+    },
+    "63": {
+        "paper_id": "SfNmgDqeEa",
+        "review_id": "YaHvukeytI",
+        "judge": {
+            "soundness": 4,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 6
+        }
+    },
+    "64": {
+        "paper_id": "RtzxJLPxGk",
+        "review_id": "BqfQioacgZ",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 6
+        }
+    },
+    "65": {
+        "paper_id": "SYv9b4juom",
+        "review_id": "RIg5FZAnQL",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 8
+        }
+    },
+    "66": {
+        "paper_id": "zVagbJLgkP",
+        "review_id": "UR9vdaRxya",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 6
+        }
+    },
+    "67": {
+        "paper_id": "fSbPwHjdDG",
+        "review_id": "6pY4ftkzzP",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 8
+        }
+    },
+    "68": {
+        "paper_id": "vqJZb9SX1T",
+        "review_id": "UnGYcZlsem",
+        "judge": {
+            "soundness": 3,
+            "presentation": 2,
+            "contribution": 3,
+            "overall": 8
+        }
+    },
+    "69": {
+        "paper_id": "gNOW7ch3Ye",
+        "review_id": "rEeLDkCqF3",
+        "judge": {
+            "soundness": 3,
+            "presentation": 4,
+            "contribution": 3,
+            "overall": 8
+        }
+    },
+    "70": {
+        "paper_id": "RDFkGZ9Dkh",
+        "review_id": "tVt17Gmvpb",
+        "judge": {
+            "soundness": 3,
+            "presentation": 2,
+            "contribution": 3,
+            "overall": 8
+        }
+    },
+    "71": {
+        "paper_id": "viQ1bLqKY0",
+        "review_id": "8VSxLwK9Bd",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 6
+        }
+    },
+    "72": {
+        "paper_id": "4RHdGVimNA",
+        "review_id": "LYTFw6ff20",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 6
+        }
+    },
+    "73": {
+        "paper_id": "AEwtGiJVPi",
+        "review_id": "FlEGBYbPCG",
+        "judge": {
+            "soundness": 4,
+            "presentation": 3,
+            "contribution": 4,
+            "overall": 8
+        }
+    },
+    "74": {
+        "paper_id": "BHTgbGSCXu",
+        "review_id": "w7TaP5Dd6T",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 4,
+            "overall": 6
+        }
+    },
+    "75": {
+        "paper_id": "3jvgm61l9S",
+        "review_id": "BL0FTD66TY",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 4,
+            "overall": 8
+        }
+    },
+    "76": {
+        "paper_id": "rD6LQagatR",
+        "review_id": "QzeYFf5pfA",
+        "judge": {
+            "soundness": 3,
+            "presentation": 2,
+            "contribution": 3,
+            "overall": 8
+        }
+    },
+    "77": {
+        "paper_id": "1dUdNzLJRF",
+        "review_id": "Gfz1dj1w1k",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 8
+        }
+    },
+    "78": {
+        "paper_id": "DlZ97cVwr0",
+        "review_id": "V709m4B8w2",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 6
+        }
+    },
+    "79": {
+        "paper_id": "w2HYVwXhMh",
+        "review_id": "WGUAqD5G0k",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 6
+        }
+    },
+    "80": {
+        "paper_id": "k8KsI84Ds7",
+        "review_id": "4FNF9heqB3",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 6
+        }
+    },
+    "81": {
+        "paper_id": "pzmbxkCBiq",
+        "review_id": "CbhQwb7PNK",
+        "judge": {
+            "soundness": 3,
+            "presentation": 2,
+            "contribution": 3,
+            "overall": 6
+        }
+    },
+    "82": {
+        "paper_id": "vl8VpW2niQ",
+        "review_id": "x1j87xaira",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 8
+        }
+    },
+    "83": {
+        "paper_id": "n72WC4a9qQ",
+        "review_id": "cmZ4UiHo8L",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 8
+        }
+    },
+    "84": {
+        "paper_id": "9XprjIqkBI",
+        "review_id": "jVd5B0hlOc",
+        "judge": {
+            "soundness": 4,
+            "presentation": 4,
+            "contribution": 4,
+            "overall": 8
+        }
+    },
+    "85": {
+        "paper_id": "iEUZMISIKj",
+        "review_id": "eF6sF4GC84",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 8
+        }
+    },
+    "86": {
+        "paper_id": "8mE8KNHTjd",
+        "review_id": "5LjjYzvo2S",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 8
+        }
+    },
+    "87": {
+        "paper_id": "xlxGsX1pc7",
+        "review_id": "6n3CFqaTjv",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 6
+        }
+    },
+    "88": {
+        "paper_id": "rZmQ2z7MPA",
+        "review_id": "iwEnMOv2xr",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 8
+        }
+    },
+    "89": {
+        "paper_id": "dZsjj4vQjl",
+        "review_id": "y53DKKArxO",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 6
+        }
+    },
+    "90": {
+        "paper_id": "6xqPekRv7f",
+        "review_id": "Z5SmP4Rzoi",
+        "judge": {
+            "soundness": 3,
+            "presentation": 2,
+            "contribution": 3,
+            "overall": 8
+        }
+    },
+    "91": {
+        "paper_id": "ohqjYsRBD1",
+        "review_id": "H3srUVGT8C",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 4,
+            "overall": 8
+        }
+    },
+    "92": {
+        "paper_id": "TTUtPIpaol",
+        "review_id": "0XDhwzRL0Y",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 6
+        }
+    },
+    "93": {
+        "paper_id": "Mh8blXreJW",
+        "review_id": "E0pWC5Q8Nu",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 8
+        }
+    },
+    "94": {
+        "paper_id": "0ULf242ApE",
+        "review_id": "YUJSKiD9fZ",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 8
+        }
+    },
+    "95": {
+        "paper_id": "uinsufj5TR",
+        "review_id": "By2F57vrEH",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 6
+        }
+    },
+    "96": {
+        "paper_id": "hLIlN0f4ix",
+        "review_id": "5eJGODCRhF",
+        "judge": {
+            "soundness": 3,
+            "presentation": 3,
+            "contribution": 3,
+            "overall": 8
+        }
+    }
+}

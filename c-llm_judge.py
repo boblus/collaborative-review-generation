@@ -56,7 +56,7 @@ def inference(paper, review_A, review_B, model, tokenizer, max_tokens=8192, temp
 def main():
     config = pd.read_csv('config.txt', sep='\t')
 
-    venue = 'emnlp24'
+    venue = 'iclr25'
     judge_model_name = 'meta-llama/Llama-3.3-70B-Instruct'
     temperature = 0.8
     max_tokens = 8192
@@ -79,17 +79,17 @@ def main():
 
     # for arg_model_name_a in ['Qwen/Qwen3-VL-8B-Instruct', 'Qwen/Qwen3-VL-32B-Instruct', 'deepseek-ai/DeepSeek-R1-Distill-Qwen-14B', 'deepseek-ai/DeepSeek-R1-Distill-Llama-8B', 'deepseek-ai/DeepSeek-R1-Distill-Llama-70B', 'openai/gpt-oss-20b', 'openai/gpt-oss-120b']:
     
-    # for arg_model_name_a in ['gpt-5', 'Qwen/Qwen3-1.7B', 'Qwen/Qwen3-8B', 'Qwen/Qwen3-14B', 'Qwen/Qwen3-32B', 'Qwen/Qwen3-VL-8B-Instruct', 'Qwen/Qwen3-VL-32B-Instruct', 'deepseek-ai/DeepSeek-R1-Distill-Qwen-14B', 'deepseek-ai/DeepSeek-R1-Distill-Qwen-32B', 'deepseek-ai/DeepSeek-R1-Distill-Llama-8B', 'deepseek-ai/DeepSeek-R1-Distill-Llama-70B', 'openai/gpt-oss-20b', 'openai/gpt-oss-120b']:
+    for arg_model_name_a in ['openai/gpt-oss-20b', 'openai/gpt-oss-120b', 'Qwen/Qwen3-14B', 'Qwen/Qwen3-32B', 'deepseek-ai/DeepSeek-R1-Distill-Qwen-14B', 'deepseek-ai/DeepSeek-R1-Distill-Qwen-32B']:
 
     
-        prompt_type_a = 'emnlp24-general'
+        prompt_type_a = 'iclr25-general'
         type_of_labels_a = '-'
         
         arg_model_name_b = arg_model_name_a
-        prompt_type_b = 'emnlp24-aspect'
+        prompt_type_b = 'iclr25-aspect'
         type_of_labels_b = 'coarse'
     
-        round_n = 'first_round'
+        round_n = 'last_round'
         adversarial = False
     
         device = torch.cuda.get_device_name(0)
@@ -104,7 +104,7 @@ def main():
             raise ValueError(f"multiple matches")
         else:
             experiment_id_a = match[0]
-            if prompt_type_a in ['emnlp24-general']:
+            if prompt_type_a in ['emnlp24-general', 'iclr25-general']:
                 arg_a = defaultdict(dict)
                 with open(f"results/arg-{experiment_id_a}.json") as file:
                     for _, item in json.loads(file.read()).items():
@@ -112,9 +112,11 @@ def main():
                             llm_review = json.loads(item['llm_review'])
                         elif type(item['llm_review']) == dict:
                             llm_review = item['llm_review']
-                        arg_a[item['paper_id']][item['review_id']] = {'strengths': llm_review['strengths'], 'weaknesses': llm_review['weaknesses']}
 
-            if prompt_type_a in ['emnlp24-aspect']:
+                        if 'strengths' in llm_review and 'weaknesses' in llm_review:
+                            arg_a[item['paper_id']][item['review_id']] = {'strengths': llm_review['strengths'], 'weaknesses': llm_review['weaknesses']}
+
+            if prompt_type_a in ['emnlp24-aspect', 'iclr25-aspect']:
                 arg_a = {}
                 with open(f"results/judge-{experiment_id_a}.json") as file:
                     for _, item in json.loads(file.read()).items():
@@ -147,7 +149,7 @@ def main():
             raise ValueError(f"multiple matches")
         else:
             experiment_id_b = match[0]
-            if prompt_type_b in ['emnlp24-general']:
+            if prompt_type_b in ['emnlp24-general', 'iclr25-general']:
                 arg_b = defaultdict(dict)
                 with open(f"results/arg-{experiment_id_b}.json") as file:
                     for _, item in json.loads(file.read()).items():
@@ -155,9 +157,11 @@ def main():
                             llm_review = json.loads(item['llm_review'])
                         elif type(item['llm_review']) == dict:
                             llm_review = item['llm_review']
-                        arg_b[item['paper_id']][item['review_id']] = {'strengths': llm_review['strengths'], 'weaknesses': llm_review['weaknesses']}
+
+                        if 'strengths' in llm_review and 'weaknesses' in llm_review:
+                            arg_b[item['paper_id']][item['review_id']] = {'strengths': llm_review['strengths'], 'weaknesses': llm_review['weaknesses']}
             
-            if prompt_type_b in ['emnlp24-aspect']:
+            if prompt_type_b in ['emnlp24-aspect', 'iclr25-aspect']:
                 arg_b = {}
                 with open(f"results/judge-{experiment_id_b}.json") as file:
                     for _, item in json.loads(file.read()).items():
@@ -206,7 +210,7 @@ def main():
             
                     t.update(1)
     
-        with open('config_llm_judge.txt', 'a') as file:
+        with open('config_llm_judge_3_dimensions.txt', 'a') as file:
             file.write(f'{run_id}\t{judge_model_name}\t{experiment_id_a}\t{experiment_id_b}\t{round_n}\t{temperature}\t{max_tokens}\t{seed}\t{device}\n')
 
 if __name__ == "__main__":

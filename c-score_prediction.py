@@ -15,10 +15,10 @@ from accelerate import Accelerator
 from collections import defaultdict
 from utils import *
 
-def inference(review, model, tokenizer, max_tokens=2048, temperature=1, backend='vllm'):
+def inference(review, venue, model, tokenizer, max_tokens=2048, temperature=1, backend='vllm'):
 
     message = [
-        {'role': 'system', 'content': prompt_score_prediction},
+        {'role': 'system', 'content': prompt_score_prediction[venue]},
         {'role': 'user', 'content': f"## Review: {review}"}
         ]
     message = tokenizer.apply_chat_template(message, tokenize=False, add_generation_prompt=True, enable_thinking=False)
@@ -56,17 +56,17 @@ def inference(review, model, tokenizer, max_tokens=2048, temperature=1, backend=
 def main():
     config = pd.read_csv('config.txt', sep='\t')
 
-    venue = 'emnlp24'
-    prompt_type = 'emnlp24-aspect'
+    venue = 'iclr25'
+    prompt_type = 'iclr25-aspect'
     type_of_labels = 'coarse'
     adversarial = False
 
-    round_n = 'last_round'
+    round_n = 'first_round'
 
     backend = 'vllm'
     device = torch.cuda.get_device_name(0)
 
-    for arg_model_name in ['openai/gpt-oss-20b', 'openai/gpt-oss-120b']:
+    for arg_model_name in ['openai/gpt-oss-20b', 'openai/gpt-oss-120b', 'Qwen/Qwen3-14B', 'Qwen/Qwen3-32B', 'deepseek-ai/DeepSeek-R1-Distill-Qwen-14B', 'deepseek-ai/DeepSeek-R1-Distill-Qwen-32B']:
 
         run_id = time.strftime('%Y%m%d_%H%M%S', time.localtime())
 
@@ -78,7 +78,7 @@ def main():
             temperature = float(config['temperature'][config['experiment_id'] == experiment_id].to_list()[0])
             max_tokens = int(config['max_tokens'][config['experiment_id'] == experiment_id].to_list()[0])
             seed = int(config['seed'][config['experiment_id'] == experiment_id].to_list()[0])
-            if prompt_type in ['emnlp24-general']:
+            if prompt_type in ['emnlp24-general', 'iclr25-general']:
                 arg = defaultdict(dict)
                 with open(f"results/arg-{experiment_id}.json") as file:
                     for _, item in json.loads(file.read()).items():
@@ -90,7 +90,7 @@ def main():
                         if 'strengths' in llm_review and 'weaknesses' in llm_review:
                             arg[item['paper_id']][item['review_id']] = {'strengths': llm_review['strengths'], 'weaknesses': llm_review['weaknesses']}
     
-            if prompt_type in ['emnlp24-aspect']:
+            if prompt_type in ['emnlp24-aspect', 'iclr25-aspect']:
                 arg = {}
                 with open(f"results/judge-{experiment_id}.json") as file:
                     for _, item in json.loads(file.read()).items():
@@ -136,7 +136,7 @@ def main():
             for paper_id in arg:
                 for review_id in arg[paper_id]:
                     
-                    score_prediction = inference(arg[paper_id][review_id], arg_model, arg_tokenizer, max_tokens, temperature, backend)
+                    score_prediction = inference(arg[paper_id][review_id], venue, arg_model, arg_tokenizer, max_tokens, temperature, backend)
     
                     if score_prediction != 'FORMAT ERROR':
                         output_index = len(output)

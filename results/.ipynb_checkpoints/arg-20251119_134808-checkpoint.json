@@ -1,0 +1,42 @@
+{
+    "0": {
+        "paper_id": "VHpCu0jCr6",
+        "review_id": "Voo6srMa1d",
+        "human_review": {
+            "strengths": {
+                "0": "To the best of my knowledge, this is a novel problem and the authors make a meaningful contribution towards the problem. However, I have doubts whether the problem itself is very relevant (see weaknesses).",
+                "1": "Regardless of the relevance of the problem, the techniques introduced in this paper could be relevant to study other problems such as memorization or data poisoning.",
+                "2": "The paper is generally well written and easy to follow."
+            },
+            "weaknesses": {
+                "0": "Weak motivation: The paper motivates the technique by pointing out that watermarking still allows an attacker to use the model. However, this is exactly the point of watermarking. Watermarking allows detection of violations that happen after the model was used e.g. plagiarism detection. In this case the model answers to a legitimate question. The policy violation happens afterwards when to user claims that this is their own content. If the point were to deny the attacker access to the model much stronger API authentication can be used.",
+                "1": "Wake words are also susceptible to leakage: The paper makes the point that API keys can be leaked, however, it seems to me that all shortcomings of API keys also apply to wake words. Both are based on the concept of a shared secret. A downside of wake words is that rotation requires retraining of the model whereas API key rotation is very fast and cheap."
+            }
+        },
+        "llm_review": {
+            "strengths": "The paper proposes a clear, novel concept—IdentityLock—that actively protects API‑fine‑tuned LLMs by requiring identity‑based wake words for model activation. The methodology is well described, with a dual‑dataset construction (locked vs. refusal) that is simple to implement and aligns with back‑door training paradigms. Extensive empirical evaluation covers a wide range of models (open‑source and commercial), tasks (multi‑choice and dialogue), and domains (agriculture, economics, healthcare, law), demonstrating strong locking (PR lock≈0%) while preserving high unlock performance (PR unlock≈100%) and only modest accuracy loss. The paper also investigates the impact of different wake‑word types and refusal‑rate hyperparameters, and includes a black‑box robustness study showing that constructed (non‑vocab) wake words resist brute‑force and synonym attacks better than common‑word wake words. These results give the approach solid empirical support and practical relevance for real‑world API fine‑tuning scenarios.",
+            "weaknesses": "The threat model is somewhat simplified: it assumes only key leakage and ignores more sophisticated adversaries that might exploit side‑channels or model extraction. The paper does not quantify the computational or data overhead introduced by the 90/10 split or the impact on training time and inference latency. The evaluation stops at accuracy and response quality; security metrics such as entropy, resilience against more advanced attacks, or formal guarantees are missing. There is limited discussion of how the approach scales to larger datasets or higher refusal rates, and no ablation on the choice of wake‑word positions or on varying the proportion of locked samples beyond 90%. Finally, the paper lacks a comparison with other protection mechanisms (e.g., watermarking, encryption, access‑control systems) to contextualize the incremental value of IdentityLock."
+        }
+    },
+    "1": {
+        "paper_id": "F0Zd3knG9j",
+        "review_id": "ePQ20ywz3G",
+        "human_review": {
+            "strengths": {
+                "0": "The work is well-placed in the context of other mechanistic interpretability work for transformers, as well as other work looking into the effect of structured data on machine learning models.",
+                "1": "Understanding what strategy is learned by transformer models trained on structured distributions is an important problem.",
+                "2": "The family of synthetic distributions is interesting and has a hyperparameter that allows one to control the locality of correlations between tokens in the sequence.",
+                "3": "The authors present a novel construction for how to implement BP on a depth $l$ tree using only $l$ layers of a transformer, whereas previous constructions required $2l$ layers."
+            },
+            "weaknesses": {
+                "0": "It’s not clear how much the observations made in this work generalizes to larger models, and more complicated data distributions.",
+                "1": "The empirical evidence presented has alternative interpretations that haven't been ruled out. (Please see Questions.)",
+                "2": "The construction for implementing BP on depth-$l$ tree using a transformer of only $l$-layers could benefit from a bit more details, especially on the root-to-leaf message passing part. (Please see Questions.)"
+            }
+        },
+        "llm_review": {
+            "strengths": "• The paper introduces a clear and tunable hierarchical filtering model that gives precise control over the range of correlations in synthetic sequences, enabling a rigorous testbed for transformer behaviour.  • It provides compelling empirical evidence that vanilla encoder‑only transformers learn computation that closely matches exact Belief Propagation (BP) on both root‑classification and masked language modelling tasks, including calibration of predicted probabilities.  • The study dissects learning dynamics, showing a sequential inclusion of longer‑range correlations during training and a staged alignment with progressively more complex BP variants.  • Attention‑map visualisations and probing experiments reveal a hierarchical organisation of computation across transformer layers, supporting the claim that transformers implement a BP‑like message‑passing scheme.  • The work connects the benefits of MLM pre‑training to the underlying inference mechanism, offering an interpretable explanation for improved sample efficiency.  • A full, open‑source reproducibility package is provided, and the authors explore multiple random grammars and varying numbers of layers, strengthening robustness claims.",
+            "weaknesses": "• The experimental domain is highly simplified: binary trees, fixed depth, small vocabulary (q=4) and a specific log‑normal transition tensor; it is unclear how the findings extrapolate to real‑world language or protein sequences.  • No formal theoretical proof that the transformer implements BP; the evidence is empirical and relies on specific architectural choices (e.g., number of layers matching tree depth).  • The study does not address variable‑length sequences or non‑fixed tree topologies, limiting relevance to natural language processing.  • Limited ablation: only a single grammar seed (seed=0) is used for most figures, raising concerns about variability across random grammars.  • Computational scalability is not discussed; the proposed BP‑like embedding would require high-dimensional tokens and may not be practical for large models.  • The paper focuses on encoder‑only transformers and does not examine decoder or encoder‑decoder architectures, which are central to many ICLR papers.  • While attention maps are visualised, quantitative metrics for interpretability (e.g., causality or perturbation studies) are missing.  • The impact of hyper‑parameters (learning rate, batch size) is reported as negligible, but no systematic hyper‑parameter sweep is shown."
+        }
+    }
+}

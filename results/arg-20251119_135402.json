@@ -1,0 +1,657 @@
+{
+    "0": {
+        "paper_id": "o2Gg2tSKBn",
+        "review_id": "Ah68GzK0HW",
+        "aspects": {
+            "strengths": {
+                "0": [
+                    "Evaluation",
+                    "Data/Task"
+                ],
+                "1": [
+                    "Evaluation",
+                    "Result",
+                    "Methodology",
+                    "Analysis"
+                ],
+                "2": [
+                    "Methodology",
+                    "Result",
+                    "Experiment"
+                ]
+            },
+            "weaknesses": {
+                "0": [
+                    "Data/Task"
+                ],
+                "1": [
+                    "Methodology",
+                    "Intuition/Justification/Motivation/Validation",
+                    "Data/Task"
+                ],
+                "2": [
+                    "Contribution"
+                ],
+                "3": [
+                    "Definition/Description/Detail/Discussion/Explanation/Interpretation",
+                    "Experiment"
+                ]
+            }
+        },
+        "human_review": {
+            "strengths": {
+                "0": "The annotation process is comprehensive in that the annotation team takes multiple rounds and quality control, comprehensive evaluation using multiple metrics, and documentation of the data collection and processing steps.",
+                "1": "This paper evaluated multiple types of models (ML, PLM, LLM), including domain-specific models, and continued pre-training models. The author also showed a detailed error analysis and performance comparisons.",
+                "2": "The experiment results demonstrated that domain-specific models, FinBERT with continued pre-training, perform better on complex tasks. This insight is useful to the domain."
+            },
+            "weaknesses": {
+                "0": "The FinTruthQA dataset is exclusively from Chinese markets. In addition, the proposed dataset focuses only on the Q&A format, excluding other types of financial disclosure (like, long reports, and analytic reports).",
+                "1": "In question relevance, the label is imbalanced (99.51% positive), and limited number of samples for some categories. This may affect the validity and generalizability of the benchmark results.",
+                "2": "Limited overall technical contribution to financial Q&A or general domain Q&A.",
+                "3": "Experiment detail is not comprehensive, such as no details such as temperature were reported."
+            }
+        },
+        "llm_review": {
+            "strengths": {
+                "0": [
+                    "Evaluation",
+                    "Data/Task"
+                ],
+                "1": [
+                    "Evaluation",
+                    "Result",
+                    "Methodology",
+                    "Analysis"
+                ],
+                "2": [
+                    "Methodology",
+                    "Result",
+                    "Experiment"
+                ]
+            },
+            "weaknesses": {
+                "0": [
+                    "Data/Task"
+                ],
+                "1": [
+                    "Methodology",
+                    "Intuition/Justification/Motivation/Validation",
+                    "Data/Task"
+                ],
+                "2": [
+                    "Contribution"
+                ],
+                "3": [
+                    "Definition/Description/Detail/Discussion/Explanation/Interpretation",
+                    "Experiment"
+                ]
+            }
+        }
+    },
+    "1": {
+        "paper_id": "ywKlmMor0f",
+        "review_id": "GRQD9LsnPA",
+        "aspects": {
+            "strengths": {
+                "0": [
+                    "Methodology",
+                    "Data/Task"
+                ],
+                "1": [
+                    "Evaluation",
+                    "Result",
+                    "Methodology",
+                    "Analysis"
+                ],
+                "2": [
+                    "Methodology",
+                    "Result"
+                ]
+            },
+            "weaknesses": {
+                "0": [
+                    "Methodology",
+                    "Data/Task"
+                ],
+                "1": [
+                    "Data/Task"
+                ],
+                "2": [
+                    "Methodology",
+                    "Experiment",
+                    "Data/Task"
+                ]
+            }
+        },
+        "human_review": {
+            "strengths": {
+                "0": "This paper proposed a novel benchmark aimed at evaluating MLLMs’ ability to leverage visual information to clarify the ambiguities in texts. The task is designed to rely on both text and image information.",
+                "1": "This work conducted comprehensive evaluations on 24 proprietary and open-sourced MLLMs. The categorization of ambiguities into different types allows for a detailed analysis of model performance.",
+                "2": "The results, such as models' error consistency rate and the performance differences between different types of ambiguity and model types, offer valuable insights for future research and development."
+            },
+            "weaknesses": {
+                "0": "The dataset size is limited in some categories due to constraints on the number of participants. This may affect the representativeness and generalizability of the results.",
+                "1": "The authors should explore how to do the data collections in an autonomous way instead of human labors. Only on this manner, the data size can be increased significantly.",
+                "2": "The authors should propose valuation suggestions for the MLLM data preparation, pretraining and posttraining. Some experiments on the open source MLLMs will add some value to this work."
+            }
+        },
+        "llm_review": {
+            "strengths": {
+                "0": [
+                    "Methodology",
+                    "Data/Task"
+                ],
+                "1": [
+                    "Evaluation",
+                    "Result",
+                    "Methodology",
+                    "Analysis"
+                ],
+                "2": [
+                    "Methodology",
+                    "Result"
+                ]
+            },
+            "weaknesses": {
+                "0": [
+                    "Methodology",
+                    "Data/Task"
+                ],
+                "1": [
+                    "Data/Task"
+                ],
+                "2": [
+                    "Methodology",
+                    "Experiment",
+                    "Data/Task"
+                ]
+            }
+        }
+    },
+    "2": {
+        "paper_id": "tXnAmayaio",
+        "review_id": "Fqk6ICx8m5",
+        "aspects": {
+            "strengths": {
+                "0": [
+                    "Methodology",
+                    "Novelty",
+                    "Data/Task"
+                ],
+                "1": [
+                    "Presentation"
+                ]
+            },
+            "weaknesses": {
+                "0": [
+                    "Experiment",
+                    "Intuition/Justification/Motivation/Validation",
+                    "Methodology",
+                    "Comparison",
+                    "Data/Task"
+                ],
+                "1": [
+                    "Methodology"
+                ],
+                "2": [
+                    "Analysis"
+                ]
+            }
+        },
+        "human_review": {
+            "strengths": {
+                "0": "Novelty: This paper presents a method for generating large-scale instruction datasets from single prompt, which is essential for research requiring large-scale datasets for model fine-tuning. The creation of GenQA datasets may profoundly impact the field of NLP, especially on fine-tuning LLMs. The authors detail the generator prompts strategy, a novel approach for improving the efficiency of extracting diverse questions from LLMs. This approach may also inspire the creation of other datasets.",
+                "1": "Writing: This paper is well structured and logical, with clear diagrams and tables that help the reader to understand."
+            },
+            "weaknesses": {
+                "0": "(Main) Experiments with different models and scales: LIMA [1] points out that a small amount of data can motivate the capabilities of the larger scale model (70B), and the authors could have conducted further comparisons at more model structures, such as Qwen2-7B. Or comparisons can be made at larger scales with small amounts of data regarding the quality of the generated data, which can strengthen the contribution of this paper.",
+                "1": "Bias caused by prompt engineering: the Gemini 1.0 Pro LLM, used in the paper, may produce bias and cost constraints, and the situation in more varied LLMs, such as open source models and ChatGPT, remains unclear.",
+                "2": "Cost issues are not mentioned or discussed. Specific cost analysis may need to be covered, such as balancing the consumption in the open-source model with the particular API cost and comparing the resource consumption with the existing programs.\n\n[1] LIMA: Less Is More for Alignment. NeurIPS 2023."
+            }
+        },
+        "llm_review": {
+            "strengths": {
+                "0": [
+                    "Methodology",
+                    "Novelty",
+                    "Data/Task"
+                ],
+                "1": [
+                    "Presentation"
+                ]
+            },
+            "weaknesses": {
+                "0": [
+                    "Experiment",
+                    "Intuition/Justification/Motivation/Validation",
+                    "Methodology",
+                    "Comparison",
+                    "Data/Task"
+                ],
+                "1": [
+                    "Methodology"
+                ],
+                "2": [
+                    "Analysis"
+                ]
+            }
+        }
+    },
+    "3": {
+        "paper_id": "RLzeoy4FzP",
+        "review_id": "gQk8jvTx25",
+        "aspects": {
+            "strengths": {
+                "0": [
+                    "Methodology",
+                    "Data/Task"
+                ],
+                "1": [
+                    "Methodology",
+                    "Result",
+                    "Data/Task"
+                ],
+                "2": [
+                    "Methodology",
+                    "Result",
+                    "Experiment"
+                ]
+            },
+            "weaknesses": {
+                "0": [
+                    "Methodology",
+                    "Result",
+                    "Experiment"
+                ],
+                "1": [
+                    "Methodology",
+                    "Definition/Description/Detail/Discussion/Explanation/Interpretation",
+                    "Data/Task"
+                ],
+                "2": [
+                    "Result",
+                    "Data/Task",
+                    "Analysis"
+                ]
+            }
+        },
+        "human_review": {
+            "strengths": {
+                "0": "This paper introduces an innovative routing framework to optimize the preference label space, automating the selection of appropriate annotation sources, thereby reducing human annotation costs while achieving better model performance.",
+                "1": "It presents a Performance Prediction Model (PPM) that predicts the performance metrics of a trained model on a benchmark using the given dataset directly, rather than relying on model outputs, making it more convenient to predict dataset performance.",
+                "2": "The claims regarding the performance of the framework are well-supported by experiments, with the designed experiments effectively demonstrating the advantages and good generalization performance of the routing framework across various benchmarks."
+            },
+            "weaknesses": {
+                "0": "The experiments lack tests on other models, as all experiments are based on Tülu 2 13B. It is unclear if the framework would provide the same performance improvements when replacing the Reward Model or Policy Model. Training the PPM requires conducting hundreds of RLHF runs to explore the relationship between data features and outcomes, which is computationally expensive. If the PPM has low generalizability across different models, the usage cost would be high.",
+                "1": "There is a lack of reasoning and explanation regarding the routing strategy algorithm, making it unclear why this particular routing strategy is adopted and the characteristics of the mixing data it generates.",
+                "2": "The accuracy of the PPM is not convincing. The paper provides limited ablation analysis of the PPM and lacks information on the accuracy and robustness of the PPM's predictions on non-training datasets."
+            }
+        },
+        "llm_review": {
+            "strengths": [
+                "Proposes a novel routing framework that intelligently combines human and LM‑generated preferences, leading to higher reward model performance while reducing annotation cost;",
+                "Introduces a large, high‑quality MultiPref dataset (10k instances) with paired human and GPT‑4 annotations and provides an annotation platform and code for reproducibility;",
+                "Performs extensive experiments across multiple datasets and evaluation settings, demonstrating that the hybrid routing consistently outperforms both 100% human and 100% synthetic baselines and generalizes to other benchmarks."
+            ],
+            "weaknesses": [
+                "Analysis is confined to pairwise preference feedback, ignoring more nuanced forms such as aspect‑based or fine‑grained preferences;",
+                "Generalization experiments are limited to a fixed dataset size (~7k instances) and a small set of evaluation metrics, raising questions about scalability to larger or more diverse data;",
+                "The study does not investigate downstream impacts on policy or DPO training, leaving uncertainty about practical benefits in full RLHF pipelines."
+            ]
+        }
+    },
+    "4": {
+        "paper_id": "CKYsXi0dOV",
+        "review_id": "yvNcVtFkNZ",
+        "aspects": {
+            "strengths": {
+                "0": [
+                    "Methodology"
+                ],
+                "1": [
+                    "Ablation",
+                    "Experiment",
+                    "Intuition/Justification/Motivation/Validation"
+                ],
+                "2": [
+                    "Result",
+                    "Comparison",
+                    "Data/Task"
+                ]
+            },
+            "weaknesses": {
+                "0": [
+                    "Definition/Description/Detail/Discussion/Explanation/Interpretation",
+                    "Methodology"
+                ],
+                "1": [
+                    "Methodology",
+                    "Experiment",
+                    "Data/Task"
+                ]
+            }
+        },
+        "human_review": {
+            "strengths": {
+                "0": "The temporal encoder which aggregates visual tokens across frames in a highly efficient manner results in computational efficiency of training the model.",
+                "1": "Extensive ablation study in the temporal encoder design validates the design choice while also demonstrating the flexibility in the design of temporal encoder.",
+                "2": "Competitive performance on various video question-answering benchmarks, despite its smaller size."
+            },
+            "weaknesses": {
+                "0": "The model proposed in the paper utilizes 8 frames per video which are uniformly sampled. This approach might not work for tasks that inherently require more than 8 frames to understand the video. If this method could scale up, an explanation of why that might be would be helpful.",
+                "1": "The experiments of the paper focuses on video question-answering benchmarks only, and this limited experimentation may not capture the model's ability in other video-based tasks. Further evaluation on other video tasks, such as temporal understanding would demonstrate the applicability of this approach to more general and diverse video-related tasks."
+            }
+        },
+        "llm_review": {
+            "strengths": [
+                "Methodology",
+                "Ablation, Experiment, Intuition/Justification/Motivation/Validation",
+                "Result, Comparison, Data/Task"
+            ],
+            "weaknesses": [
+                "Definition/Description/Detail/Discussion/Explanation/Interpretation, Methodology",
+                "Methodology, Experiment, Data/Task"
+            ]
+        }
+    },
+    "5": {
+        "paper_id": "kE1TVeolWv",
+        "review_id": "ThcAZRNAmn",
+        "aspects": {
+            "strengths": {
+                "0": [
+                    "Methodology",
+                    "Novelty"
+                ],
+                "1": [
+                    "Evaluation",
+                    "Experiment",
+                    "Methodology",
+                    "Data/Task"
+                ],
+                "2": [
+                    "Presentation"
+                ],
+                "3": [
+                    "Result",
+                    "Significance"
+                ]
+            },
+            "weaknesses": {
+                "0": [
+                    "Methodology",
+                    "Result",
+                    "Analysis"
+                ],
+                "1": [
+                    "Methodology",
+                    "Data/Task"
+                ],
+                "2": [
+                    "Definition/Description/Detail/Discussion/Explanation/Interpretation",
+                    "Methodology"
+                ]
+            }
+        },
+        "human_review": {
+            "strengths": {
+                "0": "Originality: The GRABLI approach introduces a novel integration of KGs and LMs through cross-modal alignment, aiming to improve the semantic richness of LMs with domain-specific details from KGs. This dual-encoder strategy is distinctive in its utilization of both a graph neural network (GNN) and a pre-trained LM to create a unified representation space.",
+                "1": "Quality: The technical evaluation of the GRABLI framework is robust, featuring a comprehensive set of experiments across various benchmarks for question answering and entity linking tasks.",
+                "2": "Clarity: The paper is well-structured and articulates the research problem and the proposed solution clearly.",
+                "3": "Significance: The significance of GRABLI lies in its potential to enhance the performance of biomedical LMs by integrating domain-specific knowledge."
+            },
+            "weaknesses": {
+                "0": "When evaluating the performance of GRABLI against existing biomedical ontology encoders, the authors should provide details regarding the size of each model, specifically the number of trainable weights added when including GRABLI (e.g. the addition of the GNN). This analysis is crucial because the performance improvements observed with GRABLI may be due to an increase in model size rather than its inherent effectiveness in learning superior medical concept representations.",
+                "1": "Limitations: The authors should discuss the limitations of the proposed methodology, including the limited data used in the pre-training stage (1.5M sentences and 600K nodes only).",
+                "2": "Computational Efficiency: There is limited discussion on the computational demands of GRABLI, particularly when scaling to larger knowledge graphs or more extensive text corpora."
+            }
+        },
+        "llm_review": {
+            "strengths": {
+                "0": [
+                    "Methodology",
+                    "Novelty"
+                ],
+                "1": [
+                    "Evaluation",
+                    "Experiment",
+                    "Data/Task"
+                ],
+                "2": [
+                    "Presentation"
+                ],
+                "3": [
+                    "Result",
+                    "Significance"
+                ]
+            },
+            "weaknesses": {
+                "0": [
+                    "Methodology",
+                    "Result",
+                    "Analysis"
+                ],
+                "1": [
+                    "Methodology",
+                    "Data/Task"
+                ],
+                "2": [
+                    "Definition/Description/Detail/Discussion/Explanation/Interpretation",
+                    "Methodology"
+                ]
+            }
+        }
+    },
+    "6": {
+        "paper_id": "RtzxJLPxGk",
+        "review_id": "BqfQioacgZ",
+        "aspects": {
+            "strengths": {
+                "0": [
+                    "Presentation"
+                ],
+                "1": [
+                    "Methodology",
+                    "Presentation",
+                    "Intuition/Justification/Motivation/Validation"
+                ],
+                "2": [
+                    "Result"
+                ],
+                "3": [
+                    "Methodology",
+                    "Significance"
+                ]
+            },
+            "weaknesses": {
+                "0": [
+                    "Ablation",
+                    "Methodology"
+                ],
+                "1": [
+                    "Presentation"
+                ]
+            }
+        },
+        "human_review": {
+            "strengths": {
+                "0": "Clarity: The paper is well written and easy to understand.",
+                "1": "Clarity: The method is conceptually simple and well motivated.",
+                "2": "Quality: Numerical results demonstrate promising performance, achieving strong performance with limited computational overhead due to computing a higher-rank approximation of the second moment buffers compared to Adafactor and CAME.",
+                "3": "Significance: The paper is likely to be of interest to a broad audience, and tackles an important problem reducing the memory footprint of language model optimizers."
+            },
+            "weaknesses": {
+                "0": "Computation times for higher rank decompositions are quite flat in the ablations (Figure 2b and Table 1); this is attributed to parallelization on the GPU, but, how does this time actually scale during training when the GPU supposedly has high SM occupancy?",
+                "1": "It seems a little odd that all the validation curves in Figure 4 (including those using different optimizers), line up perfectly, down to every minute jump or dip in the loss and perplexity."
+            }
+        },
+        "llm_review": {
+            "strengths": {
+                "0": [
+                    "Presentation"
+                ],
+                "1": [
+                    "Methodology",
+                    "Intuition/Justification/Motivation/Validation"
+                ],
+                "2": [
+                    "Result"
+                ],
+                "3": [
+                    "Methodology",
+                    "Significance"
+                ]
+            },
+            "weaknesses": {
+                "0": [
+                    "Ablation",
+                    "Methodology"
+                ],
+                "1": [
+                    "Presentation"
+                ]
+            }
+        }
+    },
+    "7": {
+        "paper_id": "SYv9b4juom",
+        "review_id": "RIg5FZAnQL",
+        "aspects": {
+            "strengths": {
+                "0": [
+                    "Methodology"
+                ],
+                "1": [
+                    "Methodology"
+                ],
+                "2": [
+                    "Methodology",
+                    "Presentation",
+                    "Intuition/Justification/Motivation/Validation"
+                ]
+            },
+            "weaknesses": {
+                "0": [
+                    "Evaluation",
+                    "Experiment",
+                    "Methodology",
+                    "Data/Task"
+                ],
+                "1": [
+                    "Methodology",
+                    "Comparison"
+                ],
+                "2": [
+                    "Methodology",
+                    "Result"
+                ]
+            }
+        },
+        "human_review": {
+            "strengths": {
+                "0": "**OrthoRank** proposes the pruning method at a hidden-state-level and uses an innovative method for token selection based on the orthogonality of tokens to a \"sink token.\"",
+                "1": "Unlike existing pruning methods, which typically remove layers or tokens based on static characteristics or require additional training components, **OrthoRank** has a simple but effective algorithmic setup.",
+                "2": "The paper is overall well-written and organized with clear math expressions in methodology sections. The motivation behind **OrthoRank** and the logic flow of the design can clearly understood by readers."
+            },
+            "weaknesses": {
+                "0": "The experiments are limited in terms of model choices and types of experiments. You can consider adding LLaMA-3.1 and evaluate on more tasks from LongBench datasets.",
+                "1": "The authors didn't discuss advantages and disadvantages of **OrthoRank** compared to other sparse attention mechanisms that also uses token selection to estimate the tokens with the highest attention scores.",
+                "2": "The authors didn't include the results for end-to-end or attention efficiency. Given the matrix multiplication used for find cosine similarity, I am concerned about how this will affect the overall latency of the generation."
+            }
+        },
+        "llm_review": {
+            "strengths": {
+                "0": [
+                    "Methodology",
+                    "Intuition/Justification/Motivation/Validation"
+                ],
+                "1": [
+                    "Evaluation"
+                ],
+                "2": [
+                    "Presentation"
+                ]
+            },
+            "weaknesses": {
+                "0": [
+                    "Evaluation",
+                    "Data/Task"
+                ],
+                "1": [
+                    "Comparison"
+                ],
+                "2": [
+                    "Result"
+                ]
+            }
+        }
+    },
+    "8": {
+        "paper_id": "ohqjYsRBD1",
+        "review_id": "H3srUVGT8C",
+        "aspects": {
+            "strengths": {
+                "0": [
+                    "Presentation"
+                ],
+                "1": [],
+                "2": [
+                    "Significance",
+                    "Data/Task"
+                ],
+                "3": [
+                    "Methodology",
+                    "Data/Task"
+                ]
+            },
+            "weaknesses": {
+                "0": [
+                    "Evaluation",
+                    "Data/Task"
+                ],
+                "1": [
+                    "Definition/Description/Detail/Discussion/Explanation/Interpretation"
+                ]
+            }
+        },
+        "human_review": {
+            "strengths": {
+                "0": "The paper is well written with notable clarity.",
+                "1": "The paper provides extensive and well-designed quantitative and qualitative studies to understand the correlation between forgetting the upstream knowledge and tuning on the downstream tasks.",
+                "2": "The paper highlights that the importance/similarity of the examples to the target downstream tasks is a different notion compared to their sensitivity to be forgotten.",
+                "3": "The proposed predict-then-upweight replay strategy effectively mitigates the sample forgetting for upstream pretraining/instruction-tuning data in terms of perplexity."
+            },
+            "weaknesses": {
+                "0": "Reducing LLM forgetting of the upstream knowledge during instruction-tuning and alignment stages is an important aspect, but typical instruction-tuning and alignment datasets have other metrics for evaluation. It is unclear whether reducing forgetting has practical benefits or trade-offs to these downstream tasks.",
+                "1": "There are extensive discussions about using SVD to approximate the matrix, which certainly proves the hypothesis that leveraging a simple forgetting predictor can be more helpful than task-related features. However, the final forgetting predictor using KNN over SVD reduces the importance of those discussions."
+            }
+        },
+        "llm_review": {
+            "strengths": {
+                "0": [
+                    "Presentation"
+                ],
+                "1": [
+                    "Clarity and organization"
+                ],
+                "2": [
+                    "Significance",
+                    "Data/Task"
+                ],
+                "3": [
+                    "Methodology",
+                    "Data/Task"
+                ]
+            },
+            "weaknesses": {
+                "0": [
+                    "Evaluation",
+                    "Data/Task"
+                ],
+                "1": [
+                    "Definition/Description/Detail/Discussion/Explanation/Interpretation"
+                ]
+            }
+        }
+    }
+}
