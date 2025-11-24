@@ -60,3 +60,15 @@
 20251029_203515	20251026_002141	openai/gpt-oss-120b	emnlp24-aspect	last_round	NVIDIA A100-SXM4-80GB
 20251029_205005	20251021_041126	deepseek-ai/DeepSeek-R1-Distill-Llama-8B	emnlp24-aspect	last_round	NVIDIA A100-SXM4-80GB
 20251029_205845	20251021_132929	deepseek-ai/DeepSeek-R1-Distill-Llama-70B	emnlp24-aspect	last_round	NVIDIA A100-SXM4-80GB
+20251120_100159	20251119_134808	openai/gpt-oss-20b	iclr25-general	first_round	NVIDIA A100-SXM4-80GB
+20251120_100536	20251119_135640	openai/gpt-oss-120b	iclr25-general	first_round	NVIDIA A100-SXM4-80GB
+20251120_101354	20251119_140927	Qwen/Qwen3-14B	iclr25-general	first_round	NVIDIA A100-SXM4-80GB
+20251120_101608	20251119_141710	Qwen/Qwen3-32B	iclr25-general	first_round	NVIDIA A100-SXM4-80GB
+20251120_101936	20251119_143129	deepseek-ai/DeepSeek-R1-Distill-Qwen-14B	iclr25-general	first_round	NVIDIA A100-SXM4-80GB
+20251120_102731	20251119_144609	deepseek-ai/DeepSeek-R1-Distill-Qwen-32B	iclr25-general	first_round	NVIDIA A100-SXM4-80GB
+20251120_125319	20251119_172316	openai/gpt-oss-20b	iclr25-aspect	first_round	NVIDIA A100-SXM4-80GB
+20251120_125722	20251119_182029	openai/gpt-oss-120b	iclr25-aspect	first_round	NVIDIA A100-SXM4-80GB
+20251120_130407	20251119_194355	Qwen/Qwen3-14B	iclr25-aspect	first_round	NVIDIA A100-SXM4-80GB
+20251120_130602	20251119_203810	Qwen/Qwen3-32B	iclr25-aspect	first_round	NVIDIA A100-SXM4-80GB
+20251120_130911	20251119_214636	deepseek-ai/DeepSeek-R1-Distill-Qwen-14B	iclr25-aspect	first_round	NVIDIA A100-SXM4-80GB
+20251120_131520	20251119_230030	deepseek-ai/DeepSeek-R1-Distill-Qwen-32B	iclr25-aspect	first_round	NVIDIA A100-SXM4-80GB
