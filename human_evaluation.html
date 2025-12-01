@@ -183,6 +183,8 @@
     let keys = [];
     let currentIndex = 0;
     let responses = {};  // { paperId: { criterion: selectedValue } }
+    let keyToIndexMap = {};  // { dataJsonKey: index }
+    let indexToKeyMap = {};  // { index: dataJsonKey }
 
     const STORAGE_KEYS = {
       responses: 'peer_eval_responses',
@@ -204,18 +206,21 @@
         const rawI = localStorage.getItem(STORAGE_KEYS.index);
         if (rawR) {
           const parsedResponses = JSON.parse(rawR) || {};
-          // 将旧格式的索引key转换为data.json的原始key
+          // 将索引key转换为data.json的原始key
           responses = {};
           for (const oldKey in parsedResponses) {
             // 如果oldKey是数字字符串（索引），转换为data.json的key
             if (/^\d+$/.test(oldKey)) {
               const index = parseInt(oldKey);
-              if (index >= 0 && index < keys.length) {
-                responses[keys[index]] = parsedResponses[oldKey];
+              if (indexToKeyMap.hasOwnProperty(index)) {
+                responses[indexToKeyMap[index]] = parsedResponses[oldKey];
               }
             } else {
               // 如果不是索引，直接使用原始key（可能是aggregate类型等）
-              responses[oldKey] = parsedResponses[oldKey];
+              // 验证key是否在keys数组中存在
+              if (keyToIndexMap.hasOwnProperty(oldKey)) {
+                responses[oldKey] = parsedResponses[oldKey];
+              }
             }
           }
         }
@@ -240,6 +245,13 @@
         if (!a.includes('_aggregate') && b.includes('_aggregate')) return -1;
         return a.localeCompare(b);
       });
+      // 建立key到index的映射
+      keyToIndexMap = {};
+      indexToKeyMap = {};
+      for (let i = 0; i < keys.length; i++) {
+        keyToIndexMap[keys[i]] = i;
+        indexToKeyMap[i] = keys[i];
+      }
       restoreState();
       if (currentIndex >= keys.length) currentIndex = 0;
       displayPaper(currentIndex);
@@ -1322,6 +1334,7 @@
       // 只导出responses，不包含currentIndex
       // 只保存到当前页面（currentIndex）为止的数据，不包含后面的数据
       // 只保存keys数组中到currentIndex为止的数据，不保存responses中其他未访问的item
+      // key使用interface的item index（数字索引），而不是data.json的key
       const sortedResponses = {};
       // 按照keys数组的顺序遍历，只保存到currentIndex为止
       // 只保存用户已经访问过的item，不保存后面的item
@@ -1337,10 +1350,12 @@
               cleanedResponse['BetterReview'] = responses[key]['BetterReview'];
             }
             if (Object.keys(cleanedResponse).length > 0) {
-              sortedResponses[key] = cleanedResponse;
+              // 使用索引i作为key，而不是data.json的key
+              sortedResponses[String(i)] = cleanedResponse;
             }
           } else {
-            sortedResponses[key] = responses[key];
+            // 使用索引i作为key，而不是data.json的key
+            sortedResponses[String(i)] = responses[key];
           }
         }
       }
@@ -1379,37 +1394,56 @@
           const obj = JSON.parse(String(reader.result||'{}'));
           if (obj && typeof obj === 'object') {
             if (obj.responses && typeof obj.responses === 'object') {
-              // 将旧格式的索引key转换为data.json的原始key
+              // 判断是旧模式还是新模式
+              // 如果第一个key是"0"，这是新模式（使用索引，从0开始）
+              // 如果第一个key不是"0"（比如"37"），这是旧模式（使用data.json的key）
+              const responseKeys = Object.keys(obj.responses);
+              const firstKey = responseKeys.length > 0 ? responseKeys[0] : '';
+              const isNewMode = firstKey === '0';
+              
               const newResponses = {};
+              let maxIndex = -1;
+              
               for (const oldKey in obj.responses) {
-                // 如果oldKey是数字字符串（索引），转换为data.json的key
-                if (/^\d+$/.test(oldKey)) {
+                if (isNewMode) {
+                  // 新模式：oldKey是索引（数字字符串，从0开始），转换为data.json的key
                   const index = parseInt(oldKey);
-                  if (index >= 0 && index < keys.length) {
-                    newResponses[keys[index]] = obj.responses[oldKey];
+                  if (index >= 0 && indexToKeyMap.hasOwnProperty(index)) {
+                    const dataJsonKey = indexToKeyMap[index];
+                    newResponses[dataJsonKey] = obj.responses[oldKey];
+                    // 记录最大的索引
+                    if (index > maxIndex) {
+                      maxIndex = index;
+                    }
                   }
                 } else {
-                  // 如果不是索引，直接使用原始key（可能是aggregate类型等）
-                  newResponses[oldKey] = obj.responses[oldKey];
+                  // 旧模式：oldKey是data.json的key，直接使用
+                  if (keyToIndexMap.hasOwnProperty(oldKey)) {
+                    newResponses[oldKey] = obj.responses[oldKey];
+                    // 记录最大的索引
+                    const keyIndex = keyToIndexMap[oldKey];
+                    if (keyIndex > maxIndex) {
+                      maxIndex = keyIndex;
+                    }
+                  }
                 }
               }
+              
               responses = newResponses;
-            }
-            // 从responses中获取最后一个key对应的索引
-            const responseKeys = Object.keys(responses);
-            if (responseKeys.length > 0) {
-              // 找到responses中最后一个key在keys数组中的索引
-              const sortedResponseKeys = responseKeys.sort((a, b) => {
-                const indexA = keys.indexOf(a);
-                const indexB = keys.indexOf(b);
-                return indexB - indexA; // 降序排列
-              });
-              const lastKey = sortedResponseKeys[0];
-              currentIndex = Math.max(0, Math.min(keys.indexOf(lastKey), keys.length - 1));
+              // 如果找到了有效的索引，设置currentIndex
+              if (maxIndex >= 0) {
+                currentIndex = maxIndex;
+              }
             }
             // 兼容旧格式，如果有currentIndex字段
+            // 但需要验证这个索引是否有效，并且对应的key在导入的responses中存在
             if (typeof obj.currentIndex === 'number') {
-              currentIndex = Math.max(0, Math.min(obj.currentIndex, keys.length - 1));
+              const proposedIndex = Math.max(0, Math.min(obj.currentIndex, keys.length - 1));
+              const proposedKey = indexToKeyMap[proposedIndex];
+              // 如果这个key在导入的responses中存在，使用这个索引
+              if (proposedKey && responses[proposedKey]) {
+                currentIndex = proposedIndex;
+              }
             }
             persistState();
             displayPaper(currentIndex);
